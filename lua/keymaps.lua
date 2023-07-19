@@ -42,18 +42,35 @@ map("x", "gw", [[y/\V<C-R>"<CR>N]])
 -- default behaviour, use `bufexists` in it's place.
 -- map("n", "<M-w>", ":<C-u>exe v:count ? v:count . 'b' : 'keepjumps b' . (bufloaded(0) ? '#' : 'n')<CR>")
 -- map("i", "<M-w>", "<C-o>:keepjumps b#<CR>")
-map({ "n", "i" }, "<M-w>", "<Cmd>keepjumps normal <CR>")
-map("n", "<M-d>", function()
-  -- switch back to previous buffer instead of going to next buffer
-  local prevFile = vim.fn.expand("#")
-  require("bufdelete").bufdelete(0)
-  vim.cmd("keepjumps b " .. prevFile)
-end, { desc = "delete buffer" })
-map("n", "<M-c>", function()
-  local prevFile = vim.fn.expand("#")
-  require("bufdelete").bufwipeout(0)
-  vim.cmd("keepjumps b " .. prevFile)
-end, { desc = "wipeout buffer" })
+-- this switches to the last used buffer even if its deleted
+-- map({ "n", "i" }, "<M-w>", "<Cmd>keepjumps normal <CR>")
+
+-- switch to the most recent buffer that's not deleted
+map({ "n", "i" }, "<M-w>", function()
+  local curbufnr = vim.api.nvim_get_current_buf()
+  local buflist = vim.tbl_filter(function(buf)
+    return vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].buflisted and buf ~= curbufnr
+  end, vim.api.nvim_list_bufs())
+
+  -- table is empty if buffers are not loaded
+  if #buflist == 0 then
+    vim.cmd("keepjumps b#")
+  else
+    local switch_bufnr
+    local switch_bufnr_lastused = -1
+    for _, bufnr in pairs(buflist) do
+      local bufinfo = vim.fn.getbufinfo(bufnr)[1]
+      if bufinfo.lastused > switch_bufnr_lastused then
+        switch_bufnr = bufnr
+        switch_bufnr_lastused = bufinfo.lastused
+      end
+    end
+    vim.cmd("keepjumps b" .. switch_bufnr)
+  end
+end)
+
+map("n", "<M-d>", "<Cmd>Bdelete<CR>", { desc = "delete buffer" })
+map("n", "<M-c>", "<Cmd>Bwipeout<CR>", { desc = "wipeout buffer" })
 -- map("n", "<M-D>", ":%bd <bar> e# <bar> bd#<CR>", { desc = "close all but current buffer" })
 map("n", "<M-D>", ":BdeleteHidden<CR>", { desc = "delete hidden buffers" })
 map("n", "<M-.>", ":bnext<CR>")
@@ -188,7 +205,7 @@ map("n", "<leader>rc", ":%s///gc<Left><left><Left>", { silent = false })
 map("x", "<leader>rr", ":s///g<Left><Left>", { silent = false })
 map("x", "<leader>rc", ":s///gc<Left><left><Left>", { silent = false })
 
--- <leader>rw over word to find and replace all occurrences.
+-- <leader>ra over word to find and replace all occurrences.
 map("n", "<leader>ra", [[:%s/\<<C-r>=expand("<cword>")<CR>\>//g<Left><Left>]], { silent = false })
 
 -- Replace selected characters, saving the word to which they belong(use dot to replace next occurrence)
@@ -416,7 +433,7 @@ end, { force = true, desc = "paste JSON in new buffer" })
 
 vim.api.nvim_create_user_command("Mdn", function(cmd_opts)
   local url = "https://mdn.io/"
-  vim.cmd(":silent !start " .. url .. unpack(cmd_opts.fargs))
+  vim.cmd('silent !start "" "' .. url .. unpack(cmd_opts.fargs) .. '"')
 end, { nargs = 1, desc = "search in mdn" })
 
 vim.api.nvim_create_user_command("Bonly", function()
@@ -473,16 +490,6 @@ map("n", "<leader>fn", function()
     layout_config = { height = 0.95 },
   }))
 end)
-map("n", "<leader>fi", function()
-  require("telescope").extensions.tailiscope.base(require("telescope.themes").get_dropdown({
-    initial_mode = "normal",
-    layout_strategy = "vertical",
-    layout_config = { height = 0.95 },
-    preview = {
-      hide_on_startup = false, -- hide previewer when picker starts
-    },
-  }))
-end)
 map("n", "<leader>fm", function()
   require("telescope").extensions.macroscope.default({ initial_mode = "normal" })
 end)
@@ -490,7 +497,15 @@ map("n", "<leader>b", ":Telescope buffers<CR>")
 map("n", "<leader>fe", ":Telescope resume<CR>")
 map("n", "<leader>fs", ":Telescope find_files<CR>")
 map("n", "<leader>fr", ":Telescope registers<CR>")
-map("n", "<leader>fo", ":Telescope oldfiles<CR>")
+-- improve oldfiles sorting
+-- https://github.com/nvim-telescope/telescope.nvim/issues/2539
+map("n", "<leader>fo", function()
+  require("telescope.builtin").oldfiles({
+    tiebreak = function(current_entry, existing_entry, _)
+      return current_entry.index < existing_entry.index
+    end,
+  })
+end)
 map("n", "<leader>fv", ":Telescope vim_options<CR>")
 map("n", "<leader>fg", ":Telescope live_grep<CR>")
 map("n", "<leader>fk", ":Telescope keymaps<CR>")
