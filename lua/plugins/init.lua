@@ -14,4 +14,8 @@ return {
       require("nvim-autopairs").setup()
     end
   },
+  {
+    "numToStr/Comment.nvim",
+    opts = {}
+  }
 }
