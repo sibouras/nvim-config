@@ -6,9 +6,9 @@
 --   augroup END
 -- ]])
 -- highlight on yank with lua
-vim.api.nvim_create_autocmd("TextYankPost", {
+vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
-    vim.highlight.on_yank({ higroup = "IncSearch", timeout = 200 })
+    vim.highlight.on_yank({ higroup = 'IncSearch', timeout = 200 })
   end,
 })
 
@@ -20,9 +20,9 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 --   augroup END
 -- ]])
 -- with lua
-vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
   callback = function()
-    vim.cmd("set formatoptions-=cro")
+    vim.cmd('set formatoptions-=cro')
     vim.cmd([[set formatexpr=\"]]) -- empty formatexpr so gq uses formatoptions
   end,
 })
@@ -98,15 +98,15 @@ endif
 
 -- source: https://github.com/ecosse3/nvim/blob/master/lua/autocmds.lua
 -- Disable diagnostics in node_modules (0 is current buffer only)
-vim.api.nvim_create_autocmd("BufRead", { pattern = "*/node_modules/*", command = "lua vim.diagnostic.disable(0)" })
-vim.api.nvim_create_autocmd("BufNewFile", { pattern = "*/node_modules/*", command = "lua vim.diagnostic.disable(0)" })
+vim.api.nvim_create_autocmd('BufRead', { pattern = '*/node_modules/*', command = 'lua vim.diagnostic.disable(0)' })
+vim.api.nvim_create_autocmd('BufNewFile', { pattern = '*/node_modules/*', command = 'lua vim.diagnostic.disable(0)' })
 
 -- Enable spell checking for certain file types
 -- vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, { pattern = { "*.txt", "*.md", "*.tex" }, command = "setlocal spell" })
 
 -- Use 'q' to quit from common plugins
-vim.api.nvim_create_autocmd({ "FileType" }, {
-  pattern = { "qf", "help", "man", "lspinfo", "spectre_panel", "startuptime", "Redir" },
+vim.api.nvim_create_autocmd({ 'FileType' }, {
+  pattern = { 'qf', 'help', 'man', 'lspinfo', 'spectre_panel', 'startuptime', 'Redir' },
   callback = function()
     vim.cmd([[
       nnoremap <silent> <buffer> q :close<CR>
@@ -116,8 +116,8 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 })
 
 -- Remove statusline and tabline when in Alpha
-vim.api.nvim_create_autocmd({ "User" }, {
-  pattern = { "AlphaReady" },
+vim.api.nvim_create_autocmd({ 'User' }, {
+  pattern = { 'AlphaReady' },
   callback = function()
     vim.cmd([[
       " set showtabline=0 | autocmd BufUnload <buffer> set showtabline=2
@@ -136,13 +136,13 @@ vim.api.nvim_create_autocmd({ "User" }, {
 -- })
 
 -- insert mode when switching to terminal
-vim.api.nvim_create_autocmd("WinEnter", {
-  pattern = "term://*",
-  command = "startinsert",
+vim.api.nvim_create_autocmd('WinEnter', {
+  pattern = 'term://*',
+  command = 'startinsert',
 })
 
 -- cursorline in harpoon
-vim.api.nvim_create_autocmd({ "FileType" }, {
-  pattern = "harpoon",
-  command = "setlocal cursorline",
+vim.api.nvim_create_autocmd({ 'FileType' }, {
+  pattern = 'harpoon',
+  command = 'setlocal cursorline',
 })

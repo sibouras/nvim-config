@@ -5,8 +5,9 @@ return {
     'hrsh7th/cmp-path',
     'hrsh7th/cmp-nvim-lsp',
     'saadparwaiz1/cmp_luasnip',
-    'onsails/lspkind.nvim'
+    'onsails/lspkind.nvim',
   },
+  event = { 'InsertEnter' },
   config = function()
     local cmp = require('cmp')
     local luasnip = require('luasnip')
@@ -25,27 +26,27 @@ return {
       --   throttle = 40,
       -- },
       mapping = cmp.mapping.preset.insert({
-        ["<Up>"] = cmp.mapping.select_prev_item(),
-        ["<Down>"] = cmp.mapping.select_next_item(),
-        ["<PageUp>"] = cmp.mapping.scroll_docs(-4),
-        ["<PageDown>"] = cmp.mapping.scroll_docs(4),
-        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete(),
-        ["<M-C-S-F5>"] = cmp.mapping.complete(), -- mapped to control+space in terminal
-        ["<C-e>"] = cmp.mapping.abort(),
+        ['<Up>'] = cmp.mapping.select_prev_item(),
+        ['<Down>'] = cmp.mapping.select_next_item(),
+        ['<PageUp>'] = cmp.mapping.scroll_docs(-4),
+        ['<PageDown>'] = cmp.mapping.scroll_docs(4),
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<M-C-S-F5>'] = cmp.mapping.complete(), -- mapped to control+space in terminal
+        ['<C-e>'] = cmp.mapping.abort(),
 
         -- ["<C-y>"] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
         -- Accept currently selected item. If none selected, `select` first item.
         -- Set `select` to `false` to only confirm explicitly selected items.
-        ["<CR>"] = cmp.mapping.confirm({ select = true }),
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
 
-        ["<M-C-S-F6>"] = cmp.mapping(function(fallback) -- mapped to control+i in ahk,terminal
+        ['<M-C-S-F6>'] = cmp.mapping(function(fallback) -- mapped to control+i in ahk,terminal
           if cmp.visible() then
             return cmp.complete_common_string()
           end
           fallback()
-        end, { "i", "c" }),
+        end, { 'i', 'c' }),
 
         -- ["<C-j>"] = cmp.mapping(function(fallback)
         --   if luasnip.expandable() then
@@ -68,21 +69,21 @@ return {
         -- If the completion menu is visible, move to the next item. If the line is
         -- "empty", insert a Tab character. If the cursor is inside a word, trigger
         -- the completion menu.
-        ["<Tab>"] = cmp.mapping(function(fallback)
-          local col = vim.fn.col(".") - 1
+        ['<Tab>'] = cmp.mapping(function(fallback)
+          local col = vim.fn.col('.') - 1
           if cmp.visible() then
             cmp.select_next_item(select_opts)
           elseif luasnip.jumpable(1) then
             luasnip.jump(1)
             -- elseif luasnip.expand_or_locally_jumpable(select_opts) then
             --   luasnip.expand_or_jump()
-          elseif col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
+          elseif col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
             fallback()
           else
             cmp.complete()
           end
-        end, { "i", "s" }),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
+        end, { 'i', 's' }),
+        ['<S-Tab>'] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_prev_item(select_opts)
           elseif luasnip.jumpable(-1) then
@@ -90,11 +91,11 @@ return {
           else
             fallback()
           end
-        end, { "i", "s" }),
+        end, { 'i', 's' }),
       }),
       formatting = {
         expandable_indicator = true,
-        fields = { "kind", "abbr", "menu" },
+        fields = { 'kind', 'abbr', 'menu' },
         format = function(entry, vim_item)
           -- -- Kind icons
           -- vim_item.kind = kind_icons[vim_item.kind]
@@ -106,19 +107,19 @@ return {
           --   buffer = "[Buffer]",
           --   path = "[Path]",
           -- })[entry.source.name]
-          local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
-          local strings = vim.split(kind.kind, "%s", { trimempty = true })
-          kind.kind = "" .. strings[1] .. ""
-          kind.menu = " (" .. strings[2] .. ")"
+          local kind = require('lspkind').cmp_format({ mode = 'symbol_text', maxwidth = 50 })(entry, vim_item)
+          local strings = vim.split(kind.kind, '%s', { trimempty = true })
+          kind.kind = '' .. strings[1] .. ''
+          kind.menu = ' (' .. strings[2] .. ')'
           return vim_item
         end,
       },
       sources = {
-        { name = "nvim_lsp", max_item_count = 50 },
-        { name = "nvim_lua" },
-        { name = "luasnip" },
-        { name = "buffer",   max_item_count = 10 },
-        { name = "path" },
+        { name = 'nvim_lsp', max_item_count = 50 },
+        { name = 'nvim_lua' },
+        { name = 'luasnip' },
+        { name = 'buffer', max_item_count = 10 },
+        { name = 'path' },
       },
       confirm_opts = {
         behavior = cmp.ConfirmBehavior.Replace,
@@ -126,8 +127,8 @@ return {
       },
       window = {
         documentation = {
-          border = "rounded",
-          winhighlight = "NormalFloat:Pmenu,NormalFloat:Pmenu,CursorLine:PmenuSel,Search:None",
+          border = 'rounded',
+          winhighlight = 'NormalFloat:Pmenu,NormalFloat:Pmenu,CursorLine:PmenuSel,Search:None',
         },
         -- completion = {
         --   border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
@@ -152,12 +153,12 @@ return {
       --   end
       -- end,
       enabled = function()
-        local buftype = vim.api.nvim_buf_get_option(0, "buftype")
-        if buftype == "prompt" then
+        local buftype = vim.api.nvim_buf_get_option(0, 'buftype')
+        if buftype == 'prompt' then
           return false
         end
         return vim.g.cmp_active
       end,
     })
-  end
+  end,
 }
