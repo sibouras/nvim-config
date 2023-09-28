@@ -1,6 +1,6 @@
 return {
   'rebelot/heirline.nvim',
-  event = "VeryLazy",
+  event = 'VeryLazy',
   -- event = { 'BufReadPre', 'BufNewFile' },
   config = function()
     local conditions = require('heirline.conditions')
@@ -401,6 +401,7 @@ return {
         local key = require('grapple').key()
         return '  [' .. key .. ']'
       end,
+      hl = { fg = 'gray' },
     }
 
     --> Nvim Navic
@@ -502,7 +503,11 @@ return {
     --> Diagnostics
 
     local Diagnostics = {
-      condition = conditions.has_diagnostics,
+      condition = function()
+        -- check that we are not in insert mode
+        return not vim.tbl_contains({ 'i' }, vim.fn.mode()) and conditions.has_diagnostics()
+      end,
+      -- condition = conditions.has_diagnostics,
 
       static = {
         -- breaks with lazy.nvim, probably need to load lspconfig before heirline
@@ -667,9 +672,10 @@ return {
     local DefaultStatusline = {
       ViMode,
       Grapple,
-      Spell,
-      -- Space,
+      Space,
       -- FileNameBlock,
+      utils.surround({ '', '' }, 'dark_bg', { FileNameBlock }),
+      Spell,
       Git,
       Space,
       -- {
@@ -678,7 +684,7 @@ return {
       --   end,
       --   Diagnostics,
       -- },
-      Diagnostics,
+      -- Diagnostics,
       Align,
       -- { flexible = 3, LSPSimple, { provider = "" } },
       LSPSimple,
@@ -777,7 +783,7 @@ return {
 
     require('heirline').setup({
       statusline = StatusLines,
-      winbar = WinBars,
+      -- winbar = WinBars,
       opts = {
         -- if the callback returns true, the winbar will be disabled for that window
         -- the args parameter corresponds to the table argument passed to autocommand callbacks. :h nvim_lua_create_autocmd()

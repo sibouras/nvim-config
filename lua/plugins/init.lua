@@ -7,7 +7,6 @@ return {
   'folke/which-key.nvim',
   { 'dstein64/vim-startuptime', cmd = 'StartupTime', enabled = true },
   'famiu/bufdelete.nvim',
-  'vim-scripts/ReplaceWithRegister',
   'svban/YankAssassin.vim',
   'Sangdol/mintabline.vim',
   {

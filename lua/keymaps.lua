@@ -402,7 +402,7 @@ map('n', '<leader>hl', ':call functions#GetHighlightGroupUnderCursor()<CR>')
 
 -- essentials.lua functions
 -- map("n", "<F2>", ":lua require('essentials').rename()<CR>")
-map('n', 'gx', ":lua require('essentials').open_in_browser()<CR>")
+map('n', '<CR>', ":lua require('essentials').open_in_browser()<CR>")
 map('n', 'g/', ":lua require('essentials').toggle_comment()<CR>")
 map('v', 'g/', ":lua require('essentials').toggle_comment(true)<CR>")
 map('n', '<leader>ru', ":lua require('essentials').run_file()<CR>")
