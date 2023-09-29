@@ -1,7 +1,7 @@
 return {
   -- LSP Configuration & Plugins
   'neovim/nvim-lspconfig',
-  commit = '1393aaca8a59a9ce586ed55770b3a02155a56ac2',
+  -- commit = '1393aaca8a59a9ce586ed55770b3a02155a56ac2',
   event = { 'BufReadPre', 'BufNewFile' },
   dependencies = {
     -- Automatically install LSPs to stdpath for neovim
@@ -28,7 +28,6 @@ return {
     map('n', '<leader>li', '<Cmd>LspInfo<CR>')
     map('n', '<leader>lm', '<Cmd>Mason<CR>')
     map('n', '<leader>ln', '<Cmd>NullLsInfo<CR>')
-    map('n', '<leader>la', '<Cmd>Lazy<CR>')
 
     -- toggle LSP diagnostics
     vim.g.diagnostics_active = true
@@ -58,7 +57,7 @@ return {
       --   navic.attach(client, bufnr)
       -- end
 
-      if client.name == 'sumneko_lua' or client.name == 'tsserver' or client.name == 'html' then
+      if client.name == 'lua_ls' or client.name == 'tsserver' or client.name == 'html' then
         client.server_capabilities.documentFormattingProvider = false
       end
 
@@ -223,7 +222,7 @@ return {
       -- end,
 
       ['lua_ls'] = function()
-        require('lspconfig').sumneko_lua.setup({
+        require('lspconfig').lua_ls.setup({
           on_attach = on_attach,
           capabilities = capabilities,
           single_file_support = false,
@@ -261,7 +260,7 @@ return {
               description = 'Organize Imports',
             },
           },
-          -- https://openbase.com/js/typescript-language-server/documentation
+          -- DOCS https://github.com/typescript-language-server/typescript-language-server#workspacedidchangeconfiguration
           -- Diagnostics code to be omitted when reporting diagnostics.
           -- See https://github.com/microsoft/TypeScript/blob/master/src/compiler/diagnosticMessages.json for a full list of valid codes.
           settings = {
@@ -300,7 +299,7 @@ return {
           on_attach = function(client, bufnr)
             if client.server_capabilities.colorProvider then
               -- require("user.lsp.utils.documentcolors").buf_attach(bufnr)
-              require('document-color').buf_attach(bufnr)
+              -- require('document-color').buf_attach(bufnr)
             end
             -- client.server_capabilities.hoverProvider = false
             -- client.server_capabilities.completionProvider = false

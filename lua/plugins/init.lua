@@ -9,6 +9,11 @@ return {
   'svban/YankAssassin.vim',
   'Sangdol/mintabline.vim',
   {
+    'utilyre/sentiment.nvim',
+    event = 'VeryLazy',
+    opts = {},
+  },
+  {
     'https://git.sr.ht/~marcc/BufferBrowser',
     event = { 'BufReadPre', 'BufNewFile' },
     keys = {

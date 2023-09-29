@@ -19,9 +19,13 @@ require('lazy').setup('plugins', {
     rtp = {
       disabled_plugins = {
         'gzip',
+        'netrwPlugin',
+        'rplugin',
         'zipPlugin',
         'tarPlugin',
-        'matchit',
+        'shada', -- plugin for editing ShaDa files
+        -- 'matchit', -- matches html tags
+        'matchparen',
         'tohtml',
         'man',
         'spellfile',
@@ -33,6 +37,7 @@ require('lazy').setup('plugins', {
 require('keymaps')
 require('options')
 require('autocmds')
+require('lightbulb')
 
 vim.cmd([[
   highlight Underlined guisp=#7aa2f7 " change markdown link color
