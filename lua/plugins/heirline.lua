@@ -716,6 +716,7 @@ return {
       Space,
       HelpFilename,
       Align,
+      Ruler,
     }
 
     local TerminalStatusline = {

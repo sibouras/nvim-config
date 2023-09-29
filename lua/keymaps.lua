@@ -11,6 +11,8 @@ map('', '<Space>', '<Nop>')
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+map('n', '<leader>la', '<Cmd>Lazy<CR>')
+
 -- Horizontal scroll
 map({ 'n', 'i', 'v' }, '<S-ScrollWheelUp>', '<ScrollWheelLeft>')
 map({ 'n', 'i', 'v' }, '<S-ScrollWheelDown>', '<ScrollWheelRight>')
