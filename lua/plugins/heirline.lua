@@ -346,13 +346,12 @@ return {
 
     --> Treesitter
 
-    local ts_avail, ts = pcall(require, 'nvim-treesitter.parsers')
-
     local TreesitterActive = {
       -- update = { "OptionSet", pattern = "syntax" },
       update = { 'BufWinEnter' },
 
       provider = function()
+        local ts_avail, ts = pcall(require, 'nvim-treesitter.parsers')
         if not (ts_avail and ts.has_parser()) then
           return
         end
@@ -382,6 +381,7 @@ return {
         return { fg = fg, bold = false }
       end,
       provider = function()
+        local ts_avail, ts = pcall(require, 'nvim-treesitter.parsers')
         if not (ts_avail and ts.has_parser()) then
           return
         end

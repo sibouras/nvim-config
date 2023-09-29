@@ -18,6 +18,14 @@ return {
       local telescope = require('telescope')
       local actions = require('telescope.actions')
 
+      local open_with_trouble = function(...)
+        return require('trouble.providers.telescope').open_with_trouble(...)
+      end
+
+      local open_selected_with_trouble = function(...)
+        return require('trouble.providers.telescope').open_selected_with_trouble(...)
+      end
+
       telescope.setup({
         defaults = {
           prompt_prefix = ' ',
@@ -53,7 +61,7 @@ return {
               ['<CR>'] = actions.select_default,
               ['<C-h>'] = actions.select_horizontal,
               ['<C-v>'] = actions.select_vertical,
-              ['<C-t>'] = actions.select_tab,
+              ['<C-n>'] = actions.select_tab,
               ['<C-u>'] = actions.preview_scrolling_up,
               ['<C-d>'] = actions.preview_scrolling_down,
               ['<PageUp>'] = actions.results_scrolling_up,
@@ -65,14 +73,16 @@ return {
               ['<Tab>'] = actions.toggle_selection + actions.move_selection_worse,
               ['<S-Tab>'] = actions.toggle_selection + actions.move_selection_better,
               ['<C-a>'] = actions.toggle_all,
-              ['<C-q>'] = actions.send_to_qflist + actions.open_qflist,
-              ['<M-q>'] = actions.send_selected_to_qflist + actions.open_qflist,
               ['<C-l>'] = actions.complete_tag,
               ['<C-_>'] = actions.which_key, -- keys from pressing <C-/>
               ['<C-x>'] = actions.delete_buffer,
               ['<C-p>'] = require('telescope.actions.layout').toggle_preview,
               ['<C-BS>'] = { '<C-w>', type = 'command', opts = { noremap = false } },
               ['<C-f>'] = actions.to_fuzzy_refine,
+              ['<C-q>'] = actions.send_to_qflist + actions.open_qflist,
+              ['<M-q>'] = actions.send_selected_to_qflist + actions.open_qflist,
+              ['<c-t>'] = open_with_trouble,
+              ['<M-t>'] = open_selected_with_trouble,
             },
             n = {
               ['`'] = actions.close,
@@ -82,12 +92,10 @@ return {
               ['l'] = actions.select_default,
               ['<C-h>'] = actions.select_horizontal,
               ['<C-v>'] = actions.select_vertical,
-              ['<C-t>'] = actions.select_tab,
+              ['<C-n>'] = actions.select_tab,
               ['<Tab>'] = actions.toggle_selection + actions.move_selection_worse,
               ['<S-Tab>'] = actions.toggle_selection + actions.move_selection_better,
               ['<C-a>'] = actions.toggle_all,
-              ['<C-q>'] = actions.send_to_qflist + actions.open_qflist,
-              ['<M-q>'] = actions.send_selected_to_qflist + actions.open_qflist,
               ['j'] = actions.move_selection_next,
               ['k'] = actions.move_selection_previous,
               ['H'] = actions.move_to_top,
@@ -101,9 +109,17 @@ return {
               ['<C-d>'] = actions.preview_scrolling_down,
               ['<PageUp>'] = actions.results_scrolling_up,
               ['<PageDown>'] = actions.results_scrolling_down,
+              ['<C-Left>'] = actions.preview_scrolling_left,
+              ['<C-Right>'] = actions.preview_scrolling_right,
+              ['<M-Left>'] = actions.results_scrolling_left,
+              ['<M-Right>'] = actions.results_scrolling_right,
               ['?'] = actions.which_key,
               ['<C-p>'] = require('telescope.actions.layout').toggle_preview,
               ['<C-x>'] = actions.delete_buffer,
+              ['<C-q>'] = actions.send_to_qflist + actions.open_qflist,
+              ['<M-q>'] = actions.send_selected_to_qflist + actions.open_qflist,
+              ['<c-t>'] = open_with_trouble,
+              ['<M-t>'] = open_selected_with_trouble,
             },
           },
         },
