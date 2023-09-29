@@ -3,6 +3,7 @@ return {
   {
     'echasnovski/mini.clue',
     event = 'VeryLazy',
+    enabled = false,
     opts = function()
       local miniclue = require('mini.clue')
 
@@ -69,7 +70,7 @@ return {
           },
 
           -- Delay before showing clue window
-          delay = 500,
+          delay = 400,
 
           -- Keys to scroll inside the clue window
           scroll_down = '<C-d>',

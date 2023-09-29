@@ -4,7 +4,6 @@
 
 return {
   -- the colorscheme should be available when starting Neovim
-  'folke/which-key.nvim',
   { 'dstein64/vim-startuptime', cmd = 'StartupTime', enabled = true },
   'famiu/bufdelete.nvim',
   'svban/YankAssassin.vim',

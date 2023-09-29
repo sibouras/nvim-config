@@ -402,7 +402,7 @@ map('n', '<leader>hl', ':call functions#GetHighlightGroupUnderCursor()<CR>')
 
 -- essentials.lua functions
 -- map("n", "<F2>", ":lua require('essentials').rename()<CR>")
-map('n', '<CR>', ":lua require('essentials').open_in_browser()<CR>")
+map('n', 'g<CR>', ":lua require('essentials').open_in_browser()<CR>")
 map('n', 'g/', ":lua require('essentials').toggle_comment()<CR>")
 map('v', 'g/', ":lua require('essentials').toggle_comment(true)<CR>")
 map('n', '<leader>ru', ":lua require('essentials').run_file()<CR>")
@@ -483,16 +483,18 @@ end, { desc = 'Find files from current buffer' })
 map('n', '<leader>fw', function()
   require('telescope').extensions.recent_files.pick({ initial_mode = 'normal' })
 end, { desc = 'Telescope recent files extesion' })
-map('n', '<leader>fn', function()
-  require('telescope').extensions.neoclip.default(require('telescope.themes').get_dropdown({
-    initial_mode = 'normal',
-    layout_strategy = 'vertical',
-    layout_config = { height = 0.95 },
-  }))
-end)
-map('n', '<leader>fm', function()
-  require('telescope').extensions.macroscope.default({ initial_mode = 'normal' })
-end)
+-- telescope neoclip
+-- map('n', '<leader>fn', function()
+--   require('telescope').extensions.neoclip.default(require('telescope.themes').get_dropdown({
+--     initial_mode = 'normal',
+--     layout_strategy = 'vertical',
+--     layout_config = { height = 0.95 },
+--   }))
+-- end)
+-- map('n', '<leader>fm', function()
+--   require('telescope').extensions.macroscope.default({ initial_mode = 'normal' })
+-- end)
+map('n', '<leader>fm', ':Telescope marks<CR>')
 map('n', '<leader>b', ':Telescope buffers<CR>')
 map('n', '<leader>fe', ':Telescope resume<CR>')
 map('n', '<leader>fs', ':Telescope find_files<CR>')
@@ -505,10 +507,11 @@ map('n', '<leader>fo', function()
       return current_entry.index < existing_entry.index
     end,
   })
-end)
+end, { desc = 'Telescope oldfiles' })
 map('n', '<leader>fv', ':Telescope vim_options<CR>')
 map('n', '<leader>fg', ':Telescope live_grep<CR>')
 map('n', '<leader>fk', ':Telescope keymaps<CR>')
+map('n', '<leader>fc', ':Telescope commands<CR>')
 map('n', '<leader>f;', ':Telescope command_history<CR>')
 map('n', '<leader>f/', ':Telescope search_history<CR>')
 map('n', '<leader>/', ':Telescope current_buffer_fuzzy_find<CR>')

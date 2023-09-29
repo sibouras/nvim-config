@@ -245,7 +245,7 @@ function M.open_in_browser()
   -- local url = string.match(vim.fn.expand("<cWORD>"), "https?://[%w-_%.%?%.:/%+=&]+[^ >\"',;`]*")
   -- new pattern
   -- INFO mastodon URLs contain `@`, neovim docs urls can contain a `'`
-  local url = string.match(vim.fn.expand('<cWORD>'), "https?://[A-Za-z0-9_%-/.#%%=?&'@]+")
+  local url = string.match(vim.fn.expand('<cWORD>'), "https?://[A-Za-z0-9_%-/.#%%=?&@]+")
   if url ~= nil then
     if vim.fn.has('win32') == 1 then
       os.execute(('start %s'):format(url))
