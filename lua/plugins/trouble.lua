@@ -8,15 +8,23 @@ return {
     { '<leader>xl', '<cmd>TroubleToggle loclist<cr>', desc = 'Location List (Trouble)' },
     { '<leader>xq', '<cmd>TroubleToggle quickfix<cr>', desc = 'Quickfix List (Trouble)' },
     {
-      '[q',
+      '<Down>',
       function()
         if require('trouble').is_open() then
-          require('trouble').previous({ skip_groups = true, jump = true })
+          require('trouble').next({ skip_groups = true, jump = false })
         else
-          local ok, err = pcall(vim.cmd.cprev)
-          if not ok then
-            print(err, vim.log.levels.ERROR)
-          end
+          vim.cmd('+1')
+        end
+      end,
+      desc = 'Next trouble/quickfix item',
+    },
+    {
+      '<Up>',
+      function()
+        if require('trouble').is_open() then
+          require('trouble').previous({ skip_groups = true, jump = false })
+        else
+          vim.cmd('-1')
         end
       end,
       desc = 'Previous trouble/quickfix item',
@@ -33,7 +41,21 @@ return {
           end
         end
       end,
-      desc = 'Next trouble/quickfix item',
+      desc = 'Next trouble/quickfix item and jump',
+    },
+    {
+      '[q',
+      function()
+        if require('trouble').is_open() then
+          require('trouble').previous({ skip_groups = true, jump = true })
+        else
+          local ok, err = pcall(vim.cmd.cprev)
+          if not ok then
+            print(err, vim.log.levels.ERROR)
+          end
+        end
+      end,
+      desc = 'Previous trouble/quickfix item and jump',
     },
   },
 }
