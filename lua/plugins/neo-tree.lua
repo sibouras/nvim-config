@@ -2,9 +2,9 @@ return {
   'nvim-neo-tree/neo-tree.nvim',
   enabled = false,
   cmd = 'Neotree',
-  branch = 'v2.x',
+  -- branch = 'v3.x',
   keys = {
-    { '<leader>e', '<CMD>NeoTreeFloatToggle<CR>', desc = 'NeoTree' },
+    { '<leader>e', '<CMD>Neotree toggle float<CR>', desc = 'NeoTree' },
   },
   dependencies = {
     'nvim-lua/plenary.nvim',
@@ -13,7 +13,9 @@ return {
   },
   opts = {
     filesystem = {
-      follow_current_file = false,
+      bind_to_cwd = false,
+      follow_current_file = { enabled = false },
+      use_libuv_file_watcher = true,
     },
   },
 }

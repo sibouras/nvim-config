@@ -11,10 +11,11 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Remap space as leader key
 vim.g.mapleader = ' ' -- Make sure to set `mapleader` before lazy so your mappings are correct
+vim.g.maplocalleader = ' '
 
 require('lazy').setup('plugins', {
-  -- "folke/which-key.nvim",
   performance = {
     rtp = {
       disabled_plugins = {
@@ -23,9 +24,9 @@ require('lazy').setup('plugins', {
         'rplugin',
         'zipPlugin',
         'tarPlugin',
-        'shada', -- plugin for editing ShaDa files
+        -- 'shada', -- for editing ShaDa files
         -- 'matchit', -- matches html tags
-        'matchparen',
+        'matchparen', -- replaced with sentiment.nvim
         'tohtml',
         'man',
         'spellfile',
@@ -38,10 +39,3 @@ require('keymaps')
 require('options')
 require('autocmds')
 require('lightbulb')
-
-vim.cmd([[
-  highlight Underlined guisp=#7aa2f7 " change markdown link color
-  highlight markdownLinkText guisp=#7aa2f7
-  highlight WinSeparator guifg=#3b4261
-  highlight HarpoonCurrentFile guifg=#7aa2f7
-]])

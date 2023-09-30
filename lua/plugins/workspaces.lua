@@ -14,6 +14,7 @@ return {
   },
   {
     'natecraddock/workspaces.nvim',
+    cmd = { 'WorkspacesAdd', 'WorkspacesOpen' },
     opts = {
       hooks = {
         -- hooks run before change directory
