@@ -19,8 +19,13 @@ return {
         colors.bg_highlight = '#181a22'
         colors.bg_statusline = '#121218'
       end,
+      -- https://github.com/folke/tokyonight.nvim/blob/main/lua/tokyonight/theme.lua
       on_highlights = function(hl, colors)
         hl.TabLineSel = { bg = '#1A2336' }
+        hl.WinSeparator = { fg = colors.fg_gutter }
+        hl['@text.uri.markdown_inline'] = { fg = colors.blue, underline = true } -- markdown link
+        hl.PounceAccept = { bold = true, fg = '#ffffff', bg = '#3F00FF' }
+        hl.PounceAcceptBest = { bold = true, fg = '#ffffff', bg = '#FF2400' }
       end,
     })
 

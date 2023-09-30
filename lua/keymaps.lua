@@ -6,11 +6,6 @@ local function map(mode, lhs, rhs, opts)
   vim.keymap.set(mode, lhs, rhs, options)
 end
 
--- Remap space as leader key
-map('', '<Space>', '<Nop>')
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
 map('n', '<leader>la', '<Cmd>Lazy<CR>')
 
 -- Horizontal scroll
@@ -71,10 +66,7 @@ map({ 'n', 'i' }, '<M-w>', function()
   end
 end)
 
-map('n', '<M-d>', '<Cmd>Bdelete<CR>', { desc = 'delete buffer' })
-map('n', '<M-c>', '<Cmd>Bwipeout<CR>', { desc = 'wipeout buffer' })
 -- map("n", "<M-D>", ":%bd <bar> e# <bar> bd#<CR>", { desc = "close all but current buffer" })
-map('n', '<M-D>', ':BdeleteHidden<CR>', { desc = 'delete hidden buffers' })
 map('n', '<M-.>', ':bnext<CR>')
 map('i', '<M-.>', '<Esc>:bnext<CR>')
 map('n', '<M-,>', ':bprevious<CR>')
@@ -288,7 +280,7 @@ map('v', '<', '<gv')
 map('v', '>', '>gv')
 
 -- remove highlight
--- map("n", "<esc>", ":noh<cr>")
+map('n', '<esc>', '<Cmd>noh<CR>', { desc = 'Escape and clear hlsearch' })
 
 -- %% expands to the path of the directory that contains the current file.
 -- works with with :cd, :grep etc.
@@ -442,16 +434,6 @@ vim.api.nvim_create_user_command('Bonly', function()
   vim.cmd("silent! execute '%bd|e#|bd#'")
 end, { desc = 'delete all but current buffer' })
 
-vim.api.nvim_create_user_command('BdeleteHidden', function()
-  local hidden_bufs = vim.tbl_filter(function(bufnr)
-    return vim.fn.getbufinfo(bufnr)[1].hidden == 1
-  end, vim.api.nvim_list_bufs())
-
-  for _, bufnr in ipairs(hidden_bufs) do
-    require('bufdelete').bufdelete(bufnr)
-  end
-end, { bang = true, desc = 'delete hidden buffers' })
-
 ----------------------------------
 ---------- abbreviations ---------
 ----------------------------------
@@ -496,11 +478,13 @@ end, { desc = 'Telescope recent files extesion' })
 -- map('n', '<leader>fm', function()
 --   require('telescope').extensions.macroscope.default({ initial_mode = 'normal' })
 -- end)
-map('n', '<leader>fm', ':Telescope marks<CR>')
+map('n', '<leader>o', ':Telescope find_files<CR>')
 map('n', '<leader>b', ':Telescope buffers<CR>')
+map('n', '<leader>fs', ':Telescope git_files<CR>')
+map('n', '<leader>fi', ':Telescope git_status<CR>')
 map('n', '<leader>fe', ':Telescope resume<CR>')
-map('n', '<leader>fs', ':Telescope find_files<CR>')
 map('n', '<leader>fr', ':Telescope registers<CR>')
+map('n', '<leader>fm', ':Telescope marks<CR>')
 -- improve oldfiles sorting
 -- https://github.com/nvim-telescope/telescope.nvim/issues/2539
 map('n', '<leader>fo', function()
@@ -512,6 +496,7 @@ map('n', '<leader>fo', function()
 end, { desc = 'Telescope oldfiles' })
 map('n', '<leader>fv', ':Telescope vim_options<CR>')
 map('n', '<leader>fg', ':Telescope live_grep<CR>')
+map('n', '<leader>fh', ':Telescope highlights<CR>')
 map('n', '<leader>fk', ':Telescope keymaps<CR>')
 map('n', '<leader>fc', ':Telescope commands<CR>')
 map('n', '<leader>f;', ':Telescope command_history<CR>')
