@@ -33,8 +33,10 @@ return {
     },
   },
   config = function(_, opts)
-    require('mini.files').setup(opts)
+    local minifiles = require('mini.files')
+    minifiles.setup(opts)
 
+    -- Create mapping to show/hide dot-files(from :help mini.files)
     local show_dotfiles = true
     local filter_show = function(fs_entry)
       return true
@@ -46,15 +48,41 @@ return {
     local toggle_dotfiles = function()
       show_dotfiles = not show_dotfiles
       local new_filter = show_dotfiles and filter_show or filter_hide
-      require('mini.files').refresh({ content = { filter = new_filter } })
+      minifiles.refresh({ content = { filter = new_filter } })
     end
 
     vim.api.nvim_create_autocmd('User', {
       pattern = 'MiniFilesBufferCreate',
       callback = function(args)
-        local buf_id = args.data.buf_id
         -- Tweak left-hand side of mapping to your liking
-        vim.keymap.set('n', 'g.', toggle_dotfiles, { buffer = buf_id })
+        vim.keymap.set('n', 'g.', toggle_dotfiles, { buffer = args.data.buf_id })
+      end,
+    })
+
+    -- Create mapping to set current working directory
+    local files_set_cwd = function(path)
+      -- Works only if cursor is on the valid file system entry
+      local cur_entry_path = minifiles.get_fs_entry().path
+      local cur_directory = vim.fs.dirname(cur_entry_path)
+      print(cur_directory)
+      vim.fn.chdir(cur_directory)
+    end
+
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'MiniFilesBufferCreate',
+      callback = function(args)
+        vim.keymap.set('n', 'gd', files_set_cwd, { buffer = args.data.buf_id })
+      end,
+    })
+
+    -- Open a file or directory in your preferred application.
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'MiniFilesBufferCreate',
+      callback = function(args)
+        vim.keymap.set('n', 'go', function()
+          local cur_entry_path = minifiles.get_fs_entry().path
+          os.execute('start "" "' .. cur_entry_path .. '"')
+        end, { buffer = args.data.buf_id })
       end,
     })
   end,
