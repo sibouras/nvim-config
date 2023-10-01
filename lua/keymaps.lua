@@ -160,6 +160,9 @@ map('n', '<C-y>', '2<C-y>')
 map('n', "'", '`')
 map('n', '`', "'")
 
+-- like `gi` but stay in normal mode
+map('n', 'mi', "`^")
+
 -- Split line with X
 map('n', 'X', ':keeppatterns substitute/\\s*\\%#\\s*/\\r/e <bar> normal! ==^<cr>')
 

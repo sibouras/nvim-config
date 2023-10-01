@@ -12,7 +12,7 @@ return {
     -- near EoL: from cursor position to end of line, minus one character
     map({ 'o', 'x' }, 'm', "<Cmd>lua require('various-textobjs').nearEoL()<CR>")
     -- like }, but linewise
-    map({ 'o', 'x' }, '<CR>', "<Cmd>lua require('various-textobjs').restOfParagraph()<CR>")
+    map({ 'o', 'x' }, '<BS>', "<Cmd>lua require('various-textobjs').restOfParagraph()<CR>")
     -- rest of indentation
     map({ 'o', 'x' }, 'R', "<Cmd>lua require('various-textobjs').restOfIndentation()<CR>")
     -- from cursor to next closing ], ), or }
@@ -22,7 +22,7 @@ return {
     -- entire buffer
     map({ 'o', 'x' }, 'gG', "<Cmd>lua require('various-textobjs').entireBuffer()<CR>")
     -- url
-    map({ 'o', 'x' }, '<BS>', "<Cmd>lua require('various-textobjs').url()<CR>")
+    map({ 'o', 'x' }, '<CR>', "<Cmd>lua require('various-textobjs').url()<CR>")
 
     -- example: `aS` for outer subword, `iS` for inner subword
     map({ 'o', 'x' }, 'aS', "<Cmd>lua require('various-textobjs').subword(false)<CR>")
