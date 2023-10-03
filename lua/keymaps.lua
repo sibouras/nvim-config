@@ -161,7 +161,7 @@ map('n', "'", '`')
 map('n', '`', "'")
 
 -- like `gi` but stay in normal mode
-map('n', 'mi', "`^")
+map('n', 'mi', '`^')
 
 -- Split line with X
 map('n', 'X', ':keeppatterns substitute/\\s*\\%#\\s*/\\r/e <bar> normal! ==^<cr>')
@@ -341,9 +341,22 @@ map('t', '<C-q>', [[<C-\><C-n>:call ToggleZoom(v:true)<CR>i]])
 map('n', '<leader>fl', ':silent !start %:p:h<CR>')
 
 -- Toggle quickfix window
-map('n', '<leader>q', function()
-  vim.cmd(not vim.g.quickfix_toggled and 'cclose' or 'copen')
-  vim.g.quickfix_toggled = not vim.g.quickfix_toggled
+map('n', '<leader>x', function()
+  local qf_exists = false
+  for _, win in pairs(vim.fn.getwininfo()) do
+    if win['quickfix'] == 1 then
+      qf_exists = true
+    end
+  end
+
+  if qf_exists == true then
+    vim.cmd('cclose')
+    return
+  end
+  -- dont open if quickfix is empty
+  if not vim.tbl_isempty(vim.fn.getqflist()) then
+    vim.cmd('copen')
+  end
 end, { desc = 'toggle quickfix window' })
 
 -- toggle cmp(mapped <C-;> to <M-C-S-F7> in ahk,terminal)
@@ -366,7 +379,7 @@ end
 
 map('n', 'dd', smart_dd, { expr = true })
 
--- Quickly add empty lines
+-- Quickly add empty lines(requires vim-repeat for dot repeat)
 vim.cmd([[
 function! s:BlankUp() abort
   let cmd = 'put!=repeat(nr2char(10), v:count1)|silent '']+'
@@ -514,10 +527,57 @@ map('n', '<leader>lt', ':Telescope treesitter<CR>')
 ---------------------------------------------------------------
 -- => document-color.nvim
 ---------------------------------------------------------------
-map('n', '<leader>tw', "<cmd>lua require('document-color').buf_toggle()<CR>", { desc = 'toggle tailwind colors' })
+-- map('n', '<leader>tw', "<cmd>lua require('document-color').buf_toggle()<CR>", { desc = 'toggle tailwind colors' })
 
 ---------------------------------------------------------------
 -- => ton/vim-bufsurf
 ---------------------------------------------------------------
 -- map("n", "<C-j>", "<Plug>(buf-surf-forward)")
 -- map("n", "<C-k>", "<Plug>(buf-surf-back)")
+
+local fn = vim.fn
+local api = vim.api
+
+-- move around indents
+-- from https://github.com/tj-moody/.dotfiles/blob/c2afec06b68cd0413c20d332672907c11f0a9c47/nvim/lua/mappings.lua#L171C1-L171C1
+-- Adapted from https://vi.stackexchange.com/a/12870
+-- Traverse to indent >= or > current indent
+---@param direction integer 1 - forwards | -1 - backwards
+---@param equal boolean include lines equal to current indent in search?
+local function indent_traverse(direction, equal) -- {{{
+  return function()
+    -- Get the current cursor position
+    local current_line, column = unpack(api.nvim_win_get_cursor(0))
+    local match_line = current_line
+    local match_indent = false
+    local match = false
+    local buf_length = api.nvim_buf_line_count(0)
+
+    -- Look for a line of appropriate indent
+    -- level without going out of the buffer
+    while (not match) and (match_line ~= buf_length) and (match_line ~= 1) do
+      match_line = match_line + direction
+      local match_line_str = api.nvim_buf_get_lines(0, match_line - 1, match_line, false)[1]
+      -- local match_line_is_whitespace = match_line_str and match_line_str:match('^%s*$')
+      local match_line_is_whitespace = match_line_str:match('^%s*$')
+
+      if equal then
+        match_indent = fn.indent(match_line) <= fn.indent(current_line)
+      else
+        match_indent = fn.indent(match_line) < fn.indent(current_line)
+      end
+      match = match_indent and not match_line_is_whitespace
+    end
+
+    -- If a line is found go to line
+    if match or match_line == buf_length then
+      vim.cmd('normal! m`') -- add current position to jumplist with m`
+      fn.cursor({ match_line, column + 1 })
+    end
+  end
+end
+
+map({ 'n', 'x' }, 'gj', indent_traverse(1, true)) -- next equal indent
+map({ 'n', 'x' }, 'gk', indent_traverse(-1, true)) -- previous equal indent
+map({ 'n', 'x' }, 'gJ', indent_traverse(1, false)) -- next bigger indent
+map({ 'n', 'x' }, 'gK', indent_traverse(-1, false)) -- previous bigger indent
