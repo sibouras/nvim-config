@@ -276,7 +276,7 @@ map('v', '<', '<gv')
 map('v', '>', '>gv')
 
 -- remove highlight
-map('n', '<esc>', '<Cmd>noh<CR>', { desc = 'Escape and clear hlsearch' })
+map('n', '<Esc>', '<Cmd>noh<CR>', { desc = 'Escape and clear hlsearch' })
 
 -- %% expands to the path of the directory that contains the current file.
 -- works with with :cd, :grep etc.
@@ -372,30 +372,9 @@ end
 
 map('n', 'dd', smart_dd, { expr = true })
 
--- Quickly add empty lines(requires vim-repeat for dot repeat)
-vim.cmd([[
-function! s:BlankUp() abort
-  let cmd = 'put!=repeat(nr2char(10), v:count1)|silent '']+'
-  if &modifiable
-    let cmd .= '|silent! call repeat#set("\<Plug>(unimpaired-blank-up)", v:count1)'
-  endif
-  return cmd
-endfunction
-
-function! s:BlankDown() abort
-  let cmd = 'put =repeat(nr2char(10), v:count1)|silent ''[-'
-  if &modifiable
-    let cmd .= '|silent! call repeat#set("\<Plug>(unimpaired-blank-down)", v:count1)'
-  endif
-  return cmd
-endfunction
-
-nnoremap <silent> <Plug>(unimpaired-blank-up)   :<C-U>exe <SID>BlankUp()<CR>
-nnoremap <silent> <Plug>(unimpaired-blank-down) :<C-U>exe <SID>BlankDown()<CR>
-]])
-
-map('n', '[<space>', '<Plug>(unimpaired-blank-up)')
-map('n', ']<space>', '<Plug>(unimpaired-blank-down)')
+-- Quickly add empty lines
+map('n', '[<space>', "<Cmd>call append(line('.') - 1, repeat([''], v:count1))<CR>", { desc = 'Put empty line above' })
+map('n', ']<space>', "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR>", { desc = 'Put empty line below' })
 
 -- autoload/functions.vim
 map('v', '<leader>cy', ':call functions#CompleteYank()<CR>')
