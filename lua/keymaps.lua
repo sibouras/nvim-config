@@ -66,13 +66,6 @@ map({ 'n', 'i' }, '<M-w>', function()
   end
 end)
 
--- map("n", "<M-D>", ":%bd <bar> e# <bar> bd#<CR>", { desc = "close all but current buffer" })
-map('n', '<M-.>', ':bnext<CR>')
-map('i', '<M-.>', '<Esc>:bnext<CR>')
-map('n', '<M-,>', ':bprevious<CR>')
-map('i', '<M-,>', '<Esc>:bprevious<CR>')
-map('n', '<C-p>', '<Cmd>wincmd p<CR>')
-
 -- Navigate tabs
 -- Number + , to select a tab, i.e. type 1, to select the first tab.
 for i = 1, 9 do
