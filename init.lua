@@ -17,6 +17,9 @@ vim.g.maplocalleader = ' '
 vim.keymap.set('n', '<Space><Esc>', '<Nop>') -- prevent cursor jumping when escaping bofore which-key pops
 
 require('lazy').setup('plugins', {
+  change_detection = {
+    notify = false,
+  },
   performance = {
     rtp = {
       disabled_plugins = {

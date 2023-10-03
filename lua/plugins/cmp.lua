@@ -26,6 +26,8 @@ return {
       --   throttle = 40,
       -- },
       mapping = cmp.mapping.preset.insert({
+        ['<C-n>'] = cmp.config.disable,
+        ['<C-p>'] = cmp.config.disable,
         ['<Up>'] = cmp.mapping.select_prev_item(),
         ['<Down>'] = cmp.mapping.select_next_item(),
         ['<PageUp>'] = cmp.mapping.scroll_docs(-4),
