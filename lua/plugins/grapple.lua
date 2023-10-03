@@ -16,7 +16,7 @@ return {
       mode = 'n',
     },
     {
-      '<M-j>',
+      '<C-n>',
       function()
         require('grapple').cycle_forward()
       end,
@@ -24,7 +24,7 @@ return {
       desc = 'cycle forwards to marked file',
     },
     {
-      '<M-k>',
+      '<C-p>',
       function()
         require('grapple').cycle_backward()
       end,
