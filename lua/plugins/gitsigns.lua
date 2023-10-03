@@ -10,6 +10,7 @@ return {
       changedelete = { text = '▎' },
       untracked = { text = '▎' },
     },
+    -- base = 'FILE',
     on_attach = function(buffer)
       local gs = package.loaded.gitsigns
 

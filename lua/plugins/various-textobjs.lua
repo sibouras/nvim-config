@@ -1,9 +1,6 @@
 return {
   'chrisgrieser/nvim-various-textobjs',
   lazy = false,
-  opts = {
-    useDefaultKeymaps = false,
-  },
   config = function()
     local map = vim.keymap.set
 
