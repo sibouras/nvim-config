@@ -101,10 +101,10 @@ return {
         swap = {
           enable = true,
           swap_next = {
-            [']r'] = '@parameter.inner',
+            ['<leader>rl'] = '@parameter.inner',
           },
           swap_previous = {
-            ['[r'] = '@parameter.inner',
+            ['<leader>rh'] = '@parameter.inner',
           },
         },
         move = {
@@ -112,7 +112,6 @@ return {
           set_jumps = true, -- whether to set jumps in the jumplist
           goto_next_start = {
             [']f'] = '@function.outer',
-            [']c'] = '@comment.outer',
             [']a'] = '@parameter.inner',
             [']e'] = '@call.outer',
             [']b'] = '@block.outer',
@@ -120,14 +119,12 @@ return {
           },
           goto_next_end = {
             [']F'] = '@function.outer',
-            [']C'] = '@comment.outer',
             [']A'] = '@parameter.inner',
             [']E'] = '@call.outer',
             [']B'] = '@block.outer',
           },
           goto_previous_start = {
             ['[f'] = '@function.outer',
-            ['[c'] = '@comment.outer',
             ['[a'] = '@parameter.inner',
             ['[e'] = '@call.outer',
             ['[b'] = '@block.inner',
@@ -135,7 +132,6 @@ return {
           },
           goto_previous_end = {
             ['[F'] = '@function.outer',
-            ['[C'] = '@comment.outer',
             ['[A'] = '@parameter.inner',
             ['[E'] = '@call.outer',
             ['[B'] = '@block.outer',
@@ -196,18 +192,49 @@ return {
       -- LSP diagnostics
       local diagnostic_goto_next_repeat, diagnostic_goto_prev_repeat =
         ts_repeat_move.make_repeatable_move_pair(vim.diagnostic.goto_next, vim.diagnostic.goto_prev)
-      map({ 'n', 'x', 'o' }, '[d', diagnostic_goto_prev_repeat)
-      map({ 'n', 'x', 'o' }, ']d', diagnostic_goto_next_repeat)
+      map({ 'n', 'x', 'o' }, '[d', diagnostic_goto_prev_repeat, { desc = 'Diagnostic forward' })
+      map({ 'n', 'x', 'o' }, ']d', diagnostic_goto_next_repeat, { desc = 'Diagnostic forward' })
 
-      local status_ok, gs = pcall(require, 'gitsigns')
-      if not status_ok then
-        return
+      local gitsigns_ok, gitsigns = pcall(require, 'gitsigns')
+      if gitsigns_ok then
+        local next_hunk_repeat, prev_hunk_repeat =
+          ts_repeat_move.make_repeatable_move_pair(gitsigns.next_hunk, gitsigns.prev_hunk)
+        -- Or, use `make_repeatable_move` or `set_last_move` functions for more control. See the code for instructions.
+
+        map({ 'n', 'x', 'o' }, ']g', next_hunk_repeat, { desc = 'Git hunk forward' })
+        map({ 'n', 'x', 'o' }, '[g', prev_hunk_repeat, { desc = 'Git hunk forward' })
       end
-      local next_hunk_repeat, prev_hunk_repeat = ts_repeat_move.make_repeatable_move_pair(gs.next_hunk, gs.prev_hunk)
-      -- Or, use `make_repeatable_move` or `set_last_move` functions for more control. See the code for instructions.
 
-      vim.keymap.set({ 'n', 'x', 'o' }, ']g', next_hunk_repeat)
-      vim.keymap.set({ 'n', 'x', 'o' }, '[g', prev_hunk_repeat)
+      -- override some mini.bracketed keys
+      local bracketed_ok, bracketed = pcall(require, 'mini.bracketed')
+      if bracketed_ok then
+        -- Comment block
+        local next_comment, prev_comment = ts_repeat_move.make_repeatable_move_pair(function()
+          bracketed.comment('forward')
+        end, function()
+          bracketed.comment('backward')
+        end)
+        map({ 'n', 'x', 'o' }, ']c', next_comment, { desc = 'Comment forward' })
+        map({ 'n', 'x', 'o' }, '[c', prev_comment, { desc = 'Comment backward' })
+
+        -- Indent change
+        local next_indent, prev_indent = ts_repeat_move.make_repeatable_move_pair(function()
+          bracketed.indent('forward')
+        end, function()
+          bracketed.indent('backward')
+        end)
+        map({ 'n', 'x', 'o' }, ']i', next_indent, { desc = 'Indent forward' })
+        map({ 'n', 'x', 'o' }, '[i', prev_indent, { desc = 'Indent forward' })
+
+        -- Tree-sitter node and parents
+        local next_treesitter, prev_treesitter = ts_repeat_move.make_repeatable_move_pair(function()
+          bracketed.treesitter('forward')
+        end, function()
+          bracketed.treesitter('backward')
+        end)
+        map({ 'n', 'x', 'o' }, ']t', next_treesitter, { desc = 'Treesitter forward' })
+        map({ 'n', 'x', 'o' }, '[t', prev_treesitter, { desc = 'Treesitter forward' })
+      end
     end,
   },
 }
