@@ -49,6 +49,8 @@ return {
           },
           preview = {
             hide_on_startup = true, -- hide previewer when picker starts
+            filesize_limit = 25, -- The maximum file size in MB attempted to be previewed. Default: 25mb
+            highlight_limit = 1, -- The maximum file size in MB attempted to be highlighted. Default: 1mb
           },
           mappings = {
             i = {

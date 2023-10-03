@@ -39,4 +39,4 @@ require('lazy').setup('plugins', {
 require('keymaps')
 require('options')
 require('autocmds')
-require('lightbulb')
+-- require('lightbulb')
