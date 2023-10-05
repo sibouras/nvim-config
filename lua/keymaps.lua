@@ -180,6 +180,9 @@ vim.cmd([[
   onoremap gl :normal vgl<CR>
 ]])
 
+-- limit the search in the visual selection
+map('x', '<leader>/', '<Esc>/\\%V', { desc = 'limit the search in the visual selection' })
+
 -- use . to repeat a regular c-prefixed command as if it were perforced using cgn.
 map('n', 'g.', '/\\V<C-r>"<CR>cgn<C-a><Esc>', { silent = false })
 -- search for the word under the cursor and perform cgn on it
@@ -254,10 +257,12 @@ map('v', '<leader>p', '"_dP')
 -- change directory to the file being edited and print the directory after changing
 map('n', '<leader>cd', ':cd %:p:h<CR>:pwd<CR>')
 
--- Copy filename to clipboard
--- map("n", "<leader>cs", ":let @*=expand('%')<CR>:echo expand('%')<CR>")
-map('n', '<leader>cs', ":echo expand('%')<CR>")
-map('n', '<leader>cl', ":let @*=expand('%:p')<CR>:echo expand('%:p')<CR>")
+-- print current file name
+map('n', '<leader>cs', [[:echo expand('%') .. "\n"<CR>]])
+-- print alternate file name
+map('n', '<leader>co', [[:echo expand('#') .. "\n"<CR>]])
+-- Copy absolute file name to clipboard
+map('n', '<leader>cl', [[:let @*=expand('%:p')<CR>:echo expand('%:p') .. "\ncopied to clipboard\n"<CR>]])
 -- nnoremap <silent> <leader>yf :call setreg(v:register, expand('%:p'))<CR>
 
 -- paste from ditto
@@ -486,10 +491,11 @@ map('n', '<leader>fv', ':Telescope vim_options<CR>')
 map('n', '<leader>fg', ':Telescope live_grep<CR>')
 map('n', '<leader>fh', ':Telescope highlights<CR>')
 map('n', '<leader>fk', ':Telescope keymaps<CR>')
+map('n', '<leader>fa', ':Telescope autocommands<CR>')
 map('n', '<leader>fc', ':Telescope commands<CR>')
 map('n', '<leader>f;', ':Telescope command_history<CR>')
 map('n', '<leader>f/', ':Telescope search_history<CR>')
-map('n', '<leader>/', ':Telescope current_buffer_fuzzy_find<CR>')
+map('n', '<leader>fb', ':Telescope current_buffer_fuzzy_find<CR>')
 map('n', '<leader>fp', ':Telescope workspaces<CR>')
 map('n', '<leader>lr', ':Telescope lsp_references<CR>')
 map('n', '<leader>ld', ':Telescope diagnostics<CR>')
