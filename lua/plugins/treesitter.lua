@@ -61,8 +61,8 @@ return {
       incremental_selection = {
         enable = true,
         keymaps = {
-          init_selection = 'go', -- set to `false` to disable one of the mappings
-          node_incremental = '<C-o>',
+          init_selection = '<M-C-S-F5>', -- ctrl+space
+          node_incremental = '<C-o>', -- set to `false` to disable one of the mappings
           node_decremental = '<M-C-S-F6>', -- <C-i>
           scope_incremental = '.',
         },
@@ -87,15 +87,25 @@ return {
           lookahead = true,
           keymaps = {
             -- You can use the capture groups defined in textobjects.scm
-            ['af'] = '@function.outer',
-            ['if'] = '@function.inner',
+            ['am'] = '@function.outer',
+            ['im'] = '@function.inner',
             ['ab'] = '@block.outer',
             ['ib'] = '@block.inner',
             ['aa'] = '@parameter.outer',
             ['ia'] = '@parameter.inner',
-            ['ae'] = '@call.outer',
-            ['ie'] = '@call.inner',
+            ['af'] = '@call.outer',
+            ['if'] = '@call.inner',
             ['in'] = '@number.inner',
+
+            ['a='] = '@assignment.outer',
+            ['i='] = '@assignment.inner',
+            ['<Left>'] = '@assignment.lhs',
+            ['<Right>'] = '@assignment.rhs',
+
+            -- from: https://github.com/josean-dev/dev-environment-files/blob/main/.config/nvim/lua/josean/plugins/nvim-treesitter-text-objects.lua
+            -- works for javascript/typescript files (custom capture I created in after/queries/ecma/textobjects.scm)
+            ['a:'] = '@property.outer',
+            ['i:'] = '@property.inner',
           },
         },
         swap = {
@@ -111,29 +121,41 @@ return {
           enable = true,
           set_jumps = true, -- whether to set jumps in the jumplist
           goto_next_start = {
-            [']f'] = '@function.outer',
+            [']m'] = '@function.outer',
+            [']]'] = '@class.outer',
             [']a'] = '@parameter.inner',
-            [']e'] = '@call.outer',
+            [']f'] = '@call.outer',
             [']b'] = '@block.outer',
             [']n'] = '@number.inner',
+
+            -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
+            -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
+            [']s'] = { query = '@scope', query_group = 'locals', desc = 'Next scope' },
+            [']z'] = { query = '@fold', query_group = 'folds', desc = 'Next fold' },
           },
           goto_next_end = {
-            [']F'] = '@function.outer',
+            [']M'] = '@function.outer',
+            [']['] = '@class.outer',
             [']A'] = '@parameter.inner',
-            [']E'] = '@call.outer',
+            [']F'] = '@call.outer',
             [']B'] = '@block.outer',
           },
           goto_previous_start = {
-            ['[f'] = '@function.outer',
+            ['[m'] = '@function.outer',
+            ['[['] = '@class.outer',
             ['[a'] = '@parameter.inner',
-            ['[e'] = '@call.outer',
+            ['[f'] = '@call.outer',
             ['[b'] = '@block.inner',
             ['[n'] = '@number.inner',
+
+            ['[s'] = { query = '@scope', query_group = 'locals', desc = 'Previous scope' },
+            ['[z'] = { query = '@fold', query_group = 'folds', desc = 'Previous fold' },
           },
           goto_previous_end = {
-            ['[F'] = '@function.outer',
+            ['[M'] = '@function.outer',
+            ['[]'] = '@class.outer',
             ['[A'] = '@parameter.inner',
-            ['[E'] = '@call.outer',
+            ['[F'] = '@call.outer',
             ['[B'] = '@block.outer',
           },
           -- Below will go to either the start or the end, whichever is closer.
