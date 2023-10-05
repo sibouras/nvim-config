@@ -57,7 +57,7 @@ return {
       --   navic.attach(client, bufnr)
       -- end
 
-      if client.name == 'lua_ls' or client.name == 'tsserver' or client.name == 'html' then
+      if client.name == 'tsserver' or client.name == 'html' then
         client.server_capabilities.documentFormattingProvider = false
       end
 
@@ -226,20 +226,35 @@ return {
           on_attach = on_attach,
           capabilities = capabilities,
           single_file_support = false,
+          on_init = function(client)
+            local path = client.workspace_folders[1].name
+            if not vim.uv.fs_stat(path .. '/.luarc.json') and not vim.uv.fs_stat(path .. '/.luarc.jsonc') then
+              client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
+                Lua = {
+                  -- Tell the language server which version of Lua you're using
+                  -- (most likely LuaJIT in the case of Neovim)
+                  runtime = { version = 'LuaJIT' },
+                  -- Make the server aware of Neovim runtime files
+                  workspace = {
+                    checkThirdParty = false,
+                    library = {
+                      vim.env.VIMRUNTIME,
+                      -- '${3rd}/luv/library',
+                    },
+                  },
+                },
+              })
+              client.notify(
+                vim.lsp.protocol.Methods.workspace_didChangeConfiguration,
+                { settings = client.config.settings }
+              )
+            end
+            return true
+          end,
           settings = {
             Lua = {
-              runtime = {
-                version = 'LuaJIT',
-              },
-              diagnostics = {
-                globals = { 'vim' },
-              },
-              workspace = {
-                library = {
-                  [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-                  [vim.fn.stdpath('config') .. '/lua'] = true,
-                },
-              },
+              format = { enable = false },
+              diagnostics = { globals = { 'vim' } },
               telemetry = {
                 enable = false,
               },
