@@ -138,16 +138,6 @@ vim.api.nvim_create_autocmd('WinEnter', {
   command = 'startinsert',
 })
 
-vim.api.nvim_create_autocmd('FileType', {
-  desc = 'cursorline in grapple',
-  group = augroup('grapple'),
-  pattern = 'grapple',
-  callback = function()
-    vim.opt_local.cursorline = true
-    vim.keymap.set('n', '<M-e>', '<Cmd>close<CR>', { buffer = true })
-  end,
-})
-
 vim.api.nvim_create_autocmd('SessionLoadPost', {
   desc = 'change tab title to directory name when loading session',
   group = augroup('change_title'),

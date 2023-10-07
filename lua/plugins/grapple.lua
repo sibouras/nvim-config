@@ -46,5 +46,20 @@ return {
     end
 
     require('close-unused-buffers')
+
+    vim.api.nvim_create_autocmd('FileType', {
+      desc = 'set cursorline and move the cursor to the current file',
+      group = vim.api.nvim_create_augroup('MyGroup_grapple', { clear = true }),
+      pattern = 'grapple',
+      callback = function()
+        local path = string.gsub(vim.fn.expand('#'), '/', '\\\\')
+        vim.schedule(function()
+          -- doesn't work outside of vim.schedule
+          vim.fn.search('.*' .. path)
+        end)
+        vim.opt_local.cursorline = true
+        vim.keymap.set('n', '<M-e>', '<Cmd>close<CR>', { buffer = true })
+      end,
+    })
   end,
 }
