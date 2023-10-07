@@ -19,15 +19,25 @@ return {
     local map = vim.keymap.set
     map('n', '<leader>dg', vim.diagnostic.open_float, opts)
     map('n', '<leader>dq', vim.diagnostic.setloclist, opts)
-    map('n', '<M-F>', function()
-      vim.lsp.buf.format({ async = true })
-    end, opts)
-    map('v', '<M-F>', function()
-      vim.lsp.buf.format({ async = true, range = true })
-    end)
     map('n', '<leader>li', '<Cmd>LspInfo<CR>')
     map('n', '<leader>lm', '<Cmd>Mason<CR>')
     map('n', '<leader>ln', '<Cmd>NullLsInfo<CR>')
+
+    -- restore terminal tab title after formatting
+    local function restoreTitle()
+      local title = vim.uv.get_process_title()
+      require('utils').setTimeout(500, function()
+        vim.uv.set_process_title(title)
+      end)
+    end
+    map('n', '<M-F>', function()
+      vim.lsp.buf.format({ async = true })
+      restoreTitle()
+    end)
+    map('v', '<M-F>', function()
+      vim.lsp.buf.format({ async = true, range = true })
+      restoreTitle()
+    end)
 
     -- toggle LSP diagnostics
     vim.g.diagnostics_active = true
