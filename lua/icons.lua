@@ -50,6 +50,7 @@ M.symbol_kinds = {
 M.misc = {
   search = '',
   vertical_bar = '│',
+  dots = '󰇘',
 }
 
 return M

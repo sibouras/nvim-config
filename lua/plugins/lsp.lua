@@ -5,9 +5,9 @@ return {
   event = { 'BufReadPre', 'BufNewFile' },
   dependencies = {
     -- Automatically install LSPs to stdpath for neovim
-    { 'williamboman/mason.nvim', config = true },
+    'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
-    { 'b0o/SchemaStore.nvim' },
+    'b0o/SchemaStore.nvim',
 
     -- Useful status updates for LSP
     -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
@@ -265,9 +265,7 @@ return {
             Lua = {
               format = { enable = false },
               diagnostics = { globals = { 'vim' } },
-              telemetry = {
-                enable = false,
-              },
+              telemetry = { enable = false },
             },
           },
         })
