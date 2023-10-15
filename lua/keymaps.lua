@@ -27,8 +27,23 @@ map('n', '<M-F4>', ':qa!<CR>')
 -- new line
 map('i', '<C-CR>', '<C-o>o')
 
+-- search for word under cursor without moving
 map('n', 'gw', '*N')
 map('x', 'gw', [[y/\V<C-R>"<CR>N]])
+
+-- Move Lines
+map('n', '<M-Down>', '<cmd>m .+1<cr>==', { desc = 'Move down' })
+map('n', '<M-Up>', '<cmd>m .-2<cr>==', { desc = 'Move up' })
+map('i', '<M-Down>', '<esc><cmd>m .+1<cr>==gi', { desc = 'Move down' })
+map('i', '<M-Up>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move up' })
+map('v', '<M-Down>', ":m '>+1<cr>gv=gv", { desc = 'Move down' })
+map('v', '<M-Up>', ":m '<-2<cr>gv=gv", { desc = 'Move up' })
+
+-- Resize window using <ctrl> arrow keys
+map('n', '<C-Up>', '<cmd>resize +2<cr>', { desc = 'Increase window height' })
+map('n', '<C-Down>', '<cmd>resize -2<cr>', { desc = 'Decrease window height' })
+map('n', '<C-Left>', '<cmd>vertical resize -2<cr>', { desc = 'Decrease window width' })
+map('n', '<C-Right>', '<cmd>vertical resize +2<cr>', { desc = 'Increase window width' })
 
 --> Navigate buffers
 -- NOTE: b# doesn't work with jumpoption=view
@@ -559,3 +574,11 @@ map({ 'n', 'x' }, 'gj', indent_traverse(1, true)) -- next equal indent
 map({ 'n', 'x' }, 'gk', indent_traverse(-1, true)) -- previous equal indent
 map({ 'n', 'x' }, 'gJ', indent_traverse(1, false)) -- next bigger indent
 map({ 'n', 'x' }, 'gK', indent_traverse(-1, false)) -- previous bigger indent
+
+-- For moving quickly up and down,
+-- Goes to the first line above/below that isn't whitespace
+-- Thanks to: http://vi.stackexchange.com/a/213
+vim.cmd([[
+  nnoremap <silent> <leader>j :let _=&lazyredraw<CR>:set lazyredraw<CR>/\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>:let &lazyredraw=_<CR>
+  nnoremap <silent> <leader>k :let _=&lazyredraw<CR>:set lazyredraw<CR>?\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>:let &lazyredraw=_<CR>
+]])
