@@ -46,7 +46,9 @@ return {
     ls.filetype_extend('typescriptreact', { 'javascript' })
 
     ls.config.set_config({
-      history = true,
+      keep_roots = true,
+      link_roots = true,
+      link_children = false,
       update_events = 'TextChanged,TextChangedI',
       -- region_check_events = "CursorMoved,CursorHold,InsertEnter",
       -- delete_check_events = "InsertLeave",
@@ -77,32 +79,31 @@ return {
       },
     })
 
-    -- vim.keymap.set("n", "<leader>s", ":source $LOCALAPPDATA/nvim/lua/user/luasnip.lua<CR>")
-
+    -- TODO(2023-10-05): test and see if its fixed by https://github.com/L3MON4D3/LuaSnip/pull/941
     -- forget the current snippet when leaving the insert mode
     -- https://github.com/L3MON4D3/LuaSnip/issues/747#issuecomment-1406946217
-    vim.api.nvim_create_autocmd('CursorMovedI', {
-      pattern = '*',
-      callback = function(ev)
-        if not ls.session or not ls.session.current_nodes[ev.buf] or ls.session.jump_active then
-          return
-        end
-
-        local current_node = ls.session.current_nodes[ev.buf]
-        local current_start, current_end = current_node:get_buf_position()
-        current_start[1] = current_start[1] + 1 -- (1, 0) indexed
-        current_end[1] = current_end[1] + 1 -- (1, 0) indexed
-        local cursor = vim.api.nvim_win_get_cursor(0)
-
-        if
-          cursor[1] < current_start[1]
-          or cursor[1] > current_end[1]
-          or cursor[2] < current_start[2]
-          or cursor[2] > current_end[2]
-        then
-          ls.unlink_current()
-        end
-      end,
-    })
+    -- vim.api.nvim_create_autocmd('CursorMovedI', {
+    --   pattern = '*',
+    --   callback = function(ev)
+    --     if not ls.session or not ls.session.current_nodes[ev.buf] or ls.session.jump_active then
+    --       return
+    --     end
+    --
+    --     local current_node = ls.session.current_nodes[ev.buf]
+    --     local current_start, current_end = current_node:get_buf_position()
+    --     current_start[1] = current_start[1] + 1 -- (1, 0) indexed
+    --     current_end[1] = current_end[1] + 1 -- (1, 0) indexed
+    --     local cursor = vim.api.nvim_win_get_cursor(0)
+    --
+    --     if
+    --       cursor[1] < current_start[1]
+    --       or cursor[1] > current_end[1]
+    --       or cursor[2] < current_start[2]
+    --       or cursor[2] > current_end[2]
+    --     then
+    --       ls.unlink_current()
+    --     end
+    --   end,
+    -- })
   end,
 }
