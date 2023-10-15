@@ -4,6 +4,7 @@ return {
     -- build = ":TSUpdate",
     -- event = "BufEnter",
     event = { 'BufReadPost', 'BufNewFile' },
+    cmd = { 'TSUpdateSync', 'TSUpdate', 'TSInstall', 'TSInstallInfo' },
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
       'windwp/nvim-ts-autotag',
@@ -180,10 +181,6 @@ return {
     },
     config = function(_, opts)
       require('nvim-treesitter.configs').setup(opts)
-
-      -- folding(slow for large files)
-      -- vim.wo.foldmethod = "expr"
-      -- vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
 
       local ts_repeat_move = require('nvim-treesitter.textobjects.repeatable_move')
       local map = vim.keymap.set

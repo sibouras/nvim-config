@@ -17,8 +17,12 @@ vim.g.maplocalleader = ' '
 vim.keymap.set('n', '<Space><Esc>', '<Nop>') -- prevent cursor jumping when escaping bofore which-key pops
 
 require('lazy').setup('plugins', {
-  change_detection = {
-    notify = false,
+  -- version = false, -- always use the latest git commit
+  change_detection = { notify = false },
+  -- checker = { enabled = true }, -- automatically check for plugin updates
+  concurrency = jit.os:find('Windows') and 8 or nil,
+  git = {
+    log = { '--since=3 days ago' }, -- show commits from the last 3 days
   },
   performance = {
     rtp = {
