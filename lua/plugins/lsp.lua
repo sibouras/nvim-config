@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-field
 return {
   -- LSP Configuration & Plugins
   'neovim/nvim-lspconfig',
@@ -32,11 +33,15 @@ return {
     end
     map('n', '<M-F>', function()
       vim.lsp.buf.format({ async = true })
-      restoreTitle()
+      if vim.fn.has('nvim-0.10') == 1 then
+        restoreTitle()
+      end
     end)
     map('v', '<M-F>', function()
       vim.lsp.buf.format({ async = true, range = true })
-      restoreTitle()
+      if vim.fn.has('nvim-0.10') == 1 then
+        restoreTitle()
+      end
     end)
 
     -- toggle LSP diagnostics
@@ -161,6 +166,7 @@ return {
 
     -- disable notifications in vim.lsp.buf.hover
     -- from: https://github.com/neovim/neovim/issues/20457
+    ---@diagnostic disable-next-line: redefined-local
     vim.lsp.handlers['textDocument/hover'] = function(_, result, ctx, config)
       config = config or { border = 'rounded' }
       config.focus_id = ctx.method
@@ -168,6 +174,7 @@ return {
         return
       end
       local markdown_lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
+      ---@diagnostic disable-next-line: deprecated
       markdown_lines = vim.lsp.util.trim_empty_lines(markdown_lines)
       if vim.tbl_isempty(markdown_lines) then
         return
@@ -251,6 +258,7 @@ return {
                       vim.env.VIMRUNTIME,
                       -- '${3rd}/luv/library',
                     },
+                    -- maxPreload = 0, -- lua_ls is preloading files with diagnotic errors and adding them to oldfiles
                   },
                 },
               })
@@ -310,7 +318,7 @@ return {
 
       ['unocss'] = function()
         lspconfig.unocss.setup({
-          on_attach = function(client, bufnr)
+          on_attach = function(client)
             client.server_capabilities.completionProvider.triggerCharacters = { '-' }
           end,
           capabilities = capabilities,
@@ -319,11 +327,11 @@ return {
 
       ['tailwindcss'] = function()
         lspconfig.tailwindcss.setup({
-          on_attach = function(client, bufnr)
-            if client.server_capabilities.colorProvider then
-              -- require("user.lsp.utils.documentcolors").buf_attach(bufnr)
-              -- require('document-color').buf_attach(bufnr)
-            end
+          on_attach = function(client)
+            -- if client.server_capabilities.colorProvider then
+            -- require("user.lsp.utils.documentcolors").buf_attach(bufnr)
+            -- require('document-color').buf_attach(bufnr)
+            -- end
             -- client.server_capabilities.hoverProvider = false
             -- client.server_capabilities.completionProvider = false
             client.server_capabilities.completionProvider.triggerCharacters = {
@@ -365,7 +373,7 @@ return {
 
       ['emmet_ls'] = function()
         lspconfig.emmet_ls.setup({
-          on_attach = function(client, bufnr)
+          on_attach = function(client)
             client.server_capabilities.completionProvider.triggerCharacters = { '.', '>', '*', '+' }
           end,
           capabilities = capabilities,

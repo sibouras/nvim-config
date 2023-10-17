@@ -1,3 +1,4 @@
+---@diagnostic disable: unused-local
 return {
   'rebelot/heirline.nvim',
   event = 'VeryLazy',
@@ -40,6 +41,7 @@ return {
       -- and the highlight functions, so we compute it only once per component
       -- evaluation and store it as a component attribute
       init = function(self)
+        ---@diagnostic disable-next-line: redundant-parameter
         self.mode = vim.fn.mode(1) -- :h mode()
 
         -- execute this only once, this is required if you want the ViMode
@@ -126,9 +128,7 @@ return {
       -- Re-evaluate the component only on ModeChanged event!
       -- This is not required in any way, but it's there, and it's a small
       -- performance improvement.
-      update = {
-        'ModeChanged',
-      },
+      update = { 'ModeChanged' },
     }
 
     --> Crash course part 2: FileName and friends
@@ -211,7 +211,7 @@ return {
       FileNameBlock,
       FileIcon,
       utils.insert(FileNameModifer, FileName), -- a new table where FileName is a child of FileNameModifier
-      unpack(FileFlags) -- A small optimisation, since their parent does nothing
+      FileFlags
     )
 
     --> FileType, FileEncoding and FileFormat
@@ -318,6 +318,7 @@ return {
         -- return " [" .. table.concat(names, " ") .. "]"
         local expand_null_ls = true
         local buf_client_names = {}
+        ---@diagnostic disable-next-line: deprecated
         for _, client in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
           if client.name == 'null-ls' and expand_null_ls then
             local null_ls_sources = {}
@@ -375,9 +376,10 @@ return {
         end
       end,
       hl = function()
-        local buf = vim.api.nvim_get_current_buf()
-        local highlighter = require('vim.treesitter.highlighter')
-        local fg = highlighter.active[buf] and 'green' or 'red'
+        -- local buf = vim.api.nvim_get_current_buf()
+        -- local highlighter = require('vim.treesitter.highlighter')
+        -- local fg = highlighter.active[buf] and 'green' or 'red'
+        local fg = vim.b.ts_highlight and 'green' or 'red'
         return { fg = fg, bold = false }
       end,
       provider = function()

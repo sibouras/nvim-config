@@ -79,6 +79,7 @@ return {
             luasnip.jump(1)
             -- elseif luasnip.expand_or_locally_jumpable(select_opts) then
             --   luasnip.expand_or_jump()
+            ---@diagnostic disable-next-line: param-type-mismatch
           elseif col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
             fallback()
           else
@@ -155,7 +156,7 @@ return {
       --   end
       -- end,
       enabled = function()
-        local buftype = vim.api.nvim_buf_get_option(0, 'buftype')
+        local buftype = vim.api.nvim_get_option_value('buftype', {})
         if buftype == 'prompt' then
           return false
         end
