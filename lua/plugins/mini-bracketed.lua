@@ -7,7 +7,7 @@ return {
     oldfile = { suffix = 'o', options = { wrap = false } },
     conflict = { suffix = 'x', options = {} },
     location = { suffix = 'l', options = {} },
-    yank = { suffix = 'y', options = {} },
+    yank = { suffix = '', options = {} },
     window = { suffix = 'w', options = {} },
     -- using these with Repeat movement with ; and ,
     comment = { suffix = 'c', options = { add_to_jumplist = true } },
