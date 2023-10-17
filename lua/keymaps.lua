@@ -117,7 +117,7 @@ map('c', '<C-BS>', '<C-w>', { silent = false })
 map('i', '<C-z>', '<C-o>:u<CR>')
 
 -- undo break points
-local undo_ch = { ',', '.', '!', '?', ';' }
+local undo_ch = { ',', '!', '?', ';' }
 for _, ch in ipairs(undo_ch) do
   map('i', ch, ch .. '<C-g>u')
 end
@@ -250,9 +250,17 @@ map('n', ']q', ':cnext<CR>')
 map({ 'n', 'v' }, '<M-y>', '"+y')
 map('n', '<M-Y>', '"+y$')
 map({ 'n', 'v' }, '<M-p>', '"+p')
-map('i', '<M-p>', '<C-r><C-o>+', { desc = 'Inserts text literally, not as if you typed it' })
+map('i', '<M-p>', '<C-r><C-o>+', { desc = "Insert the contents of a register literally and don't auto-indent" })
 map('c', '<M-p>', '<C-r>+', { silent = false })
 map({ 'n', 'v' }, '<M-S-p>', '"+P')
+
+-- paste from ditto
+map('n', '<S-Insert>', '"+p')
+map('v', '<S-Insert>', '"+p')
+map('i', '<S-Insert>', '<C-r>+')
+
+-- reselect pasted or yanked text
+map('n', 'gp', '`[v`]', { desc = 'reselect pasted or yanked text' })
 
 -- Copies last yank/cut to clipboard register
 map('n', '<leader>cp', ':let @*=@"<CR>')
@@ -279,14 +287,6 @@ map('n', '<leader>co', [[:echo expand('#') .. "\n"<CR>]])
 -- Copy absolute file name to clipboard
 map('n', '<leader>cl', [[:let @*=expand('%:p')<CR>:echo expand('%:p') .. "\ncopied to clipboard\n"<CR>]])
 -- nnoremap <silent> <leader>yf :call setreg(v:register, expand('%:p'))<CR>
-
--- paste from ditto
-map('n', '<S-Insert>', '"+p')
-map('v', '<S-Insert>', '"+p')
-map('i', '<S-Insert>', '<C-r>+')
-
--- reselect pasted text
--- map("n", "sp", "`[v`]")
 
 -- Quickly edit your macros(from vim-galore)
 map('n', '<leader>me', ":<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>")
@@ -404,7 +404,6 @@ map('n', '<leader>hl', ':call functions#GetHighlightGroupUnderCursor()<CR>')
 
 -- essentials.lua functions
 -- map("n", "<F2>", ":lua require('essentials').rename()<CR>")
-map('n', 'g<CR>', ":lua require('essentials').open_in_browser()<CR>")
 map('n', 'g/', ":lua require('essentials').toggle_comment()<CR>")
 map('v', 'g/', ":lua require('essentials').toggle_comment(true)<CR>")
 map('n', '<leader>ru', ":lua require('essentials').run_file()<CR>")
@@ -486,13 +485,6 @@ end, { desc = 'Telescope recent files extesion' })
 -- map('n', '<leader>fm', function()
 --   require('telescope').extensions.macroscope.default({ initial_mode = 'normal' })
 -- end)
-map('n', '<leader>o', ':Telescope find_files<CR>')
-map('n', '<leader>b', ':Telescope buffers<CR>')
-map('n', '<leader>fs', ':Telescope git_files<CR>')
-map('n', '<leader>fi', ':Telescope git_status<CR>')
-map('n', '<leader>fe', ':Telescope resume<CR>')
-map('n', '<leader>fr', ':Telescope registers<CR>')
-map('n', '<leader>fm', ':Telescope marks<CR>')
 -- improve oldfiles sorting
 -- https://github.com/nvim-telescope/telescope.nvim/issues/2539
 map('n', '<leader>fo', function()
@@ -502,6 +494,15 @@ map('n', '<leader>fo', function()
     end,
   })
 end, { desc = 'Telescope oldfiles' })
+map('n', '<leader>fu', ':Telescope undo<CR>') -- telescope-undo.nvim
+map('n', '<leader>fs', ':Telescope find_files<CR>')
+map('n', '<leader>b', ':Telescope buffers<CR>')
+map('n', '<leader>fn', ':Telescope git_files<CR>')
+map('n', '<leader>fi', ':Telescope git_status<CR>')
+map('n', '<leader>fe', ':Telescope resume<CR>')
+map('n', '<leader>fr', ':Telescope registers<CR>')
+map('n', '<leader>fm', ':Telescope marks<CR>')
+map('n', '<leader>fj', ':Telescope jumplist<CR>')
 map('n', '<leader>fv', ':Telescope vim_options<CR>')
 map('n', '<leader>fg', ':Telescope live_grep<CR>')
 map('n', '<leader>fh', ':Telescope highlights<CR>')
@@ -514,8 +515,8 @@ map('n', '<leader>fb', ':Telescope current_buffer_fuzzy_find<CR>')
 map('n', '<leader>fp', ':Telescope workspaces<CR>')
 map('n', '<leader>lr', ':Telescope lsp_references<CR>')
 map('n', '<leader>ld', ':Telescope diagnostics<CR>')
-map('n', '<leader>ls', ':Telescope lsp_document_symbols<CR>')
-map('n', '<leader>lt', ':Telescope treesitter<CR>')
+map('n', '<leader>ft', ':Telescope treesitter previewer=true<CR>')
+map('n', '<leader>ls', ':Telescope lsp_document_symbols previewer=true<CR>')
 
 ---------------------------------------------------------------
 -- => document-color.nvim
