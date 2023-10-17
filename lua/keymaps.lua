@@ -260,7 +260,7 @@ map('v', '<S-Insert>', '"+p')
 map('i', '<S-Insert>', '<C-r>+')
 
 -- reselect pasted or yanked text
-map('n', 'gp', '`[v`]', { desc = 'reselect pasted or yanked text' })
+map('n', 'gy', '`[v`]', { desc = 'reselect pasted or yanked text' })
 
 -- Copies last yank/cut to clipboard register
 map('n', '<leader>cp', ':let @*=@"<CR>')

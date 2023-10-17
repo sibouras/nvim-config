@@ -4,7 +4,6 @@
 
 return {
   { 'dstein64/vim-startuptime', cmd = 'StartupTime', enabled = true },
-  'svban/YankAssassin.vim',
   'Sangdol/mintabline.vim',
   { 'utilyre/sentiment.nvim', event = 'VeryLazy', opts = {} },
 }
