@@ -38,7 +38,6 @@ local options = {
   linebreak = true,
   scrolloff = 4,
   sidescrolloff = 10,
-  foldlevelstart = 99,
   keywordprg = ':help', -- default is :Man(crashes on windows)
   grepprg = 'rg --vimgrep --smart-case', -- Replacing grep with rg
   grepformat = '%f:%l:%c:%m',
@@ -70,12 +69,31 @@ vim.opt.wildignore = {
   '**/.git/**',
 }
 
+vim.opt.fillchars = {
+  foldopen = '',
+  foldclose = '',
+  -- fold = "⸱",
+  fold = ' ',
+  foldsep = ' ',
+  diff = '╱',
+  eob = ' ',
+}
+
 -- prettier folding
 function _G.MyFoldText()
   return vim.fn.getline(vim.v.foldstart) .. ' ... ' .. vim.fn.getline(vim.v.foldend):gsub('^%s*', '')
 end
-vim.opt.foldtext = 'v:lua.MyFoldText()'
-vim.opt.fillchars:append({ fold = ' ' })
+
+vim.opt.foldlevelstart = 99
+-- folding with treesitter(slow for large files)
+-- vim.opt.foldmethod = 'expr'
+-- vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+
+-- vim.opt.foldtext = 'v:lua.vim.treesitter.foldtext()'
+-- vim.opt.foldtext = 'v:lua.MyFoldText()'
+vim.opt.foldtext = require('utils.foldtext')
+
+vim.opt.statuscolumn = [[%!v:lua.require'utils.ui'.statuscolumn()]]
 
 if vim.g.nvy then
   vim.cmd('cd $home')
