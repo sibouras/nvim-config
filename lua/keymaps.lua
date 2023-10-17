@@ -583,3 +583,14 @@ vim.cmd([[
   nnoremap <silent> <leader>j :let _=&lazyredraw<CR>:set lazyredraw<CR>/\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>:let &lazyredraw=_<CR>
   nnoremap <silent> <leader>k :let _=&lazyredraw<CR>:set lazyredraw<CR>?\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>:let &lazyredraw=_<CR>
 ]])
+
+map('n', '<leader>ut', function()
+  -- HACK: in heirline OptionSet `syntax` doesn't trigger so i set any other option like `emoji`
+  vim.opt.emoji = true
+  if vim.b.ts_highlight then
+    vim.treesitter.stop()
+  else
+    vim.treesitter.start()
+    vim.opt.emoji = true
+  end
+end, { desc = 'Toggle Treesitter Highlight' })
