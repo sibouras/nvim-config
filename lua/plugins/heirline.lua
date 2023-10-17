@@ -364,7 +364,8 @@ return {
     }
 
     local TSHl = {
-      update = { 'OptionSet', pattern = 'syntax' },
+      -- HACK: OptionSet `syntax` doesn't trigger so i set `emoji`
+      update = { 'OptionSet', pattern = 'emoji' },
       init = function(self)
         if not rawget(self, 'once') then
           vim.api.nvim_create_autocmd('BufWinEnter', {
