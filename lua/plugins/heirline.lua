@@ -348,7 +348,6 @@ return {
     --> Treesitter
 
     local TreesitterActive = {
-      -- update = { "OptionSet", pattern = "syntax" },
       update = { 'BufWinEnter' },
 
       provider = function()
@@ -364,18 +363,7 @@ return {
     }
 
     local TSHl = {
-      -- HACK: OptionSet `syntax` doesn't trigger so i set `emoji`
-      update = { 'OptionSet', pattern = 'emoji' },
-      init = function(self)
-        if not rawget(self, 'once') then
-          vim.api.nvim_create_autocmd('BufWinEnter', {
-            callback = function()
-              self._win_cache = nil
-            end,
-          })
-          self.once = true
-        end
-      end,
+      update = { 'BufWinEnter', 'syntax' },
       hl = function()
         -- local buf = vim.api.nvim_get_current_buf()
         -- local highlighter = require('vim.treesitter.highlighter')
