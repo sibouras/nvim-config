@@ -27,6 +27,22 @@ map('n', '<M-F4>', ':qa!<CR>')
 -- new line
 map('i', '<C-CR>', '<C-o>o')
 
+-- remove highlight
+map('n', '<Esc>', '<Cmd>noh | stopinsert<CR>', { desc = 'Escape and clear hlsearch/messages' })
+
+-- Clear search, diff update and redraw
+-- taken from runtime/lua/_editor.lua
+map(
+  'n',
+  '<C-c>',
+  '<Cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><CR>',
+  { desc = 'Redraw / clear hlsearch / diff update' }
+)
+
+-- Stay in indent mode
+map('v', '<', '<gv')
+map('v', '>', '>gv')
+
 -- search for word under cursor without moving
 map('n', 'gw', '*N')
 map('x', 'gw', [[y/\V<C-R>"<CR>N]])
@@ -175,7 +191,7 @@ map('n', 'mi', '`^')
 map('n', 'X', ':keeppatterns substitute/\\s*\\%#\\s*/\\r/e <bar> normal! ==^<cr>')
 
 -- Keep the cursor in place while joining lines
-map('n', 'J', 'mzJ`z')
+-- map('n', 'J', 'mzJ`z')
 
 vim.cmd([[
   " line text object
@@ -290,13 +306,6 @@ map('n', '<leader>cl', [[:let @*=expand('%:p')<CR>:echo expand('%:p') .. "\ncopi
 
 -- Quickly edit your macros(from vim-galore)
 map('n', '<leader>me', ":<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>")
-
--- Stay in indent mode
-map('v', '<', '<gv')
-map('v', '>', '>gv')
-
--- remove highlight
-map('n', '<Esc>', '<Cmd>noh<CR>', { desc = 'Escape and clear hlsearch' })
 
 -- %% expands to the path of the directory that contains the current file.
 -- works with with :cd, :grep etc.
