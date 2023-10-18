@@ -27,9 +27,12 @@ return {
     -- restore terminal tab title after formatting
     local function restoreTitle()
       local title = vim.uv.get_process_title()
-      require('utils').setTimeout(500, function()
+      -- require('utils').setTimeout(500, function()
+      --   vim.uv.set_process_title(title)
+      -- end)
+      vim.defer_fn(function()
         vim.uv.set_process_title(title)
-      end)
+      end, 500)
     end
     map('n', '<M-F>', function()
       vim.lsp.buf.format({ async = true })
