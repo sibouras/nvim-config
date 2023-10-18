@@ -412,9 +412,6 @@ map('n', '<leader>hl', ':call functions#GetHighlightGroupUnderCursor()<CR>')
 -- map("n", "gx", ":call functions#open_url_under_cursor()<CR>")
 
 -- essentials.lua functions
--- map("n", "<F2>", ":lua require('essentials').rename()<CR>")
-map('n', 'g/', ":lua require('essentials').toggle_comment()<CR>")
-map('v', 'g/', ":lua require('essentials').toggle_comment(true)<CR>")
 map('n', '<leader>ru', ":lua require('essentials').run_file()<CR>")
 map('n', '<leader>sb', ":lua require('essentials').swap_bool()<CR>")
 map('n', '<leader>sc', ":lua require('essentials').scratch()<CR>", { desc = 'Command to scratch buffer' })
@@ -523,9 +520,16 @@ map('n', '<leader>f/', ':Telescope search_history<CR>')
 map('n', '<leader>fb', ':Telescope current_buffer_fuzzy_find<CR>')
 map('n', '<leader>fp', ':Telescope workspaces<CR>')
 map('n', '<leader>lr', ':Telescope lsp_references<CR>')
+map('n', '<leader>lt', ':Telescope lsp_type_definitions<CR>')
 map('n', '<leader>ld', ':Telescope diagnostics<CR>')
 map('n', '<leader>ft', ':Telescope treesitter previewer=true<CR>')
 map('n', '<leader>ls', ':Telescope lsp_document_symbols previewer=true<CR>')
+map(
+  'n',
+  '<leader>lw',
+  ':Telescope lsp_dynamic_workspace_symbols previewer=true<CR>',
+  { desc = '[W]orkspace [S]ymbols' }
+)
 
 ---------------------------------------------------------------
 -- => document-color.nvim
