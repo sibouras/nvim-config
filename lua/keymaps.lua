@@ -280,8 +280,11 @@ map('n', 'gy', '`[v`]', { desc = 'reselect pasted or yanked text' })
 
 -- Copies last yank/cut to clipboard register
 map('n', '<leader>cp', ':let @*=@"<CR>')
+map('n', '<leader>dp', ':let @*=@"<CR>')
 
 -- Redirect change/delete operations to the blackhole
+-- NOTE: before these mapping map something with <leader>c and <leader>d like
+-- above to prevent it from triggering instantly(fix for mini.clue)
 map('n', '<leader>c', '"_c')
 map('n', '<leader>C', '"_C')
 map('n', '<leader>d', '"_d')
