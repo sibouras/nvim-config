@@ -1,7 +1,7 @@
 return {
   'echasnovski/mini.clue',
   event = 'VeryLazy',
-  enabled = false,
+  enabled = true,
   opts = function()
     local miniclue = require('mini.clue')
 
@@ -48,12 +48,13 @@ return {
       },
       clues = {
         -- Enhance this by adding descriptions for <Leader> mapping groups
+        { mode = 'n', keys = 'zl', postkeys = 'z' },
+        { mode = 'n', keys = 'zh', postkeys = 'z' },
+        miniclue.gen_clues.z(),
         miniclue.gen_clues.builtin_completion(),
         miniclue.gen_clues.g(),
         miniclue.gen_clues.marks(),
         miniclue.gen_clues.registers(),
-        miniclue.gen_clues.windows(),
-        miniclue.gen_clues.z(),
         miniclue.gen_clues.windows({
           submode_move = true,
           submode_navigate = true,
@@ -66,10 +67,8 @@ return {
         config = {
           width = 40,
         },
-
         -- Delay before showing clue window
         delay = 400,
-
         -- Keys to scroll inside the clue window
         scroll_down = '<C-d>',
         scroll_up = '<C-u>',
