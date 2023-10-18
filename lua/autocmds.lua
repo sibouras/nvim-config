@@ -3,13 +3,13 @@ local function augroup(name)
 end
 
 -- Highlight on yank
--- vim.api.nvim_create_autocmd('TextYankPost', {
---   desc = 'Highlight on yank',
---   group = augroup('highlight_yank'),
---   callback = function()
---     vim.highlight.on_yank({ higroup = 'IncSearch', timeout = 200 })
---   end,
--- })
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight on yank',
+  group = augroup('highlight_yank'),
+  callback = function()
+    vim.highlight.on_yank({ higroup = 'IncSearch', timeout = 200 })
+  end,
+})
 
 vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
   desc = 'disable auto-comment on o and O and enter',

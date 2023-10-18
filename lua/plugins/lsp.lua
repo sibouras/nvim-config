@@ -95,12 +95,7 @@ return {
       nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
       -- nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
       nmap('gd', '<cmd>TroubleToggle lsp_definitions<cr>', '[G]oto [D]efinition')
-      -- nmap('gR', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
       nmap('gR', '<cmd>TroubleToggle lsp_references<cr>', '[G]oto [R]eferences')
-      nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-      nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-      nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-      nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
       -- See `:help K` for why this keymap
       nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
