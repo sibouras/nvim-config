@@ -585,8 +585,6 @@ vim.cmd([[
 ]])
 
 map('n', '<leader>ut', function()
-  -- HACK: in heirline OptionSet `syntax` doesn't trigger so i set any other option like `emoji`
-  vim.opt.emoji = true
   if vim.b.ts_highlight then
     vim.treesitter.stop()
   else
