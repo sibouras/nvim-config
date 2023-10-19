@@ -1,1 +1,1 @@
-vim.opt_local.keywordprg = ":Mdn"
+vim.opt_local.keywordprg = ':Mdn'
