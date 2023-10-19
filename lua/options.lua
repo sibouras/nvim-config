@@ -58,6 +58,7 @@ end
 -- vim.opt.iskeyword:append("-")
 vim.opt.whichwrap:append('<,>,[,],h,l') -- let movement keys reach the previous line
 vim.opt.shortmess:append('c') -- don't show the dumb matching stuff
+vim.opt.cpoptions:append('>') -- When appending to a register, put a line break before the appended text.
 -- vim.opt.concealcursor:append("nc")
 -- view: When you jump around, or switch buffers with ctrl-^ the viewport is
 -- restored instead of resetting/recentering vertically.
