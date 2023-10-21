@@ -2,7 +2,7 @@ return {
   'cbochs/grapple.nvim',
   keys = {
     {
-      '<M-e>',
+      '<leader>w',
       function()
         require('grapple').popup_tags()
       end,
@@ -58,7 +58,12 @@ return {
           vim.fn.search('.*' .. path)
         end)
         vim.opt_local.cursorline = true
-        vim.keymap.set('n', '<M-e>', '<Cmd>close<CR>', { buffer = true })
+        -- select a tag with l
+        vim.keymap.set('n', 'l', function()
+          local c = vim.api.nvim_get_current_line()
+          local key = tonumber(c:match('[%d]'))
+          require('grapple').select({ key = key })
+        end, { buffer = true })
       end,
     })
   end,
