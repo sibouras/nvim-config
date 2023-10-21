@@ -129,6 +129,8 @@ map('i', '<M-s>', '<Esc>:silent update<CR>')
 map('i', '<C-BS>', '<C-w>', { noremap = false })
 map('c', '<C-BS>', '<C-w>', { silent = false })
 
+map('i', '<C-Del>', '<C-o>dw')
+
 -- ctrl-z to undo
 map('i', '<C-z>', '<C-o>:u<CR>')
 
@@ -285,9 +287,9 @@ map('n', '<leader>dp', ':let @*=@"<CR>')
 -- Redirect change/delete operations to the blackhole
 -- NOTE: before these mapping map something with <leader>c and <leader>d like
 -- above to prevent it from triggering instantly(fix for mini.clue)
-map('n', '<leader>c', '"_c')
+map({ 'n', 'x' }, '<leader>c', '"_c')
 map('n', '<leader>C', '"_C')
-map('n', '<leader>d', '"_d')
+map({ 'n', 'x' }, '<leader>d', '"_d')
 map('n', '<leader>D', '"_D')
 -- -- x and X won't alter the register
 -- map("n", "x", '"_x')
@@ -514,7 +516,8 @@ map('n', '<leader>fm', ':Telescope marks<CR>')
 map('n', '<leader>fj', ':Telescope jumplist<CR>')
 map('n', '<leader>fv', ':Telescope vim_options<CR>')
 map('n', '<leader>fg', ':Telescope live_grep<CR>')
-map('n', '<leader>fh', ':Telescope highlights<CR>')
+map('n', '<leader>fh', ':Telescope help_tags<CR>')
+map('n', '<leader>fH', ':Telescope highlights<CR>')
 map('n', '<leader>fk', ':Telescope keymaps<CR>')
 map('n', '<leader>fa', ':Telescope autocommands<CR>')
 map('n', '<leader>fc', ':Telescope commands<CR>')
@@ -529,9 +532,9 @@ map('n', '<leader>ft', ':Telescope treesitter previewer=true<CR>')
 map('n', '<leader>ls', ':Telescope lsp_document_symbols previewer=true<CR>')
 map(
   'n',
-  '<leader>lw',
+  '<leader>lww',
   ':Telescope lsp_dynamic_workspace_symbols previewer=true<CR>',
-  { desc = '[W]orkspace [S]ymbols' }
+  { desc = 'LSP: [W]orkspace [S]ymbols' }
 )
 
 ---------------------------------------------------------------

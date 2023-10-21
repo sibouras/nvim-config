@@ -23,7 +23,8 @@ return {
   opts = {
     mappings = {
       show_help = '?',
-      go_in_plus = '<cr>',
+      go_in = ';',
+      go_in_plus = 'l',
       go_out_plus = '<tab>',
     },
     content = {
