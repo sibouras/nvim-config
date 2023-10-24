@@ -90,9 +90,9 @@ vim.opt.foldlevelstart = 99
 -- vim.opt.foldmethod = 'expr'
 -- vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
--- vim.opt.foldtext = 'v:lua.vim.treesitter.foldtext()'
+vim.opt.foldtext = 'v:lua.vim.treesitter.foldtext()'
 -- vim.opt.foldtext = 'v:lua.MyFoldText()'
-vim.opt.foldtext = require('utils.foldtext')
+-- vim.opt.foldtext = require('utils.foldtext')
 
 vim.opt.statuscolumn = [[%!v:lua.require'utils.ui'.statuscolumn()]]
 
