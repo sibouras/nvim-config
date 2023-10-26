@@ -87,8 +87,9 @@ end
 
 vim.opt.foldlevelstart = 99
 -- folding with treesitter(slow for large files)
--- vim.opt.foldmethod = 'expr'
+vim.opt.foldmethod = 'expr'
 -- vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.opt.foldexpr = "v:lua.require'utils.ui'.foldexpr()"
 
 vim.opt.foldtext = 'v:lua.vim.treesitter.foldtext()'
 -- vim.opt.foldtext = 'v:lua.MyFoldText()'
