@@ -216,8 +216,20 @@ return {
 
       local gitsigns_ok, gitsigns = pcall(require, 'gitsigns')
       if gitsigns_ok then
-        local next_hunk_repeat, prev_hunk_repeat =
-          ts_repeat_move.make_repeatable_move_pair(gitsigns.next_hunk, gitsigns.prev_hunk)
+        local next_hunk_repeat, prev_hunk_repeat = ts_repeat_move.make_repeatable_move_pair(function()
+          -- use next_hunk() when gitsigns is available to keep the preview open
+          if vim.wo.diff and vim.b.gitsigns_head == nil then
+            vim.cmd('norm! ]c')
+          else
+            gitsigns.next_hunk()
+          end
+        end, function()
+          if vim.wo.diff and vim.b.gitsigns_head == nil then
+            vim.cmd('norm! [c')
+          else
+            gitsigns.prev_hunk()
+          end
+        end)
         -- Or, use `make_repeatable_move` or `set_last_move` functions for more control. See the code for instructions.
 
         map({ 'n', 'x', 'o' }, ']g', next_hunk_repeat, { desc = 'Git hunk forward' })
