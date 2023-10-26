@@ -214,7 +214,7 @@ vim.cmd([[
 ]])
 
 -- limit the search in the visual selection
-map('x', '<leader>/', '<Esc>/\\%V', { desc = 'limit the search in the visual selection' })
+map('x', '<leader>/', '<Esc>/\\%V', { desc = 'limit the search in the visual selection', silent = false })
 
 -- use . to repeat a regular c-prefixed command as if it were perforced using cgn.
 map('n', 'g.', '/\\V<C-r>"<CR>cgn<C-a><Esc>', { silent = false })
@@ -243,8 +243,8 @@ map('n', '<leader>rw', [[:let @/='\<'.expand('<cword>').'\>'<CR>cgn]])
 -- Append to the end of a word
 map('n', '<leader>sa', [[:let @/='\<'.expand('<cword>').'\>'<CR>cgn<C-r>"]])
 
--- from: https://old.reddit.com/r/neovim/comments/w59a4m/do_you_really_need_multiple_cursors_for_the/ih747rt/
--- Begin a "searchable" macro
+-- Search selection and apply macro
+-- from: https://vonheikemen.github.io/devlog/tools/how-to-survive-without-multiple-cursors-in-vim/
 map('x', 'qi', [[y<cmd>let @/=substitute(escape(@", '/'), '\n', '\\n', 'g')<cr>gvqi]])
 
 -- Apply macro in the next instance of the search
@@ -323,7 +323,7 @@ map('n', '<Bslash>e', ":e <C-R>=expand('%:h') . '\\'<CR>", { silent = false })
 map('v', '<Bslash>c', [[:w !curl -F "f:1=<-" ix.io<CR>]])
 
 -- Append ; at end of line
-map('n', '<leader>;', [[:execute "normal! mqA;\<lt>esc>`q"<enter>]])
+-- map('n', '<leader>;', [[:execute "normal! mqA;\<lt>esc>`q"<enter>]])
 
 -- open window in new tab
 map('n', '<leader>tn', '<C-w>T')
@@ -365,7 +365,7 @@ map('t', '<C-q>', [[<C-\><C-n>:call ToggleZoom(v:true)<CR>i]])
 -- map("n", "<M-l>", "<Cmd>call search('[([{<]')<CR>")
 
 -- open current file in explorer
-map('n', '<leader>fl', ':silent !start %:p:h<CR>')
+map('n', '<leader>ul', ':silent !start %:p:h<CR>', { desc = 'open current file in explorer' })
 
 -- Toggle quickfix window
 map('n', '<leader>x', function()
@@ -412,7 +412,7 @@ map('n', ']<space>', "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR
 
 -- autoload/functions.vim
 map('v', '<leader>cy', ':call functions#CompleteYank()<CR>')
-map('x', '@', ':<C-u>call functions#ExecuteMacroOverVisualRange()<CR>')
+map('x', '@', ':<C-u>call functions#ExecuteMacroOverVisualRange()|stopinsert<CR>')
 map('n', '<leader>hl', ':call functions#GetHighlightGroupUnderCursor()<CR>')
 -- map("n", "gx", ":call functions#open_url_under_cursor()<CR>")
 
