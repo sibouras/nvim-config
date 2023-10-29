@@ -51,9 +51,9 @@ return {
 
     -- turn off highlighting for the buffer but still calculate references for
     -- <M-n> and <M-N>
-    map('n', '<leader>ti', function()
+    map('n', '<leader>ui', function()
       require('illuminate').toggle_visibility_buf()
-    end, { desc = 'toggle illuminate' })
+    end, { desc = 'Toggle Illuminate' })
 
     map({ 'n', 'v' }, '<M-n>', '<cmd>lua require"illuminate".goto_next_reference()<CR>')
     map({ 'n', 'v' }, '<M-N>', '<cmd>lua require"illuminate".goto_prev_reference()<CR>')
