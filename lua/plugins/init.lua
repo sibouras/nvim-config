@@ -5,5 +5,6 @@
 return {
   { 'dstein64/vim-startuptime', cmd = 'StartupTime', enabled = true },
   'Sangdol/mintabline.vim',
+  { 'airblade/vim-matchquote', event = 'VeryLazy' }, -- should be loaded after matchit plugin
   { 'utilyre/sentiment.nvim', event = 'VeryLazy', opts = {} },
 }

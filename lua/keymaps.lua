@@ -281,8 +281,8 @@ map('i', '<S-Insert>', '<C-r>+')
 map('n', 'gy', '`[v`]', { desc = 'reselect pasted or yanked text' })
 
 -- Copies last yank/cut to clipboard register
-map('n', '<leader>cp', ':let @*=@"<CR>')
-map('n', '<leader>dp', ':let @*=@"<CR>')
+map('n', '<leader>cy', ':let @*=@"<CR>', { desc = 'Copy last yank/cut to clipboard' })
+map('n', '<leader>dy', ':let @*=@"<CR>', { desc = 'Copy last yank/cut to clipboard' })
 
 -- Redirect change/delete operations to the blackhole
 -- NOTE: before these mapping map something with <leader>c and <leader>d like
@@ -299,18 +299,25 @@ map('n', '<leader>D', '"_D')
 map('v', '<leader>p', '"_dP')
 
 -- change directory to the file being edited and print the directory after changing
-map('n', '<leader>cd', ':cd %:p:h<CR>:pwd<CR>')
+map('n', '<leader>cd', ':cd %:p:h<CR>:pwd<CR>', { desc = 'change directory to the file being edited' })
 
--- print current file name
-map('n', '<leader>cs', [[:echo expand('%') .. "\n"<CR>]])
--- print alternate file name
-map('n', '<leader>co', [[:echo expand('#') .. "\n"<CR>]])
 -- Copy absolute file name to clipboard
-map('n', '<leader>cl', [[:let @*=expand('%:p')<CR>:echo expand('%:p') .. "\ncopied to clipboard\n"<CR>]])
+map(
+  'n',
+  '<leader>cl',
+  [[:let @*=expand('%:p')<CR>:echo expand('%:p') .. "\ncopied to clipboard\n"<CR>]],
+  { desc = 'Copy absolute file name to clipboard' }
+)
 -- nnoremap <silent> <leader>yf :call setreg(v:register, expand('%:p'))<CR>
 
 -- Quickly edit your macros(from vim-galore)
-map('n', '<leader>me', ":<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>")
+-- Use it like this <leader>m or "q<leader>m.
+map(
+  'n',
+  '<leader>m',
+  ":<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>",
+  { desc = 'Quickly edit macros' }
+)
 
 -- %% expands to the path of the directory that contains the current file.
 -- works with with :cd, :grep etc.
