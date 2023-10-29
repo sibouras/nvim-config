@@ -36,7 +36,7 @@ return {
         -- Registers
         { mode = 'n', keys = '"' },
         { mode = 'x', keys = '"' },
-        { mode = 'i', keys = '<C-r>' },
+        -- { mode = 'i', keys = '<C-r>' }, -- bug with macros
         { mode = 'c', keys = '<C-r>' },
 
         -- Window commands
