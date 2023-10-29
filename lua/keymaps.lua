@@ -6,8 +6,6 @@ local function map(mode, lhs, rhs, opts)
   vim.keymap.set(mode, lhs, rhs, options)
 end
 
-map('n', '<leader>la', '<Cmd>Lazy<CR>')
-
 -- Horizontal scroll
 map({ 'n', 'i', 'v' }, '<S-ScrollWheelUp>', '<ScrollWheelLeft>')
 map({ 'n', 'i', 'v' }, '<S-ScrollWheelDown>', '<ScrollWheelRight>')
@@ -611,11 +609,35 @@ vim.cmd([[
   nnoremap <silent> <leader>k :let _=&lazyredraw<CR>:set lazyredraw<CR>?\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>:let &lazyredraw=_<CR>
 ]])
 
+-- toggle options
+local toggle = require('utils.toggle')
+-- stylua: ignore start
+map('n', '<leader>us', function() toggle('spell') end, { desc = 'Toggle Spelling' })
+map('n', '<leader>uw', function() toggle('wrap') end, { desc = 'Toggle Word Wrap' })
+map('n', '<leader>un', function() toggle('number') end, { desc = 'Toggle Number' })
+map('n', '<leader>ul', function() toggle('relativenumber') end, { desc = 'Toggle Relative Line Numbers' })
+map('n', '<leader>uL', function() toggle.number() end, { desc = 'Toggle Line Numbers' })
+map('n', '<leader>ud', function() toggle.diagnostics() end, { desc = 'Toggle Diagnostics' })
+
+local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 3
+map('n', '<leader>uc', function() toggle('conceallevel', false, { 0, conceallevel }) end, { desc = 'Toggle Conceal' })
+
+if vim.lsp.inlay_hint then
+  map('n', '<leader>uh', function() vim.lsp.inlay_hint(0, nil) end, { desc = 'Toggle Inlay Hints' })
+end
+
 map('n', '<leader>ut', function()
-  if vim.b.ts_highlight then
-    vim.treesitter.stop()
-  else
-    vim.treesitter.start()
-    vim.opt.emoji = true
-  end
+  if vim.b.ts_highlight then vim.treesitter.stop()
+  else vim.treesitter.start() vim.opt.emoji = true end
 end, { desc = 'Toggle Treesitter Highlight' })
+-- stylua: ignore end
+
+map('n', '<leader>ua', '<Cmd>Lazy<CR>', { desc = 'Lazy' })
+map('n', '<leader>uf', vim.show_pos, { desc = 'Inspect Pos' })
+-- print current/alternate file name
+map(
+  'n',
+  '<leader>up',
+  [[:echo "current file: " .. expand('%') .. "\nalternate file: " ..expand('#')<CR>]],
+  { desc = 'Print current file/alternate name' }
+)

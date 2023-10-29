@@ -47,17 +47,6 @@ return {
       end
     end)
 
-    -- toggle LSP diagnostics
-    vim.g.diagnostics_active = true
-    map('n', '<leader>td', function()
-      vim.g.diagnostics_active = not vim.g.diagnostics_active
-      if vim.g.diagnostics_active then
-        vim.diagnostic.enable()
-      else
-        vim.diagnostic.disable()
-      end
-    end, { desc = 'toggle LSP diagnostics' })
-
     -- LSP settings.
     --  This function gets run when an LSP connects to a particular buffer.
     local on_attach = function(client, bufnr)
