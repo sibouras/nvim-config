@@ -92,7 +92,7 @@ return {
       end
 
       nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-      nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+      nmap('<leader>lc', vim.lsp.buf.code_action, '[C]ode [A]ction')
       -- nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
       nmap('gd', '<cmd>TroubleToggle lsp_definitions<cr>', '[G]oto [D]efinition')
       nmap('gR', '<cmd>TroubleToggle lsp_references<cr>', '[G]oto [R]eferences')

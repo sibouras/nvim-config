@@ -82,7 +82,9 @@ map({ 'n', 'i' }, '<M-w>', function()
 
   -- table is empty if buffers are not loaded
   if #buflist == 0 then
-    vim.cmd('keepjumps b#')
+    if #vim.fn.expand('#') > 0 then
+      vim.cmd('keepjumps b#')
+    end
   else
     local switch_bufnr
     local switch_bufnr_lastused = -1
@@ -420,8 +422,6 @@ map('n', ']<space>', "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR
 -- autoload/functions.vim
 map('v', '<leader>cy', ':call functions#CompleteYank()<CR>')
 map('x', '@', ':<C-u>call functions#ExecuteMacroOverVisualRange()|stopinsert<CR>')
-map('n', '<leader>hl', ':call functions#GetHighlightGroupUnderCursor()<CR>')
--- map("n", "gx", ":call functions#open_url_under_cursor()<CR>")
 
 -- essentials.lua functions
 map('n', '<leader>ru', ":lua require('essentials').run_file()<CR>")

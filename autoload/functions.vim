@@ -50,11 +50,6 @@ function! functions#ToggleConcealLevel()
   endif
 endfunction
 
-function! functions#GetHighlightGroupUnderCursor()
-    let id = synID(line('.'), col('.'), 1)
-    echo synIDattr(id, 'name') . '; translated: ' . synIDattr(synIDtrans(id), 'name')
-endfunction
-
 function! functions#DeleteHiddenBuffers()
   let tpbl=[]
   let closed = 0

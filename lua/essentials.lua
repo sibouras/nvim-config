@@ -81,6 +81,7 @@ function M.scratch()
     local buf = vim.api.nvim_create_buf(true, true)
     vim.api.nvim_buf_set_lines(buf, 0, -1, false, output)
     vim.api.nvim_win_set_buf(0, buf)
+    vim.cmd('setlocal filetype=Redir buflisted')
   end)
 end
 
