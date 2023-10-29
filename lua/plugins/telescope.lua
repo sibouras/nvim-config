@@ -5,7 +5,6 @@ return {
     dependencies = {
       'nvim-lua/plenary.nvim',
       'smartpde/telescope-recent-files',
-      'debugloop/telescope-undo.nvim',
       -- Fuzzy Finder Algorithm which requires local dependencies to be built.
       -- Only load if `make` is available.
       {
@@ -144,6 +143,7 @@ return {
             initial_mode = 'normal',
             -- ignore_current_buffer = true,
             sort_mru = true,
+            sort_lastused = true,
             previewer = false,
           },
           resume = {
@@ -197,22 +197,6 @@ return {
             --   return p.normalize(p)
             -- end,
           },
-          undo = {
-            initial_mode = 'normal',
-            use_delta = false, -- slow
-            mappings = {
-              n = {
-                ['<cr>'] = require('telescope-undo.actions').yank_additions,
-                ['<S-cr>'] = require('telescope-undo.actions').yank_deletions,
-                ['<C-cr>'] = require('telescope-undo.actions').restore,
-              },
-            },
-            layout_config = {
-              horizontal = {
-                preview_width = 0.7,
-              },
-            },
-          },
           tailiscope = {
             -- initial_mode = "normal",
             -- theme = "dropdown",
@@ -240,6 +224,8 @@ return {
           },
         },
       })
+
+      require('telescope').load_extension('recent_files')
     end,
   },
 }
