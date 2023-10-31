@@ -122,7 +122,7 @@ vim.cmd([[
 -- map("i", "df", "<ESC>")
 
 -- quick save
-map('n', '<M-s>', ':silent update<CR>')
+map({ 'n', 'x' }, '<M-s>', '<Cmd>silent update<CR>')
 map('i', '<M-s>', '<Esc>:silent update<CR>')
 
 -- Ctrl-Backspace to delete the previous word
@@ -483,13 +483,13 @@ cab mdn Mdn
 -- )
 map('n', '<leader>fd', function()
   require('telescope.builtin').find_files({ cwd = '~/.config/symlinks', prompt_title = 'Dotfiles' })
-end, { desc = 'Find symlinks' })
+end, { desc = 'Telescope Find symlinks' })
 map('n', '<leader>ff', function()
   require('telescope.builtin').find_files({ cwd = vim.fn.expand('%:p:h'), prompt_title = 'From Current Buffer' })
-end, { desc = 'Find files from current buffer' })
+end, { desc = 'Telescope Find files from current buffer' })
 map('n', '<leader>fw', function()
   require('telescope').extensions.recent_files.pick({ initial_mode = 'normal' })
-end, { desc = 'Telescope recent files extesion' })
+end, { desc = 'Telescope recent files' })
 -- telescope neoclip
 -- map('n', '<leader>fn', function()
 --   require('telescope').extensions.neoclip.default(require('telescope.themes').get_dropdown({
@@ -510,32 +510,37 @@ map('n', '<leader>fo', function()
     end,
   })
 end, { desc = 'Telescope oldfiles' })
-map('n', '<leader>fu', ':Telescope undo<CR>') -- telescope-undo.nvim
-map('n', '<leader>fs', ':Telescope find_files<CR>')
-map('n', '<leader>b', ':Telescope buffers<CR>')
-map('n', '<leader>fn', ':Telescope git_files<CR>')
-map('n', '<leader>fi', ':Telescope git_status<CR>')
-map('n', '<leader>fe', ':Telescope resume<CR>')
-map('n', '<leader>fr', ':Telescope registers<CR>')
-map('n', '<leader>fq', ':Telescope quickfix<CR>')
-map('n', '<leader>fm', ':Telescope marks<CR>')
-map('n', '<leader>fj', ':Telescope jumplist<CR>')
-map('n', '<leader>fv', ':Telescope vim_options<CR>')
-map('n', '<leader>fg', ':Telescope live_grep<CR>')
-map('n', '<leader>fh', ':Telescope help_tags<CR>')
-map('n', '<leader>fH', ':Telescope highlights<CR>')
-map('n', '<leader>fk', ':Telescope keymaps<CR>')
-map('n', '<leader>fa', ':Telescope autocommands<CR>')
-map('n', '<leader>fc', ':Telescope commands<CR>')
-map('n', '<leader>f;', ':Telescope command_history<CR>')
-map('n', '<leader>f/', ':Telescope search_history<CR>')
-map('n', '<leader>fb', ':Telescope current_buffer_fuzzy_find<CR>')
-map('n', '<leader>fp', ':Telescope workspaces<CR>')
-map('n', '<leader>lr', ':Telescope lsp_references<CR>')
-map('n', '<leader>lt', ':Telescope lsp_type_definitions<CR>')
-map('n', '<leader>ld', ':Telescope diagnostics<CR>')
-map('n', '<leader>ft', ':Telescope treesitter previewer=true<CR>')
-map('n', '<leader>ls', ':Telescope lsp_document_symbols previewer=true<CR>')
+map('n', '<leader>fu', ':Telescope undo<CR>', { desc = 'Telescope undo' }) -- telescope-undo.nvim
+map('n', '<leader>fs', ':Telescope find_files<CR>', { desc = 'Telescope find_files' })
+map('n', '<leader>b', ':Telescope buffers<CR>', { desc = 'Telescope buffers' })
+map('n', '<leader>fn', ':Telescope git_files<CR>', { desc = 'Telescope git_files' })
+map('n', '<leader>fi', ':Telescope git_status<CR>', { desc = 'Telescope git_status' })
+map('n', '<leader>fe', ':Telescope resume<CR>', { desc = 'Telescope resume' })
+map('n', '<leader>fr', ':Telescope registers<CR>', { desc = 'Telescope registers' })
+map('n', '<leader>fq', ':Telescope quickfix<CR>', { desc = 'Telescope quickfix' })
+map('n', '<leader>fm', ':Telescope marks<CR>', { desc = 'Telescope marks' })
+map('n', '<leader>fj', ':Telescope jumplist<CR>', { desc = 'Telescope jumplist' })
+map('n', '<leader>fv', ':Telescope vim_options<CR>', { desc = 'Telescope vim_options' })
+map('n', '<leader>fg', ':Telescope live_grep<CR>', { desc = 'Telescope live_grep' })
+map('n', '<leader>fh', ':Telescope help_tags<CR>', { desc = 'Telescope help_tags' })
+map('n', '<leader>fH', ':Telescope highlights<CR>', { desc = 'Telescope highlights' })
+map('n', '<leader>fk', ':Telescope keymaps<CR>', { desc = 'Telescope keymaps' })
+map('n', '<leader>fa', ':Telescope autocommands<CR>', { desc = 'Telescope autocommands' })
+map('n', '<leader>fc', ':Telescope commands<CR>', { desc = 'Telescope commands' })
+map('n', '<leader>f;', ':Telescope command_history<CR>', { desc = 'Telescope command_history' })
+map('n', '<leader>f/', ':Telescope search_history<CR>', { desc = 'Telescope search_history' })
+map('n', '<leader>fb', ':Telescope current_buffer_fuzzy_find<CR>', { desc = 'Telescope current_buffer_fuzzy_find' })
+map('n', '<leader>fp', ':Telescope workspaces<CR>', { desc = 'Telescope workspaces' })
+map('n', '<leader>lr', ':Telescope lsp_references<CR>', { desc = 'Telescope lsp_references' })
+map('n', '<leader>lt', ':Telescope lsp_type_definitions<CR>', { desc = 'Telescope lsp_type_definitions' })
+map('n', '<leader>ld', ':Telescope diagnostics<CR>', { desc = 'Telescope diagnostics' })
+map('n', '<leader>ft', ':Telescope treesitter previewer=true<CR>', { desc = 'Telescope treesitter previewer=true' })
+map(
+  'n',
+  '<leader>ls',
+  ':Telescope lsp_document_symbols previewer=true<CR>',
+  { desc = 'Telescope lsp_document_symbols previewer=true' }
+)
 map(
   'n',
   '<leader>lww',

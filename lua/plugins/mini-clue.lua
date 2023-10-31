@@ -48,6 +48,12 @@ return {
       },
       clues = {
         -- Enhance this by adding descriptions for <Leader> mapping groups
+        { mode = 'n', keys = '<leader>f', desc = '+telescope' },
+        { mode = 'n', keys = '<leader>g', desc = '+git' },
+        { mode = 'x', keys = '<leader>g', desc = '+git' },
+        { mode = 'n', keys = '<leader>l', desc = '+lsp' },
+        { mode = 'n', keys = '<leader>q', desc = '+trouble' },
+        { mode = 'n', keys = '<leader>u', desc = '+ui' },
         { mode = 'n', keys = 'zl', postkeys = 'z' },
         { mode = 'n', keys = 'zh', postkeys = 'z' },
         miniclue.gen_clues.z(),

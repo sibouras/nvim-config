@@ -3,9 +3,9 @@ return {
     'natecraddock/sessions.nvim',
     cmd = 'SessionsStop', -- needed for workspaces
     keys = {
-      { '<leader>sl', ':SessionsLoad<CR>', silent = true },
-      { '<leader>ss', ':SessionsSave<CR>', silent = true },
-      { '<leader>sd', ':SessionsStop<CR>', silent = true },
+      { '<leader>sl', ':SessionsLoad<CR>', desc = 'Sessions Load', silent = true },
+      { '<leader>ss', ':SessionsSave<CR>', desc = 'Sessions Save', silent = true },
+      { '<leader>sd', ':SessionsStop<CR>', desc = 'Sessions Stop', silent = true },
     },
     opts = {
       session_filepath = vim.fn.stdpath('data') .. '/sessions',

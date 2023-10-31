@@ -20,9 +20,9 @@ return {
     local map = vim.keymap.set
     map('n', '<leader>dg', vim.diagnostic.open_float, opts)
     map('n', '<leader>dq', vim.diagnostic.setloclist, opts)
-    map('n', '<leader>li', '<Cmd>LspInfo<CR>')
-    map('n', '<leader>lm', '<Cmd>Mason<CR>')
-    map('n', '<leader>ln', '<Cmd>NullLsInfo<CR>')
+    map('n', '<leader>li', '<Cmd>LspInfo<CR>', { desc = 'LspInfo' })
+    map('n', '<leader>lm', '<Cmd>Mason<CR>', { desc = 'Mason' })
+    map('n', '<leader>ln', '<Cmd>NullLsInfo<CR>', { desc = 'NullLsInfo' })
 
     -- restore terminal tab title after formatting
     local function restoreTitle()
