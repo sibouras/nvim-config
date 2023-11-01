@@ -26,7 +26,7 @@ return {
         hl['@text.uri.markdown_inline'] = { fg = colors.blue, underline = true } -- markdown link
         hl.PounceAccept = { bold = true, fg = '#ffffff', bg = '#3F00FF' }
         hl.PounceAcceptBest = { bold = true, fg = '#ffffff', bg = '#FF2400' }
-        -- hl.Folded = { bg = colors.bg_sidebar }
+        hl.Folded = { fg = colors.blue, bg = colors.transparent }
       end,
     })
 

@@ -157,7 +157,7 @@ return {
       -- end,
       enabled = function()
         local buftype = vim.api.nvim_get_option_value('buftype', {})
-        if buftype == 'prompt' then
+        if buftype == 'prompt' or buftype == 'nofile' then
           return false
         end
         return vim.g.cmp_active
