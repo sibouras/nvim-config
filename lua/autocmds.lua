@@ -111,11 +111,32 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
-vim.api.nvim_create_autocmd('WinEnter', {
-  desc = 'go to insert mode when switching to terminal',
-  group = augroup('terminal'),
+-- vim.api.nvim_create_autocmd('WinEnter', {
+--   desc = 'go to insert mode when switching to terminal',
+--   group = augroup('terminal'),
+--   pattern = 'term://*',
+--   command = 'startinsert',
+-- })
+
+-- Set options for terminal buffer
+-- Use `BufWinEnter term://*` instead of just `TermOpen`
+-- just `TermOpen` isn't enough when terminal buffer is created in background
+vim.api.nvim_create_autocmd({ 'TermOpen', 'BufWinEnter' }, {
+  group = augroup('terminal_options'),
   pattern = 'term://*',
-  command = 'startinsert',
+  callback = function()
+    vim.cmd([[
+      setlocal nonu
+      setlocal nornu
+      setlocal nolist
+      setlocal signcolumn=no
+      setlocal foldcolumn=0
+      setlocal statuscolumn=
+      setlocal nocursorline
+      setlocal scrolloff=0
+      setlocal sidescrolloff=0
+    ]])
+  end,
 })
 
 vim.api.nvim_create_autocmd('SessionLoadPost', {
