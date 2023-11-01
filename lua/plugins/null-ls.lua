@@ -17,7 +17,11 @@ return {
         -- formatting.prettierd.with({
         --   filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "html", "css", "markdown" },
         -- }),
-        formatting.prettierd,
+        formatting.prettierd.with({
+          env = {
+            PRETTIERD_DEFAULT_CONFIG = vim.fn.stdpath('config') .. '/linter-config/.prettierrc.json',
+          },
+        }),
         -- formatting.black.with({ extra_args = { "--fast" } }),
         formatting.stylua.with({
           extra_args = { '--indent-type=Spaces', '--indent-width=2', '--quote-style=AutoPreferSingle' },
