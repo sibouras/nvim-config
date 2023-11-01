@@ -143,5 +143,15 @@ return {
         map_split(buf_id, '<C-v>', 'belowright vertical')
       end,
     })
+
+    -- fix view jump when `o`
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'MiniFilesBufferCreate',
+      callback = function()
+        vim.schedule(function()
+          vim.opt_local.scrolloff = 0
+        end)
+      end,
+    })
   end,
 }

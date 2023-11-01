@@ -198,19 +198,19 @@ map('n', 'X', ':keeppatterns substitute/\\s*\\%#\\s*/\\r/e <bar> normal! ==^<cr>
 vim.cmd([[
   " line text object
   xnoremap il g_o^
-  onoremap il :normal vil<CR>
+  onoremap <silent> il :normal vil<CR>
   xnoremap al $o^
-  onoremap al :normal val<CR>
+  onoremap <silent> al :normal val<CR>
   xnoremap ig GoggV
-  onoremap ig :normal vig<CR>
+  onoremap <silent> ig :normal vig<CR>
 
   " better start and end of line
   nnoremap gh _
   xnoremap gh _
-  onoremap gh :normal vgh<CR>
+  onoremap <silent> gh :normal vgh<CR>
   nnoremap gl g_
   xnoremap gl g_
-  onoremap gl :normal vgl<CR>
+  onoremap <silent> gl :normal vgl<CR>
 ]])
 
 -- limit the search in the visual selection
@@ -637,7 +637,7 @@ map('n', '<leader>ut', function()
 end, { desc = 'Toggle Treesitter Highlight' })
 -- stylua: ignore end
 
-map('n', '<leader>ua', '<Cmd>Lazy<CR>', { desc = 'Lazy' })
+map('n', '<leader>la', '<Cmd>Lazy<CR>', { desc = 'Lazy' })
 map('n', '<leader>uf', vim.show_pos, { desc = 'Inspect Pos' })
 -- print current/alternate file name
 map(

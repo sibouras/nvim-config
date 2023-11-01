@@ -721,6 +721,7 @@ return {
       Space,
       TerminalName,
       Align,
+      Ruler,
     }
 
     local StatusLines = {
