@@ -1,7 +1,7 @@
 return {
   'hrsh7th/nvim-cmp',
   dependencies = {
-    'hrsh7th/cmp-buffer',
+    -- 'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-path',
     'hrsh7th/cmp-nvim-lsp',
     'saadparwaiz1/cmp_luasnip',
@@ -119,9 +119,9 @@ return {
       },
       sources = {
         { name = 'nvim_lsp', max_item_count = 50 },
-        { name = 'nvim_lua' },
+        -- { name = 'nvim_lua' },
         { name = 'luasnip' },
-        { name = 'buffer', max_item_count = 10 },
+        -- { name = 'buffer', max_item_count = 10 },
         { name = 'path' },
       },
       confirm_opts = {
