@@ -23,10 +23,12 @@ return {
       on_highlights = function(hl, colors)
         hl.TabLineSel = { bg = '#1A2336' }
         hl.WinSeparator = { fg = colors.fg_gutter }
+        hl.Folded = { fg = colors.blue, bg = colors.transparent }
         hl['@text.uri.markdown_inline'] = { fg = colors.blue, underline = true } -- markdown link
         hl.PounceAccept = { bold = true, fg = '#ffffff', bg = '#3F00FF' }
         hl.PounceAcceptBest = { bold = true, fg = '#ffffff', bg = '#FF2400' }
-        hl.Folded = { fg = colors.blue, bg = colors.transparent }
+        hl.MiniFilesCursorLine = { link = 'Visual' }
+        hl.GrappleCurrentFile = { fg = colors.blue }
       end,
     })
 
