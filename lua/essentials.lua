@@ -55,8 +55,9 @@ function M.go_to_url(cmd)
     vim.cmd([[
       " add current position to jumplist with m'
       normal! m'f(
+      let path = expand("%:h") .. '/' .. expand('<cfile>')
       " When the :keepjumps command modifier is used, jumps are not stored in the jumplist.
-      keepjumps normal! gf
+      execute ":keepjumps edit " .. path
     ]])
   else
     os.execute(cmd .. ' ' .. url)
