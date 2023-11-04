@@ -1,6 +1,7 @@
 return {
   'https://git.sr.ht/~marcc/BufferBrowser',
   event = { 'BufReadPre', 'BufNewFile' },
+  enabled = false,
   keys = {
     {
       '<M-Right>',
