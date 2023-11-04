@@ -8,7 +8,7 @@ return {
         require('buffer_browser').next()
       end,
       mode = { 'i', 'n' },
-      desc = 'Next [B]uffer [[]',
+      desc = 'Next Buffer',
     },
     {
       '<M-Left>',
@@ -16,7 +16,7 @@ return {
         require('buffer_browser').prev()
       end,
       mode = { 'i', 'n' },
-      desc = 'Previous [B]uffer []]',
+      desc = 'Previous Buffer',
     },
   },
   opts = {},
