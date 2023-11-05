@@ -32,16 +32,13 @@ return {
     dashboard.section.buttons.opts.hl = 'Keyword'
     dashboard.opts.opts.noautocmd = true
 
-    -- -- close Lazy and re-open when the dashboard is ready
-    -- if vim.o.filetype == "lazy" then
-    --   vim.cmd.close()
-    --   vim.api.nvim_create_autocmd("User", {
-    --     pattern = "AlphaReady",
-    --     callback = function()
-    --       require("lazy").show()
-    --     end,
-    --   })
-    -- end
+    vim.api.nvim_create_autocmd('User', {
+      desc = 'Remove statusline when in Alpha',
+      pattern = 'AlphaReady',
+      callback = function()
+        vim.cmd('set laststatus=0 | autocmd BufUnload <buffer> set laststatus=3')
+      end,
+    })
 
     require('alpha').setup(dashboard.opts)
 
