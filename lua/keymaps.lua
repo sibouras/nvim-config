@@ -30,12 +30,12 @@ map('n', '<Esc>', '<Cmd>noh | stopinsert<CR>', { desc = 'Escape and clear hlsear
 
 -- Clear search, diff update and redraw
 -- taken from runtime/lua/_editor.lua
-map(
-  'n',
-  '<C-c>',
-  '<Cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><CR>',
-  { desc = 'Redraw / clear hlsearch / diff update' }
-)
+-- map(
+--   'n',
+--   '<C-l>',
+--   '<Cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><CR>',
+--   { desc = 'Redraw / clear hlsearch / diff update' }
+-- )
 
 -- Stay in indent mode
 map('v', '<', '<gv')
