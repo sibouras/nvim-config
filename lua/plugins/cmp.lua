@@ -7,13 +7,24 @@ return {
     'saadparwaiz1/cmp_luasnip',
     'onsails/lspkind.nvim',
   },
-  event = { 'InsertEnter' },
+  event = 'InsertEnter',
+  keys = '<C-c>',
   config = function()
     local cmp = require('cmp')
     local luasnip = require('luasnip')
 
     local select_opts = { behavior = cmp.SelectBehavior.Select }
     vim.g.cmp_active = true
+
+    vim.keymap.set({ 'i', 'n' }, '<C-c>', function()
+      if vim.g.cmp_active == true then
+        vim.g.cmp_active = false
+        print('Disabled cmp')
+      else
+        vim.g.cmp_active = true
+        print('Enabled cmp')
+      end
+    end, { desc = 'Toggle cmp' })
 
     cmp.setup({
       snippet = {
