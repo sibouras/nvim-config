@@ -393,11 +393,6 @@ map('n', '<leader>x', function()
   end
 end, { desc = 'toggle quickfix window' })
 
--- toggle cmp(mapped <C-;> to <M-C-S-F7> in ahk,terminal)
-map({ 'i', 'n' }, '<M-C-S-F7>', function()
-  vim.g.cmp_active = not vim.g.cmp_active
-end, { desc = 'toggle cmp' })
-
 -- Terminal Mappings
 map('t', '`', '<c-\\><c-n>', { desc = 'Enter Normal Mode' })
 map('t', '<C-r>', [['<C-\><C-n>"' . nr2char(getchar()) . 'pi']], { expr = true })
