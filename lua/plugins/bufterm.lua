@@ -65,6 +65,7 @@ return {
       end
     end, { desc = 'Enter terminal' })
 
+    vim.g.termheight = nil
     map({ 'n', 't' }, '<F2>', function()
       local cur_bufnr = vim.api.nvim_get_current_buf()
       if vim.bo.buftype == 'terminal' then
@@ -72,9 +73,17 @@ return {
         vim.cmd('close')
       elseif recent_bufnr == nil then
         nu:spawn()
-        vim.cmd('sb' .. nu.bufnr)
+        if vim.g.termheight == nil then
+          vim.cmd('sb' .. nu.bufnr)
+        else
+          vim.cmd('sb +resize' .. vim.g.termheight .. ' ' .. nu.bufnr)
+        end
       else
-        vim.cmd('sb' .. recent_bufnr)
+        if vim.g.termheight == nil then
+          vim.cmd('sb' .. recent_bufnr)
+        else
+          vim.cmd('sb +resize' .. vim.g.termheight .. ' ' .. recent_bufnr)
+        end
       end
     end, { desc = 'Toggle horizontal terminal' })
 
