@@ -1,7 +1,7 @@
 return {
   'mbbill/undotree',
   keys = {
-    { '<F3>', ':UndotreeToggle<CR>', desc = 'Toggle UndoTree', silent = true },
+    { '<F4>', ':UndotreeToggle<CR>', desc = 'Toggle UndoTree', silent = true },
   },
   -- init is called during startup. Configuration for vim plugins typically should be set in an init function
   init = function()

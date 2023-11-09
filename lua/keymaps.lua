@@ -199,7 +199,7 @@ vim.cmd([[
   " line text object
   xnoremap il g_o^
   onoremap <silent> il :normal vil<CR>
-  xnoremap al $o^
+  xnoremap al g_o0
   onoremap <silent> al :normal val<CR>
   xnoremap ig GoggV
   onoremap <silent> ig :normal vig<CR>
@@ -369,7 +369,8 @@ map('n', '<C-q>', ':call ToggleZoom(v:true)<CR>')
 map('t', '<C-q>', [[<C-\><C-n>:call ToggleZoom(v:true)<CR>i]])
 
 -- search for regex pattern
--- map("n", "<M-l>", "<Cmd>call search('[([{<]')<CR>")
+map({ 'n', 'x', 'o' }, '(', "<Cmd>call search('[({]')<CR>")
+map({ 'n', 'x', 'o' }, ')', "<Cmd>call search('[)}]')<CR>")
 
 -- open current file in explorer
 map('n', '<leader>ul', ':silent !start %:p:h<CR>', { desc = 'open current file in explorer' })

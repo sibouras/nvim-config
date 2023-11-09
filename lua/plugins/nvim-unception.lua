@@ -6,7 +6,9 @@ return {
       pattern = 'UnceptionEditRequestReceived',
       callback = function()
         -- Toggle the terminal off.
-        vim.cmd('close')
+        if vim.fn.winnr() > 1 then
+          vim.cmd('close')
+        end
       end,
     })
   end,
