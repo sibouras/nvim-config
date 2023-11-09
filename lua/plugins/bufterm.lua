@@ -52,11 +52,30 @@ return {
       end
     end, { desc = 'Toggle floating terminal' })
 
+    local function get_most_recent_buffer()
+      -- Get a list of all listed buffers
+      local listed_buffers = {}
+      for _, bufnr in ipairs(vim.fn.getbufinfo({ windows = vim.fn.winnr(), buflisted = 1 })) do
+        table.insert(listed_buffers, bufnr.bufnr)
+      end
+      -- Sort the listed buffers by access time
+      table.sort(listed_buffers, function(a, b)
+        return vim.fn.getbufinfo(a)[1].lastused > vim.fn.getbufinfo(b)[1].lastused
+      end)
+      return listed_buffers[1]
+    end
+
     map({ 'n', 't' }, '<F1>', function()
       local cur_bufnr = vim.api.nvim_get_current_buf()
       if vim.bo.buftype == 'terminal' then
         recent_bufnr = cur_bufnr
-        vim.cmd('close')
+        vim.cmd('b' .. get_most_recent_buffer())
+        vim.schedule(function()
+          -- Terminal-mode forces these local options so i reset them here, :h terminal-input
+          vim.opt_local.cursorline = true
+          vim.opt_local.scrolloff = 4
+          vim.opt_local.sidescrolloff = 10
+        end)
       elseif recent_bufnr == nil then
         nu:spawn()
         vim.cmd('b' .. nu.bufnr)
