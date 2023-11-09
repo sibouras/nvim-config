@@ -4,7 +4,7 @@ return {
   opts = {
     -- Exchange text regions
     exchange = {
-      prefix = 'ge',
+      prefix = 'cx',
       -- Whether to reindent new text to match previous indent
       reindent_linewise = true,
     },

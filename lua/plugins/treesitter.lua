@@ -126,7 +126,7 @@ return {
             [']]'] = '@class.outer',
             [']a'] = '@parameter.inner',
             [']f'] = '@call.outer',
-            [']b'] = '@block.outer',
+            [']e'] = '@block.outer',
             [']n'] = '@number.inner',
 
             -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
@@ -139,14 +139,14 @@ return {
             [']['] = '@class.outer',
             [']A'] = '@parameter.inner',
             [']F'] = '@call.outer',
-            [']B'] = '@block.outer',
+            [']E'] = '@block.outer',
           },
           goto_previous_start = {
             ['[m'] = '@function.outer',
             ['[['] = '@class.outer',
             ['[a'] = '@parameter.inner',
             ['[f'] = '@call.outer',
-            ['[b'] = '@block.inner',
+            ['[e'] = '@block.inner',
             ['[n'] = '@number.inner',
 
             ['[s'] = { query = '@scope', query_group = 'locals', desc = 'Previous scope' },
@@ -157,7 +157,7 @@ return {
             ['[]'] = '@class.outer',
             ['[A'] = '@parameter.inner',
             ['[F'] = '@call.outer',
-            ['[B'] = '@block.outer',
+            ['[E'] = '@block.outer',
           },
           -- Below will go to either the start or the end, whichever is closer.
           -- Use if you want more granular movements

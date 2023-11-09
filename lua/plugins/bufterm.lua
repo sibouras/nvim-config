@@ -3,9 +3,10 @@ return {
   enabled = true,
   event = { 'TermOpen' },
   keys = {
-    { mode = { 'n', 'i', 't' }, '<M-C-S-F7>' },
-    { mode = { 'n', 't' }, '<F1>' },
-    { mode = { 'n', 't' }, '<F2>' },
+    { mode = { 'n', 'i', 't' }, '<M-C-S-F7>', desc = 'Toggle floating terminal' },
+    { mode = { 'n', 't' }, '<F1>', desc = 'Enter terminal' },
+    { mode = { 'n', 't' }, '<F2>', desc = 'Toggle horizontal terminal' },
+    { mode = { 'n', 't' }, '<F3>', desc = 'Toggle vertical terminal' },
   },
   opts = {
     terminal = {
