@@ -1,5 +1,6 @@
 return {
   'gbprod/yanky.nvim',
+  enabled = false,
   opts = {
     ring = { history_length = 20 },
     highlight = {
