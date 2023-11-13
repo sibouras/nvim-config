@@ -45,8 +45,6 @@ return {
       end)
     end
 
-    require('close-unused-buffers')
-
     vim.api.nvim_create_autocmd('FileType', {
       desc = 'set cursorline and move the cursor to the current file',
       group = vim.api.nvim_create_augroup('MyGroup_grapple', { clear = true }),

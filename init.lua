@@ -46,4 +46,5 @@ require('lazy').setup('plugins', {
 require('keymaps')
 require('options')
 require('autocmds')
+require('close-unused-buffers')
 -- require('lightbulb')
