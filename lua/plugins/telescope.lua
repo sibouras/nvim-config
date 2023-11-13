@@ -14,7 +14,6 @@ return {
       },
     },
     config = function()
-      pcall(require('telescope').load_extension, 'fzf')
       local telescope = require('telescope')
       local actions = require('telescope.actions')
 
@@ -77,7 +76,6 @@ return {
               ['<C-a>'] = actions.toggle_all,
               ['<C-l>'] = actions.complete_tag,
               ['<C-_>'] = actions.which_key, -- keys from pressing <C-/>
-              ['<C-x>'] = actions.delete_buffer,
               ['<C-p>'] = require('telescope.actions.layout').toggle_preview,
               ['<C-BS>'] = { '<C-w>', type = 'command', opts = { noremap = false } },
               ['<C-f>'] = actions.to_fuzzy_refine,
@@ -117,7 +115,6 @@ return {
               ['<M-Right>'] = actions.results_scrolling_right,
               ['?'] = actions.which_key,
               ['<C-p>'] = require('telescope.actions.layout').toggle_preview,
-              ['<C-x>'] = actions.delete_buffer,
               ['<C-q>'] = actions.send_to_qflist + actions.open_qflist,
               ['<M-q>'] = actions.send_selected_to_qflist + actions.open_qflist,
               ['<c-t>'] = open_with_trouble,
@@ -136,15 +133,25 @@ return {
           find_files = {
             hidden = true, -- show hidden files
             path_display = { 'smart' },
-            find_command = { 'fd', '--type', 'f', '--strip-cwd-prefix' },
+            find_command = { 'fd', '--type', 'f' },
             follow = true,
           },
           buffers = {
+            mappings = {
+              i = { ['<C-x>'] = actions.delete_buffer },
+              n = { ['<C-x>'] = actions.delete_buffer },
+            },
+            path_display = { 'smart' },
             initial_mode = 'normal',
             -- ignore_current_buffer = true,
             sort_mru = true,
-            sort_lastused = true,
+            -- sort_lastused = true,
             previewer = false,
+            -- layout_config = {
+            --   width = 0.5,
+            --   height = 0.5,
+            --   preview_cutoff = 120,
+            -- },
           },
           resume = {
             initial_mode = 'normal',
@@ -192,10 +199,9 @@ return {
           recent_files = {
             only_cwd = true,
             show_current_file = true,
-            -- path_display = function(_, path)
-            --   local p = Path:new(path)
-            --   return p.normalize(p)
-            -- end,
+            path_display = function(_, path)
+              return vim.fn.fnamemodify(path, ':.')
+            end,
           },
           tailiscope = {
             -- initial_mode = "normal",
@@ -225,7 +231,8 @@ return {
         },
       })
 
-      require('telescope').load_extension('recent_files')
+      pcall(require('telescope').load_extension, 'fzf')
+      telescope.load_extension('recent_files')
     end,
   },
 }

@@ -49,7 +49,7 @@ local options = {
   -- guifont = "JetbrainsMono Nerd Font:h16", -- the font used in graphical neovim applications
   guifont = 'JetBrainsMono NF:h13', -- the font used in graphical neovim applications
   -- guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:Cursor/lCursor", -- this makes changing Cursor highlight work
-  shada = "!,'20,<50,s10,h", -- 20 oldfiles
+  shada = "!,'30,<50,s10,h", -- 30 oldfiles
 }
 
 for k, v in pairs(options) do
@@ -70,6 +70,8 @@ vim.opt.wildignore = {
   '**/node_modules/**',
   '**/.git/**',
 }
+-- skip common junk in 'shada' oldfiles
+vim.opt.shada:append('r/tmp/,rfugitive:,rdiffview:,rterm:,rhealth:')
 
 vim.opt.fillchars = {
   foldopen = '',
