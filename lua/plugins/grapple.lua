@@ -52,7 +52,7 @@ return {
       group = vim.api.nvim_create_augroup('MyGroup_grapple', { clear = true }),
       pattern = 'grapple',
       callback = function()
-        local path = string.gsub(vim.fn.expand('#'), '/', '\\\\')
+        local path = string.gsub(vim.fn.expand('#'), '[/\\]', '\\\\')
         -- add a hl group to current file
         vim.fn.clearmatches()
         vim.fn.matchadd('GrappleCurrentFile', '.*' .. path .. '.*')

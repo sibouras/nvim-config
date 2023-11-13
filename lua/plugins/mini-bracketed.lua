@@ -3,7 +3,7 @@ return {
   event = 'VeryLazy',
   opts = {
     file = { suffix = 'r', options = { wrap = false } },
-    buffer = { suffix = 'b', options = { wrap = false } },
+    buffer = { suffix = 'e', options = { wrap = false } },
     oldfile = { suffix = 'o', options = { wrap = false } },
     conflict = { suffix = 'x', options = {} },
     location = { suffix = 'l', options = {} },
