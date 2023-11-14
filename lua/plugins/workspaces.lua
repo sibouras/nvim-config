@@ -1,7 +1,7 @@
 return {
   {
     'natecraddock/sessions.nvim',
-    cmd = 'SessionsStop', -- needed for workspaces
+    cmd = { 'SessionsStop', 'SessionsLoad' },
     keys = {
       { '<leader>sl', ':SessionsLoad<CR>', desc = 'Sessions Load', silent = true },
       { '<leader>ss', ':SessionsSave<CR>', desc = 'Sessions Save', silent = true },
