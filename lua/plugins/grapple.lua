@@ -61,11 +61,7 @@ return {
         end)
         vim.opt_local.cursorline = true
         -- select a tag with l
-        vim.keymap.set('n', 'l', function()
-          local c = vim.api.nvim_get_current_line()
-          local key = tonumber(c:match('[%d]'))
-          require('grapple').select({ key = key })
-        end, { buffer = true })
+        vim.keymap.set('n', 'l', '<CR>', { remap = true, buffer = true })
       end,
     })
   end,
