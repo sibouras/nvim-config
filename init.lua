@@ -50,6 +50,6 @@ require('close-unused-buffers')
 
 -- small.nvim
 require('small.highlight_selected').setup()
-vim.keymap.map('n', '<leader>i', function()
+vim.keymap.set('n', '<leader>i', function()
   require('small.bufend').run()
 end)

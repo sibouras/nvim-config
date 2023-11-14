@@ -336,8 +336,7 @@ map('v', '<Bslash>c', [[:w !curl -F "f:1=<-" ix.io<CR>]])
 map('n', '<leader>tn', '<C-w>T')
 
 -- edit keymaps in new tab
--- map("n", "<leader>tk", ":tab drop $LOCALAPPDATA/nvim/lua/user/keymaps.lua<CR>:Tz nvim<CR>")
-map('n', '<leader>tk', ':tab drop $LOCALAPPDATA/nvim/lua/user/keymaps.lua<CR>')
+map('n', '<leader>tk', ':tab drop $LOCALAPPDATA/nvim/lua/keymaps.lua<CR>')
 
 -- Quickly change font size in GUI
 vim.cmd([[
