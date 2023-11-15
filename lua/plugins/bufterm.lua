@@ -85,7 +85,6 @@ return {
       end
     end, { desc = 'Enter terminal' })
 
-    vim.g.termheight = nil
     map({ 'n', 't' }, '<F2>', function()
       local cur_bufnr = vim.api.nvim_get_current_buf()
       if vim.bo.buftype == 'terminal' then
@@ -93,21 +92,18 @@ return {
         vim.cmd('close')
       elseif recent_bufnr == nil then
         nu:spawn()
-        if vim.g.termheight == nil then
-          vim.cmd('sb' .. nu.bufnr)
-        else
-          vim.cmd('sb +resize' .. vim.g.termheight .. ' ' .. nu.bufnr)
+        vim.cmd('sb' .. nu.bufnr)
+        if type(vim.g.termheight) == 'number' and vim.g.termheight > 0 then
+          vim.cmd('resize' .. vim.g.termheight)
         end
       else
-        if vim.g.termheight == nil then
-          vim.cmd('sb' .. recent_bufnr)
-        else
-          vim.cmd('sb +resize' .. vim.g.termheight .. ' ' .. recent_bufnr)
+        vim.cmd('sb' .. recent_bufnr)
+        if type(vim.g.termheight) == 'number' and vim.g.termheight > 0 then
+          vim.cmd('resize' .. vim.g.termheight)
         end
       end
     end, { desc = 'Toggle horizontal terminal' })
 
-    vim.g.termwidth = nil
     map({ 'n', 't' }, '<F3>', function()
       local cur_bufnr = vim.api.nvim_get_current_buf()
       if vim.bo.buftype == 'terminal' then
@@ -115,16 +111,14 @@ return {
         vim.cmd('close')
       elseif recent_bufnr == nil then
         nu:spawn()
-        if vim.g.termwidth == nil then
-          vim.cmd('vertical sb' .. nu.bufnr)
-        else
-          vim.cmd('vertical sb +vertical-resize' .. vim.g.termwidth .. ' ' .. nu.bufnr)
+        vim.cmd('vertical sb' .. nu.bufnr)
+        if type(vim.g.termwidth) == 'number' and vim.g.termwidth > 0 then
+          vim.cmd('vertical resize' .. vim.g.termwidth)
         end
       else
-        if vim.g.termwidth == nil then
-          vim.cmd('vertical sb' .. recent_bufnr)
-        else
-          vim.cmd('vertical sb +vertical-resize' .. vim.g.termwidth .. ' ' .. recent_bufnr)
+        vim.cmd('vertical sb' .. recent_bufnr)
+        if type(vim.g.termwidth) == 'number' and vim.g.termwidth > 0 then
+          vim.cmd('vertical resize' .. vim.g.termwidth)
         end
       end
     end, { desc = 'Toggle vertical terminal' })
