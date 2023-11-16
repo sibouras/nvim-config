@@ -428,8 +428,5 @@ return {
       cmd = { 'deno', 'lsp' },
       root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc'),
     })
-
-    -- Turn on lsp status information
-    require('fidget').setup()
   end,
 }
