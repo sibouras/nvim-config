@@ -42,7 +42,8 @@ map('v', '<', '<gv')
 map('v', '>', '>gv')
 
 -- search for word under cursor without moving
-map('n', 'gw', '*N')
+-- map('n', 'gw', '*N')
+map('n', 'gw', '<Cmd>norm! gd<CR>')
 map('x', 'gw', [[y/\V<C-R>"<CR>N]])
 
 -- Move Lines
@@ -314,7 +315,7 @@ map(
 -- Use it like this <leader>m or "q<leader>m.
 map(
   'n',
-  '<leader>m',
+  '<leader>me',
   ":<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>",
   { desc = 'Quickly edit macros' }
 )
@@ -510,7 +511,13 @@ map('n', '<leader>fo', function()
     end,
   })
 end, { desc = 'Telescope oldfiles' })
-map('n', '<leader>fu', ':Telescope undo<CR>', { desc = 'Telescope undo' }) -- telescope-undo.nvim
+map(
+  'n',
+  '<leader>fm',
+  ':Telescope marks mark_type=local previewer=true initial_mode=normal<CR>',
+  { desc = 'Telescope marks local' }
+)
+map('n', '<leader>fj', ':Telescope jumplist previewer=true initial_mode=normal<CR>', { desc = 'Telescope jumplist' })
 map('n', '<leader>fs', ':Telescope find_files<CR>', { desc = 'Telescope find_files' })
 map('n', '<leader>b', ':Telescope buffers<CR>', { desc = 'Telescope buffers' })
 map('n', '<leader>fn', ':Telescope git_files<CR>', { desc = 'Telescope git_files' })
@@ -518,8 +525,6 @@ map('n', '<leader>fi', ':Telescope git_status<CR>', { desc = 'Telescope git_stat
 map('n', '<leader>fe', ':Telescope resume<CR>', { desc = 'Telescope resume' })
 map('n', '<leader>fr', ':Telescope registers<CR>', { desc = 'Telescope registers' })
 map('n', '<leader>fq', ':Telescope quickfix<CR>', { desc = 'Telescope quickfix' })
-map('n', '<leader>fm', ':Telescope marks<CR>', { desc = 'Telescope marks' })
-map('n', '<leader>fj', ':Telescope jumplist<CR>', { desc = 'Telescope jumplist' })
 map('n', '<leader>fv', ':Telescope vim_options<CR>', { desc = 'Telescope vim_options' })
 map('n', '<leader>fg', ':Telescope live_grep<CR>', { desc = 'Telescope live_grep' })
 map('n', '<leader>fh', ':Telescope help_tags<CR>', { desc = 'Telescope help_tags' })
