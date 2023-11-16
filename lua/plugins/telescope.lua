@@ -25,6 +25,15 @@ return {
         return require('trouble.providers.telescope').open_selected_with_trouble(...)
       end
 
+      local function yank_selected_entry(prompt_bufnr)
+        local entry = require('telescope.actions.state').get_selected_entry().value
+        actions.close(prompt_bufnr)
+        local clipboardOpt = vim.opt.clipboard:get()
+        local useSystemClipb = #clipboardOpt > 0 and clipboardOpt[1]:find('unnamed')
+        local reg = useSystemClipb and '+' or '"'
+        vim.fn.setreg(reg, entry)
+      end
+
       telescope.setup({
         defaults = {
           prompt_prefix = ' ',
@@ -83,6 +92,7 @@ return {
               ['<M-q>'] = actions.send_selected_to_qflist + actions.open_qflist,
               ['<c-t>'] = open_with_trouble,
               ['<M-t>'] = open_selected_with_trouble,
+              ['<C-y>'] = yank_selected_entry,
             },
             n = {
               ['`'] = actions.close,
@@ -117,8 +127,9 @@ return {
               ['<C-p>'] = require('telescope.actions.layout').toggle_preview,
               ['<C-q>'] = actions.send_to_qflist + actions.open_qflist,
               ['<M-q>'] = actions.send_selected_to_qflist + actions.open_qflist,
-              ['<c-t>'] = open_with_trouble,
+              ['<C-t>'] = open_with_trouble,
               ['<M-t>'] = open_selected_with_trouble,
+              ['<C-y>'] = yank_selected_entry,
             },
           },
         },
