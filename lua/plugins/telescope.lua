@@ -5,6 +5,16 @@ return {
     dependencies = {
       'nvim-lua/plenary.nvim',
       'smartpde/telescope-recent-files',
+      {
+        'nvim-telescope/telescope-ui-select.nvim',
+        init = function()
+          ---@diagnostic disable-next-line: duplicate-set-field
+          vim.ui.select = function(...)
+            require('telescope').load_extension('ui-select')
+            return vim.ui.select(...)
+          end
+        end,
+      },
       -- Fuzzy Finder Algorithm which requires local dependencies to be built.
       -- Only load if `make` is available.
       {
