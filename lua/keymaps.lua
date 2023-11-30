@@ -148,8 +148,12 @@ map('n', 'j', '(v:count > 5 ? "m\'" . v:count : "") . "j"', { expr = true })
 -- When the :keepjumps command modifier is used, jumps are not stored in the jumplist.
 map('n', '{', ":execute 'keepjumps norm! ' . v:count1 . '{'<CR>")
 map('n', '}', ":execute 'keepjumps norm! ' . v:count1 . '}'<CR>")
-map('n', '(', ":execute 'keepjumps norm! ' . v:count1 . '('<CR>")
-map('n', ')', ":execute 'keepjumps norm! ' . v:count1 . ')'<CR>")
+-- map('n', '(', ":execute 'keepjumps norm! ' . v:count1 . '('<CR>")
+-- map('n', ')', ":execute 'keepjumps norm! ' . v:count1 . ')'<CR>")
+
+-- search for regex pattern
+map({ 'n', 'x', 'o' }, '(', "<Cmd>call search('[({]')<CR>")
+map({ 'n', 'x', 'o' }, ')', "<Cmd>call search('[)}]')<CR>")
 
 -- scroll with <C-j> <C-k>
 -- from: https://vi.stackexchange.com/questions/10031/scroll-a-quarter-25-of-the-screen-up-or-down
@@ -167,7 +171,7 @@ function! ScrollGolden(move)
     let key='gj'
     let post='zb'
   endif
-  execute 'keepjumps normal! ' . prep . float2nr(round(height*0.12)) . key . post
+  execute 'keepjumps normal! ' . prep . float2nr(round(height*0.24)) . key . post
 endfunction
 nnoremap <silent> <C-k> <cmd>call ScrollGolden('up')<CR>
 vnoremap <silent> <C-k> <cmd>call ScrollGolden('up')<CR>
@@ -367,10 +371,6 @@ augroup END
 ]])
 map('n', '<C-q>', ':call ToggleZoom(v:true)<CR>')
 map('t', '<C-q>', [[<C-\><C-n>:call ToggleZoom(v:true)<CR>i]])
-
--- search for regex pattern
-map({ 'n', 'x', 'o' }, '(', "<Cmd>call search('[({]')<CR>")
-map({ 'n', 'x', 'o' }, ')', "<Cmd>call search('[)}]')<CR>")
 
 -- open current file in explorer
 map('n', '<leader>ul', ':silent !start %:p:h<CR>', { desc = 'open current file in explorer' })
