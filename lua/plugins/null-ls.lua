@@ -1,5 +1,5 @@
 return {
-  'jose-elias-alvarez/null-ls.nvim',
+  'nvimtools/none-ls.nvim',
   event = { 'BufReadPre', 'BufNewFile' },
   dependencies = { 'mason.nvim' },
   opts = function()
@@ -18,11 +18,20 @@ return {
         --   filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "html", "css", "markdown" },
         -- }),
         formatting.prettierd.with({
+          -- filetypes = { 'css', 'scss', 'less', 'yaml', 'markdown', 'markdown.mdx', 'vue', 'graphql' },
+          disabled_filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'html' },
           env = {
             PRETTIERD_DEFAULT_CONFIG = vim.fn.stdpath('config') .. '/linter-config/.prettierrc.json',
           },
         }),
-        -- formatting.black.with({ extra_args = { "--fast" } }),
+        formatting.biome.with({
+          extra_args = {
+            '--indent-style=space',
+            '--semicolons=as-needed',
+            '--quote-style=single',
+            '--jsx-quote-style=single',
+          },
+        }),
         formatting.stylua.with({
           extra_args = { '--indent-type=Spaces', '--indent-width=2', '--quote-style=AutoPreferSingle' },
         }),
