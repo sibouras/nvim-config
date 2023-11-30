@@ -104,4 +104,10 @@ if vim.g.nvy then
   vim.cmd('cd $home')
 end
 
+if vim.g.neovide then
+  -- vim.g.neovide_cursor_animation_length = 0
+  vim.g.neovide_position_animation_length = 0
+  vim.g.neovide_scroll_animation_far_lines = 0
+end
+
 vim.g.python3_host_prog = 'python3'

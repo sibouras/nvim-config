@@ -82,8 +82,8 @@ return {
 
       nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
       nmap('<leader>lc', vim.lsp.buf.code_action, '[C]ode [A]ction')
-      -- nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-      nmap('gd', '<cmd>TroubleToggle lsp_definitions<cr>', '[G]oto [D]efinition')
+      nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+      -- nmap('gd', '<cmd>TroubleToggle lsp_definitions<cr>', '[G]oto [D]efinition')
       nmap('gR', '<cmd>TroubleToggle lsp_references<cr>', '[G]oto [R]eferences')
 
       -- See `:help K` for why this keymap
@@ -242,7 +242,7 @@ return {
                   workspace = {
                     checkThirdParty = false,
                     library = {
-                      vim.env.VIMRUNTIME,
+                      -- vim.env.VIMRUNTIME,
                       -- '${3rd}/luv/library',
                     },
                     -- maxPreload = 0, -- lua_ls is preloading files with diagnotic errors and adding them to oldfiles
@@ -387,7 +387,7 @@ return {
           settings = {
             json = {
               schemas = require('schemastore').json.schemas(),
-              validate = { enable = true },
+              validate = { enable = false },
             },
           },
         })
