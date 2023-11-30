@@ -64,12 +64,12 @@ return {
       --   navic.attach(client, bufnr)
       -- end
 
-      if client.name == 'tsserver' or client.name == 'html' then
+      if client.name == 'tsserver' then
         client.server_capabilities.documentFormattingProvider = false
       end
 
       if client.name == 'denols' then
-        require('null-ls').disable('prettierd')
+        require('null-ls').disable({ 'prettierd', 'biome' })
       end
 
       local nmap = function(keys, func, desc)
