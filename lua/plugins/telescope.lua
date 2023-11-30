@@ -174,6 +174,12 @@ return {
             --   preview_cutoff = 120,
             -- },
           },
+          marks = {
+            mappings = {
+              i = { ['<C-x>'] = actions.delete_mark },
+              n = { ['<C-x>'] = actions.delete_mark },
+            },
+          },
           resume = {
             initial_mode = 'normal',
           },
