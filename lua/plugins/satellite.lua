@@ -1,7 +1,7 @@
 return {
   'lewis6991/satellite.nvim',
   event = { 'BufReadPost' },
-  enabled = true,
+  enabled = false, -- overrides folding keymaps
   opts = {
     handlers = {
       gitsigns = {
