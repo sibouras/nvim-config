@@ -1,6 +1,7 @@
 return {
   {
     'rlane/pounce.nvim',
+    enabled = false,
     keys = {
       { 's', '<cmd>Pounce<CR>', mode = { 'n', 'x' } },
       { 'S', '<cmd>PounceRepeat<CR>', mode = 'n' },
