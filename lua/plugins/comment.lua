@@ -9,7 +9,7 @@ return {
   {
     'echasnovski/mini.comment',
     event = 'VeryLazy',
-    enabled = true,
+    enabled = false,
     opts = {
       options = {
         custom_commentstring = function()
@@ -20,9 +20,10 @@ return {
   },
   {
     'numToStr/Comment.nvim',
-    enabled = false,
+    enabled = true,
     keys = {
-      { 'gcc', desc = 'Coment toggle current line' },
+      { 'gc', desc = 'Coment toggle linewise' },
+      { 'gb', desc = 'Coment toggle blockwise' },
     },
     config = function()
       require('Comment').setup({
