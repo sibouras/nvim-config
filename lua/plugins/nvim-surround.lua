@@ -8,10 +8,10 @@ return {
       normal_line = 'mS',
       normal_cur_line = 'mSS',
       visual = 'ms',
-      visual_line = '<Nop>',
+      visual_line = false,
       delete = 'md',
       change = 'mr',
-      change_line = '<Nop>',
+      change_line = false,
     },
     surrounds = {
       ['l'] = {

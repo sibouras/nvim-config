@@ -19,7 +19,15 @@ return {
         -- }),
         formatting.prettierd.with({
           -- filetypes = { 'css', 'scss', 'less', 'yaml', 'markdown', 'markdown.mdx', 'vue', 'graphql' },
-          disabled_filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'html' },
+          disabled_filetypes = {
+            'javascript',
+            'javascriptreact',
+            'typescript',
+            'typescriptreact',
+            'json',
+            'jsonc',
+            'html',
+          },
           env = {
             PRETTIERD_DEFAULT_CONFIG = vim.fn.stdpath('config') .. '/linter-config/.prettierrc.json',
           },
