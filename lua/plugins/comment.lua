@@ -22,8 +22,8 @@ return {
     'numToStr/Comment.nvim',
     enabled = true,
     keys = {
-      { 'gc', desc = 'Coment toggle linewise' },
-      { 'gb', desc = 'Coment toggle blockwise' },
+      { 'gc', mode = { 'n', 'v' }, desc = 'Coment toggle linewise' },
+      { 'gb', mode = { 'n', 'v' }, desc = 'Coment toggle blockwise' },
     },
     config = function()
       require('Comment').setup({

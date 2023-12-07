@@ -307,13 +307,11 @@ map('v', '<leader>p', '"_dP')
 map('n', '<leader>cd', ':cd %:p:h<CR>:pwd<CR>', { desc = 'change directory to the file being edited' })
 
 -- Copy absolute file name to clipboard
-map(
-  'n',
-  '<leader>cl',
-  [[:let @*=expand('%:p')<CR>:echo expand('%:p') .. "\ncopied to clipboard\n"<CR>]],
-  { desc = 'Copy absolute file name to clipboard' }
-)
--- nnoremap <silent> <leader>yf :call setreg(v:register, expand('%:p'))<CR>
+map('n', '<Leader>cl', function()
+  local path = vim.fn.expand('%:p')
+  vim.fn.setreg('+', path)
+  print('Copied: ' .. path)
+end, { desc = 'Copy absolute file name to clipboard' })
 
 -- Quickly edit your macros(from vim-galore)
 -- Use it like this <leader>m or "q<leader>m.
@@ -468,6 +466,7 @@ iab <expr> td/ strftime('TODO(' . '%Y-%m-%d):')
 " Open help and man pages in a tab:
 cab he tab help
 cab mdn Mdn
+cab f find
 ]])
 
 -----------------------------------
