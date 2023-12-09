@@ -19,7 +19,7 @@ return {
     -- entire buffer
     map({ 'o', 'x' }, 'gG', "<Cmd>lua require('various-textobjs').entireBuffer()<CR>")
     -- url
-    map({ 'o', 'x' }, '<BS>', "<Cmd>lua require('various-textobjs').url()<CR>")
+    map({ 'o', 'x' }, 'x', "<Cmd>lua require('various-textobjs').url()<CR>")
 
     -- example: `aS` for outer subword, `iS` for inner subword
     map({ 'o', 'x' }, 'aS', "<Cmd>lua require('various-textobjs').subword(false)<CR>")

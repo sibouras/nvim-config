@@ -1,11 +1,10 @@
 return {
   {
     'rlane/pounce.nvim',
-    enabled = false,
+    enabled = true,
     keys = {
-      { 's', '<cmd>Pounce<CR>', mode = { 'n', 'x' } },
+      { 's', '<cmd>Pounce<CR>', mode = { 'n', 'x', 'o' } },
       { 'S', '<cmd>PounceRepeat<CR>', mode = 'n' },
-      { 'gs', '<cmd>Pounce<CR>', mode = 'o' },
     },
     opts = {
       accept_keys = 'JKLSDFAGHNUVRBYTMICEOXWPQZ',
