@@ -628,7 +628,7 @@ map('n', '<leader>ul', function() toggle('relativenumber') end, { desc = 'Toggle
 map('n', '<leader>uL', function() toggle.number() end, { desc = 'Toggle Line Numbers' })
 map('n', '<leader>ud', function() toggle.diagnostics() end, { desc = 'Toggle Diagnostics' })
 
-local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 3
+local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 2
 map('n', '<leader>uc', function() toggle('conceallevel', false, { 0, conceallevel }) end, { desc = 'Toggle Conceal' })
 
 if vim.lsp.inlay_hint then
