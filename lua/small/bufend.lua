@@ -38,15 +38,36 @@ function M.goto_file(key)
     if not vim.regex('\\v[a-z.-_]'):match_str(key) then
       return
     end
+    local items = {}
+    for path, path_type in
+      vim.fs.dir(vim.uv.cwd(), {
+        skip = function(dir_name)
+          return dir_name ~= 'node_modules' and dir_name ~= '.git' and dir_name ~= '.docusaurus'
+        end,
+        depth = math.huge,
+      })
+    do
+      -- https://itecnote.com/tecnote/regex-how-to-write-this-regular-expression-in-lua/
+      -- the pattern %f[%w%-] matches all words which are preceded by something
+      -- that is neither a word nor a dash and [^/] matches any character that is not /
+      local case_insensite_key = '[' .. key .. string.upper(key) .. ']'
+      if path_type == 'file' and path:match('%f[%w%-]' .. case_insensite_key .. '[^/]+%.%w+$') then
+        table.insert(items, path)
+      end
+    end
     require('small.lib.select')(
-      vim.fs.find(function(name, path)
-        return string.lower(name:sub(1, 1)) == key and not path:sub(#vim.fn.getcwd()):match('/%.')
-      end, { type = 'file', limit = math.huge }),
+      items,
+      -- or with fd(faster for large directory but starts slow)
+      -- vim.fn.glob(('`fd -t file -g %s*`'):format(key), true, true),
+      -- or with vim.fs.find(slow in large directory)
+      -- vim.fs.find(function(name, path)
+      --   return string.lower(name:sub(1, 1)) == key and not path:sub(#vim.fn.getcwd()):match('/%.')
+      -- end, { type = 'file', limit = math.huge }),
       {
         -- custom
-        format_item = function(file)
-          return vim.fn.fnamemodify(file, ':.')
-        end,
+        -- format_item = function(file)
+        --   return vim.fn.fnamemodify(file, ':.')
+        -- end,
       },
       function(file)
         -- custom
@@ -73,7 +94,6 @@ function M.select(key)
 end
 function M.run()
   local char = vim.fn.getcharstr()
-	-- vim.print(char)
   if char == '\t' then
     M.lock_file(vim.fn.getcharstr())
   elseif char == '\x80kb' then
