@@ -64,11 +64,60 @@ vim.opt.cpoptions:append('>') -- When appending to a register, put a line break 
 -- restored instead of resetting/recentering vertically.
 vim.opt.jumpoptions:append('stack') -- stack:browser-like jumplist behavior
 vim.opt.diffopt:append('linematch:60')
-vim.opt.path:append('**') -- find files recursively
-vim.opt.wildignore = {
-  '**/node_modules/**',
-  '**/.git/**',
-}
+vim.opt.path = ',,.' -- the default '.,,' doesn't work
+-- the lazy way(slow): https://gist.github.com/romainl/7e2b425a1706cd85f04a0bd8b3898805#the-lazy-way
+-- vim.opt.path:append('**') -- find files recursively
+-- vim.opt.wildignore = {
+--   '**/node_modules/**',
+--   '**/.git/**',
+-- }
+
+local setPath = function()
+  -- use default path if not in git directory
+  local path = vim.uv.cwd() .. '/.git'
+  local ok, err = vim.uv.fs_stat(path)
+  if not ok then
+    return ',,.'
+  end
+
+  local items = {}
+  for path, path_type in
+    vim.fs.dir(vim.uv.cwd(), {
+      -- skip = function(dir_name)
+      --   return dir_name ~= 'node_modules' and dir_name ~= '.git' and dir_name ~= '.docusaurus'
+      -- end,
+      -- depth = math.huge,
+      depth = 1,
+    })
+  do
+    if
+      path_type == 'directory'
+      and not path:match('%.git')
+      and not path:match('node_modules')
+      and not path:match('%.docusaurus')
+    then
+      table.insert(items, path .. '/')
+      table.insert(items, path .. '/**')
+    end
+  end
+  return ',,' .. table.concat(items, ',')
+end
+
+-- defer setPath to not slow down startup time
+vim.defer_fn(function()
+  vim.opt.path = setPath()
+end, 500)
+
+vim.api.nvim_create_autocmd('DirChanged', {
+  desc = 'set path',
+  group = vim.api.nvim_create_augroup('MyGroup_path', { clear = true }),
+  callback = function()
+    vim.defer_fn(function()
+      vim.opt.path = setPath()
+    end, 500)
+  end,
+})
+
 -- skip common junk in 'shada' oldfiles
 vim.opt.shada:append('r/tmp/,rfugitive:,rdiffview:,rterm:,rhealth:')
 
