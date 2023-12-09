@@ -315,10 +315,11 @@ return {
       ['tailwindcss'] = function()
         lspconfig.tailwindcss.setup({
           on_attach = function(client, bufnr)
-            if client.server_capabilities.colorProvider then
-              -- require("user.lsp.utils.documentcolors").buf_attach(bufnr)
-              require('document-color').buf_attach(bufnr)
-            end
+            -- if client.server_capabilities.colorProvider then
+            --   -- require("user.lsp.utils.documentcolors").buf_attach(bufnr)
+            --   -- slows opening files
+            --   require('document-color').buf_attach(bufnr)
+            -- end
             -- client.server_capabilities.hoverProvider = false
             -- client.server_capabilities.completionProvider = false
             client.server_capabilities.completionProvider.triggerCharacters = {
