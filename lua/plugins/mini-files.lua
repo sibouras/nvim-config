@@ -153,5 +153,20 @@ return {
         end)
       end,
     })
+
+    -- yank relative file path
+    local yank_relative_path = function()
+      local path = minifiles.get_fs_entry().path
+      local relative_path = vim.fs.normalize(vim.fn.fnamemodify(path, ':.'))
+      vim.fn.setreg('"', relative_path)
+      print('Yanked: ' .. relative_path)
+    end
+
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'MiniFilesBufferCreate',
+      callback = function(args)
+        vim.keymap.set('n', 'gy', yank_relative_path, { buffer = args.data.buf_id })
+      end,
+    })
   end,
 }
