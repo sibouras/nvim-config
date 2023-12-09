@@ -42,14 +42,6 @@ function! functions#RemoveFile()
   endif
 endfunction
 
-function! functions#ToggleConcealLevel()
-  if &conceallevel == 0
-    setlocal conceallevel=3
-  else
-    setlocal conceallevel=0
-  endif
-endfunction
-
 function! functions#DeleteHiddenBuffers()
   let tpbl=[]
   let closed = 0
