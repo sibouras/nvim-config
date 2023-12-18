@@ -615,9 +615,13 @@ return {
       -- or we could do that later (see #conditional-statuslines below)
       provider = function()
         local tname = vim.api.nvim_buf_get_name(0):gsub('.*:', '') or ''
-        local index = require('bufterm.terminal').get_index(0) or ''
-        return '[' .. index .. ']  ' .. tname
-        -- return ' ' .. tname
+        local bufterm_ok, bufterm = pcall(require, 'bufterm')
+        if bufterm_ok then
+          local index = require('bufterm.terminal').get_index(0) or ''
+          return '[' .. index .. ']  ' .. tname
+        else
+          return ' ' .. tname
+        end
       end,
       hl = { fg = 'blue', bold = true },
     }

@@ -42,6 +42,7 @@ return {
         local useSystemClipb = #clipboardOpt > 0 and clipboardOpt[1]:find('unnamed')
         local reg = useSystemClipb and '+' or '"'
         vim.fn.setreg(reg, entry)
+        print('Yanked: ' .. entry)
       end
 
       telescope.setup({

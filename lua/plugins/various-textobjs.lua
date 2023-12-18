@@ -79,8 +79,8 @@ return {
       require('various-textobjs').indentation('outer', 'outer')
 
       -- plugin only switches to visual mode when textobj found
-      local indentationFound = vim.fn.mode():find('V') == nil
-      if indentationFound then
+      local indentationFound = vim.fn.mode():find('V')
+      if not indentationFound then
         return
       end
 
