@@ -5,6 +5,11 @@ return {
     opts = {
       enable_autocmd = false,
     },
+    config = function(_, opts)
+      -- to skip backwards compatibility routines and speed up loading.
+      vim.g.skip_ts_context_commentstring_module = true
+      require('ts_context_commentstring').setup(opts)
+    end,
   },
   {
     'echasnovski/mini.comment',
@@ -22,8 +27,8 @@ return {
     'numToStr/Comment.nvim',
     enabled = true,
     keys = {
-      { 'gc', mode = { 'n', 'v' }, desc = 'Coment toggle linewise' },
-      { 'gb', mode = { 'n', 'v' }, desc = 'Coment toggle blockwise' },
+      { 'gc', mode = { 'n', 'x' }, desc = 'Coment toggle linewise' },
+      { 'gb', mode = { 'n', 'x' }, desc = 'Coment toggle blockwise' },
     },
     config = function()
       require('Comment').setup({

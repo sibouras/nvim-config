@@ -76,6 +76,12 @@ return {
             return os.date('%D - %H:%M')
           end)
         ),
+        -- s(
+        --   'date',
+        --   f(function()
+        --     return string.format(string.gsub(vim.bo.commentstring, '%%s', ' %%s'), os.date())
+        --   end)
+        -- ),
       },
     })
 
