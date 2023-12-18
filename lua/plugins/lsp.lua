@@ -64,6 +64,10 @@ return {
       --   navic.attach(client, bufnr)
       -- end
 
+      -- if client.supports_method('textDocument/inlayHint') then
+      --   require('utils.toggle').inlay_hints(bufnr, true)
+      -- end
+
       if client.name == 'tsserver' then
         client.server_capabilities.documentFormattingProvider = false
       end
@@ -261,6 +265,7 @@ return {
               format = { enable = false },
               diagnostics = { globals = { 'vim' } },
               telemetry = { enable = false },
+              hint = { enable = true, arrayIndex = 'Disable' },
             },
           },
         })
@@ -278,19 +283,22 @@ return {
               description = 'Organize Imports',
             },
           },
-          -- DOCS https://github.com/typescript-language-server/typescript-language-server#workspacedidchangeconfiguration
+          -- DOCS: https://github.com/typescript-language-server/typescript-language-server/blob/master/docs/configuration.md
           -- Diagnostics code to be omitted when reporting diagnostics.
-          -- See https://github.com/microsoft/TypeScript/blob/master/src/compiler/diagnosticMessages.json for a full list of valid codes.
+          -- See https://github.com/microsoft/TypeScript/blob/main/src/compiler/diagnosticMessages.json for a full list of valid codes.
           settings = {
             diagnostics = {
-              ignoredCodes = { 80001 },
+              ignoredCodes = { 80001 }, -- File is a CommonJS module; it may be converted to an ES module
             },
           },
-          -- init_options = {
-          --   preferences = {
-          --     disableSuggestions = true,
-          --   },
-          -- },
+          init_options = {
+            preferences = {
+              -- disableSuggestions = true,
+              -- includeInlayParameterNameHints = 'literals',
+              includeInlayVariableTypeHints = true,
+              includeInlayFunctionLikeReturnTypeHints = true,
+            },
+          },
           -- disable lsp in node_modules
           -- not needed anymore: https://github.com/neovim/nvim-lspconfig/pull/2287
           -- root_dir = function(fname)
