@@ -1,5 +1,6 @@
 return {
   'gsuuon/tshjkl.nvim',
+  enabled = false,
   keys = '<M-v>',
   opts = {
     select_current_node = false, -- false to highlight only

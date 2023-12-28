@@ -1,7 +1,7 @@
 return {
   'stevearc/aerial.nvim',
   keys = {
-    { '<leader>o', '<Cmd>AerialToggle<CR>', desc = 'Aerial (Symbols)' },
+    { '<leader>a', '<Cmd>AerialToggle<CR>', desc = 'Aerial (Symbols)' },
   },
   opts = {
     layout = {
