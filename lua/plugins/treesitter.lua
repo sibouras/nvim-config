@@ -98,11 +98,6 @@ return {
             ['i='] = '@assignment.inner',
             ['<Left>'] = '@assignment.lhs',
             ['<Right>'] = '@assignment.rhs',
-
-            -- from: https://github.com/josean-dev/dev-environment-files/blob/main/.config/nvim/lua/josean/plugins/nvim-treesitter-text-objects.lua
-            -- works for javascript/typescript files (custom capture I created in after/queries/ecma/textobjects.scm)
-            ['a:'] = '@property.outer',
-            ['i:'] = '@property.inner',
           },
         },
         swap = {
