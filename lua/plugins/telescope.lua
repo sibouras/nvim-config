@@ -56,9 +56,9 @@ return {
           layout_config = {
             height = 0.9,
             prompt_position = 'top',
-            -- preview_cutoff = 100,
             horizontal = {
               preview_width = 0.5,
+              preview_cutoff = 100,
             },
             vertical = {
               mirror = true,

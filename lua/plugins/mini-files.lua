@@ -165,7 +165,7 @@ return {
     vim.api.nvim_create_autocmd('User', {
       pattern = 'MiniFilesBufferCreate',
       callback = function(args)
-        vim.keymap.set('n', 'gy', yank_relative_path, { buffer = args.data.buf_id })
+        vim.keymap.set('n', 'gy', yank_relative_path, { buffer = args.data.buf_id, desc = 'yank relative file path' })
       end,
     })
   end,

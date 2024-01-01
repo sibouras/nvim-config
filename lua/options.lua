@@ -51,7 +51,7 @@ local options = {
   listchars = 'tab:▸ ,nbsp:+,trail:·,extends:→,precedes:←,eol:↲',
   sessionoptions = 'buffers,curdir,folds,help,tabpages,terminal,winsize',
   -- guifont = "JetbrainsMono Nerd Font:h16", -- the font used in graphical neovim applications
-  guifont = 'JetBrainsMono NF:h13', -- the font used in graphical neovim applications
+  guifont = 'JetBrainsMono Nerd Font:h13', -- the font used in graphical neovim applications
   -- guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:Cursor/lCursor", -- this makes changing Cursor highlight work
   shada = "!,'30,<50,s10,h", -- 30 oldfiles
 }
