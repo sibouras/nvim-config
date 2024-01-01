@@ -7,7 +7,7 @@ return {
     -- example: `?` for diagnostic textobj
     map({ 'o', 'x' }, '?', "<Cmd>lua require('various-textobjs').diagnostic()<CR>")
     -- near EoL: from cursor position to end of line, minus one character
-    map({ 'o', 'x' }, 'm', "<Cmd>lua require('various-textobjs').nearEoL()<CR>")
+    -- map({ 'o', 'x' }, 'm', "<Cmd>lua require('various-textobjs').nearEoL()<CR>")
     -- like }, but linewise
     map({ 'o', 'x' }, '<CR>', "<Cmd>lua require('various-textobjs').restOfParagraph()<CR>")
     -- rest of indentation
@@ -20,6 +20,19 @@ return {
     map({ 'o', 'x' }, 'gG', "<Cmd>lua require('various-textobjs').entireBuffer()<CR>")
     -- url
     map({ 'o', 'x' }, 'x', "<Cmd>lua require('various-textobjs').url()<CR>")
+    -- Last non-deletion-change, yank, or paste
+    map({ 'o', 'x' }, 'g;', "<Cmd>lua require('various-textobjs').lastChange()<CR>")
+
+    -- from cursor to next unescaped ", ', or `
+    -- map({ 'o', 'x' }, 'Q', "<Cmd>lua require('various-textobjs').toNextQuotationMark()<CR>")
+    -- from cursor to next closing ], ), or }
+    map({ 'o', 'x' }, 'O', "<Cmd>lua require('various-textobjs').toNextClosingBracket()<CR>")
+    -- between any unescaped ", ', or ` in a line
+    map({ 'o', 'x' }, 'iq', "<Cmd>lua require('various-textobjs').anyQuote('inner')<CR>")
+    map({ 'o', 'x' }, 'aq', "<Cmd>lua require('various-textobjs').anyQuote('outer')<CR>")
+    -- between any (), [], or {} in a line
+    map({ 'o', 'x' }, 'io', "<Cmd>lua require('various-textobjs').anyBracket('inner')<CR>")
+    map({ 'o', 'x' }, 'ao', "<Cmd>lua require('various-textobjs').anyBracket('outer')<CR>")
 
     -- example: `aS` for outer subword, `iS` for inner subword
     map({ 'o', 'x' }, 'aS', "<Cmd>lua require('various-textobjs').subword(false)<CR>")
