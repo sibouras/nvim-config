@@ -164,3 +164,12 @@ if vim.g.neovide then
 end
 
 vim.g.python3_host_prog = 'python3'
+
+-- popup-menu
+vim.cmd([[
+nmenu 10.100 PopUp.Goto\ Definition <Cmd>Telescope lsp_definitions<CR>
+nmenu 10.110 PopUp.References <Cmd>TroubleToggle lsp_references<CR>
+nmenu 10.120 PopUp.-Sep-	:
+aunmenu PopUp.How-to\ disable\ mouse
+aunmenu PopUp.-1-
+]])
