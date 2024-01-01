@@ -2,7 +2,7 @@ return {
   'hrsh7th/nvim-cmp',
   dependencies = {
     -- 'hrsh7th/cmp-buffer',
-    'hrsh7th/cmp-path',
+    -- 'hrsh7th/cmp-path',
     'hrsh7th/cmp-nvim-lsp',
     'saadparwaiz1/cmp_luasnip',
     'onsails/lspkind.nvim',
@@ -133,7 +133,7 @@ return {
         -- { name = 'nvim_lua' },
         { name = 'luasnip' },
         -- { name = 'buffer', max_item_count = 10 },
-        { name = 'path' },
+        -- { name = 'path' },
       },
       confirm_opts = {
         behavior = cmp.ConfirmBehavior.Replace,
