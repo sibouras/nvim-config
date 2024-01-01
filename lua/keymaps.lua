@@ -531,6 +531,7 @@ map('n', '<leader>fH', ':Telescope highlights<CR>', { desc = 'Telescope highligh
 map('n', '<leader>fk', ':Telescope keymaps<CR>', { desc = 'Telescope keymaps' })
 map('n', '<leader>fa', ':Telescope autocommands<CR>', { desc = 'Telescope autocommands' })
 map('n', '<leader>fc', ':Telescope commands<CR>', { desc = 'Telescope commands' })
+map('n', '<leader>fC', ':Telescope colorscheme enable_preview=true<CR>', { desc = 'Telescope colorscheme' })
 map('n', '<leader>f;', ':Telescope command_history<CR>', { desc = 'Telescope command_history' })
 map('n', '<leader>f/', ':Telescope search_history<CR>', { desc = 'Telescope search_history' })
 map('n', '<leader>fb', ':Telescope current_buffer_fuzzy_find<CR>', { desc = 'Telescope current_buffer_fuzzy_find' })
@@ -538,19 +539,14 @@ map('n', '<leader>fp', ':Telescope workspaces<CR>', { desc = 'Telescope workspac
 map('n', '<leader>lr', ':Telescope lsp_references<CR>', { desc = 'Telescope lsp_references' })
 map('n', '<leader>lt', ':Telescope lsp_type_definitions<CR>', { desc = 'Telescope lsp_type_definitions' })
 map('n', '<leader>ld', ':Telescope diagnostics<CR>', { desc = 'Telescope diagnostics' })
-map('n', '<leader>ft', ':Telescope treesitter previewer=true<CR>', { desc = 'Telescope treesitter previewer=true' })
+map('n', '<leader>ft', ':Telescope treesitter previewer=true<CR>', { desc = 'Telescope treesitter' })
 map(
   'n',
   '<leader>ls',
   ':Telescope lsp_document_symbols previewer=true<CR>',
-  { desc = 'Telescope lsp_document_symbols previewer=true' }
+  { desc = 'Telescope lsp_document_symbols' }
 )
-map(
-  'n',
-  '<leader>lww',
-  ':Telescope lsp_dynamic_workspace_symbols previewer=true<CR>',
-  { desc = 'LSP: [W]orkspace [S]ymbols' }
-)
+map('n', '<leader>lww', ':Telescope lsp_dynamic_workspace_symbols<CR>', { desc = 'LSP: [W]orkspace [S]ymbols' })
 
 ---------------------------------------------------------------
 -- => document-color.nvim
