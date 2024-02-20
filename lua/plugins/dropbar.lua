@@ -54,6 +54,35 @@ return {
           ['<esc>'] = close,
         },
       },
+      bar = {
+        sources = function(buf, _)
+          local sources = require('dropbar.sources')
+          local utils = require('dropbar.utils')
+          local filename = {
+            get_symbols = function(buff, win, cursor)
+              local path = sources.path.get_symbols(buff, win, cursor)
+              return { path[#path] }
+            end,
+          }
+          if vim.bo[buf].ft == 'markdown' then
+            return {
+              filename,
+              utils.source.fallback({
+                sources.treesitter,
+                sources.markdown,
+                sources.lsp,
+              }),
+            }
+          end
+          return {
+            filename,
+            utils.source.fallback({
+              sources.lsp,
+              sources.treesitter,
+            }),
+          }
+        end,
+      },
     })
   end,
 }
