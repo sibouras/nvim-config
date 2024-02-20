@@ -5,6 +5,7 @@ return {
     dependencies = {
       'nvim-lua/plenary.nvim',
       'smartpde/telescope-recent-files',
+      'nvim-telescope/telescope-frecency.nvim',
       {
         'nvim-telescope/telescope-ui-select.nvim',
         init = function()
@@ -231,6 +232,11 @@ return {
               return vim.fn.fnamemodify(path, ':.')
             end,
           },
+          frecency = {
+            default_workspace = 'CWD',
+            show_scores = true,
+            hide_current_buffer = false,
+          },
           tailiscope = {
             -- initial_mode = "normal",
             -- theme = "dropdown",
@@ -261,6 +267,7 @@ return {
 
       pcall(require('telescope').load_extension, 'fzf')
       telescope.load_extension('recent_files')
+      telescope.load_extension('frecency')
     end,
   },
 }
