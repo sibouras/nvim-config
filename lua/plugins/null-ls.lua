@@ -33,14 +33,6 @@ return {
             PRETTIERD_DEFAULT_CONFIG = vim.fn.stdpath('config') .. '/linter-config/.prettierrc.json',
           },
         }),
-        formatting.biome.with({
-          extra_args = {
-            '--indent-style=space',
-            '--semicolons=as-needed',
-            '--quote-style=single',
-            '--jsx-quote-style=single',
-          },
-        }),
         formatting.stylua.with({
           extra_args = { '--indent-type=Spaces', '--indent-width=2', '--quote-style=AutoPreferSingle' },
         }),

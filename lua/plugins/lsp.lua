@@ -437,5 +437,10 @@ return {
       cmd = { 'deno', 'lsp' },
       root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc'),
     })
+
+    lspconfig.biome.setup({
+      root_dir = lspconfig.util.root_pattern('biome.json'),
+      single_file_support = false,
+    })
   end,
 }
