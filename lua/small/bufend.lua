@@ -1,5 +1,6 @@
 -- from: https://github.com/altermo/small.nvim/blob/main/lua/small/bufend.lua
--- last commit: 2059e28
+-- last commit: 35ecddc
+-- skipped this: https://github.com/altermo/small.nvim/commit/d6a65c78bf9357966684bec448d56c09eeb3f744
 local M = {}
 function M.buf_get_file(buf)
   local filepath = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ':p')
@@ -22,7 +23,7 @@ function M.get_buf_list(key)
     :filter(vim.api.nvim_buf_is_loaded)
     :filter(function(v)
       local file = M.buf_get_file(v)
-      return file and ((not key) or key == vim.fn.fnamemodify(file, ':t'):sub(1, 1))
+      return file and ((not key) or key == vim.fn.fnamemodify(file, ':t'):sub(1, 1)) or false
     end)
     :rev()
     :totable()
@@ -46,7 +47,8 @@ function M.run()
     keys[key] = M.get_buf_list(key)
   end
   for key, buf in pairs(M.marked_buf) do
-    keys[key] = { buf }
+    keys[key] = keys[key] or {}
+    table.insert(keys[key], buf)
   end
   local buf = vim.api.nvim_create_buf(false, true)
   vim.bo[buf].bufhidden = 'wipe'
@@ -54,6 +56,7 @@ function M.run()
     '<space>: quick toggle buffer mark',
     '<cr>   : search buffer files',
     '<tab>  : toggle buffer mark (input)',
+    '<C-s>  : search files (input)',
     '',
   })
   for key, bufs in vim.spairs(keys) do
@@ -110,22 +113,64 @@ function M.run()
     else
       M.mark_buf(key)
     end
+  elseif key == '\x13' then
+    key = vim.fn.getcharstr()
+    if key:match('[%w_.-]') then
+      local cb = function(files)
+        local openfiles = vim.tbl_map(M.buf_get_file, keys[key])
+        files = vim.tbl_filter(function(x)
+          return not vim.tbl_contains(openfiles, x)
+        end, files)
+        if #files == 0 then
+          vim.notify('no files found starting with ' .. key, vim.log.levels.INFO)
+          return
+        end
+        if #files == 1 then
+          vim.cmd.edit(files[1])
+          return
+        end
+        require('small.lib.select')(vim.tbl_map(M.file_to_lfile, files), {}, function(file)
+          if not file then
+            return
+          end
+          vim.defer_fn(function()
+            vim.cmd.edit(file)
+          end, 50)
+        end)
+      end
+      if vim.fn.executable('fd') == 0 then
+        cb(vim.fs.find(function(name, path)
+          return name:sub(1, 1) == key and not path:sub(#vim.fn.getcwd()):match('/%.')
+        end, { type = 'file', limit = 1000 }))
+      else
+        vim.system({ 'fd', '-tfile', '-s', '-a', '^' .. key }, {}, function(ev)
+          vim.schedule_wrap(cb)(vim.split(ev.stdout, '\n', { trimempty = true }))
+        end)
+      end
+    end
   elseif key ~= '\x1b' then
     if keys[key] then
-      if curbuf == M.marked_buf[key] then
-        keys[key] = M.get_buf_list(key)
+      if M.marked_buf[key] and curbuf ~= M.marked_buf[key] then
+        vim.cmd.buf(M.marked_buf[key])
+        return
       end
-      keys[key] = vim.tbl_filter(function(x)
+      local k = vim.tbl_filter(function(x)
         return x ~= curbuf
       end, keys[key])
-      if #keys[key] == 1 then
-        vim.cmd.buf(keys[key][1])
-      elseif #keys[key] == 0 then
+      if #k == 1 then
+        vim.cmd.buf(k[1])
+        return
+      elseif #k == 0 then
       else
-        M.select(keys[key])
+        M.select(k)
+        return
       end
-    elseif key:match('[%w_.-]') then
+    end
+    if key:match('[%w_.-]') then
       local cb = function(files)
+        files = vim.tbl_filter(function(x)
+          return x ~= vim.fn.fnamemodify(vim.api.nvim_buf_get_name(curbuf), ':p')
+        end, files)
         if #files == 0 then
           vim.notify('no files found starting with ' .. key, vim.log.levels.INFO)
           return
