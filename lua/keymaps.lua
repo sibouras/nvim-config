@@ -517,7 +517,8 @@ map(
   { desc = 'Telescope marks local' }
 )
 map('n', '<leader>fj', ':Telescope jumplist previewer=true initial_mode=normal<CR>', { desc = 'Telescope jumplist' })
-map('n', '<leader>fs', ':Telescope find_files<CR>', { desc = 'Telescope find_files' })
+-- map('n', '<leader>fs', ':Telescope find_files<CR>', { desc = 'Telescope find_files' })
+map('n', '<leader>fs', ':Telescope frecency<CR>', { desc = 'Telescope frecency' })
 map('n', '<leader>b', ':Telescope buffers<CR>', { desc = 'Telescope buffers' })
 map('n', '<leader>fn', ':Telescope git_files<CR>', { desc = 'Telescope git_files' })
 map('n', '<leader>fi', ':Telescope git_status<CR>', { desc = 'Telescope git_status' })

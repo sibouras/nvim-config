@@ -29,6 +29,7 @@ return {
         hl.PounceAcceptBest = { bold = true, fg = '#ffffff', bg = '#FF2400' }
         hl.MiniFilesCursorLine = { link = 'Visual' }
         hl.GrappleCurrentFile = { fg = colors.blue }
+        hl.TelescopeBufferLoaded = { link = 'Text' } -- telescope frecency
       end,
     })
 
