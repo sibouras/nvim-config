@@ -439,7 +439,7 @@ return {
     })
 
     lspconfig.biome.setup({
-      root_dir = lspconfig.util.root_pattern('biome.json'),
+      root_dir = lspconfig.util.root_pattern('biome.json', 'biome.jsonc'),
       single_file_support = false,
     })
   end,

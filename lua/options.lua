@@ -129,8 +129,8 @@ vim.opt.shada:append('r/tmp/,rfugitive:,rdiffview:,rterm:,rhealth:')
 vim.opt.fillchars = {
   foldopen = '',
   foldclose = '',
-  -- fold = "⸱",
-  fold = ' ',
+  fold = '⸱',
+  -- fold = ' ',
   foldsep = ' ',
   diff = '╱',
   eob = ' ',
@@ -149,7 +149,8 @@ vim.opt.foldlevelstart = 99
 
 -- vim.opt.foldtext = 'v:lua.vim.treesitter.foldtext()'
 -- vim.opt.foldtext = 'v:lua.MyFoldText()'
-vim.opt.foldtext = "v:lua.require'small.foldtext'.setup()"
+-- vim.opt.foldtext = "v:lua.require'small.foldtext'.setup()"
+vim.o.foldtext = '' -- transparent foldtext
 
 vim.opt.statuscolumn = [[%!v:lua.require'utils.ui'.statuscolumn()]]
 

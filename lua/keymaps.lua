@@ -21,6 +21,7 @@ map('i', '<C-f>', '<C-k>')
 
 -- Quit vim
 map('n', '<M-F4>', ':qa!<CR>')
+map('n', '<C-q>', ':qa!<CR>')
 
 -- new line
 map('i', '<C-CR>', '<C-o>o')
@@ -367,8 +368,8 @@ augroup restorezoom
   au WinEnter * silent! :call ToggleZoom(v:false)
 augroup END
 ]])
-map('n', '<C-q>', ':call ToggleZoom(v:true)<CR>')
-map('t', '<C-q>', [[<C-\><C-n>:call ToggleZoom(v:true)<CR>i]])
+-- map('n', '<C-t>', ':call ToggleZoom(v:true)<CR>')
+-- map('t', '<C-t>', [[<C-\><C-n>:call ToggleZoom(v:true)<CR>i]])
 
 -- open current file in explorer
 map('n', '<leader>ul', ':silent !start %:p:h<CR>', { desc = 'open current file in explorer' })
