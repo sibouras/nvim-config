@@ -31,7 +31,7 @@ local function close_unused_buffers()
   if grapple_ok then
     local tags = grapple.tags()
     for tag_key, tag in pairs(tags) do
-      local filename = tag.file_path
+      local filename = tag.path
       local bufnr = vim.fn.bufnr(filename)
       for i, v in ipairs(buflist) do
         if v == bufnr then

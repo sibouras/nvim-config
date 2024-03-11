@@ -389,7 +389,7 @@ return {
       end,
       update = 'BufEnter',
       provider = function()
-        local key = require('grapple').key()
+        local key = require('grapple').name_or_index()
         return '  [' .. key .. ']'
       end,
       hl = { fg = 'gray' },
@@ -618,9 +618,9 @@ return {
         local bufterm_ok, bufterm = pcall(require, 'bufterm')
         if bufterm_ok then
           local index = require('bufterm.terminal').get_index(0) or ''
-          return '[' .. index .. ']  ' .. tname
+          return '[' .. index .. ']   ' .. tname
         else
-          return ' ' .. tname
+          return '  ' .. tname
         end
       end,
       hl = { fg = 'blue', bold = true },
