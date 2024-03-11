@@ -112,7 +112,7 @@ vim.cmd([[
   endif
   autocmd! TabLeave * let g:Lasttab_backup = g:Lasttab | let g:Lasttab = tabpagenr()
   autocmd! TabClosed * let g:Lasttab = g:Lasttab_backup
-  nmap <silent> <C-h> :exe "tabn " . g:Lasttab<cr>
+  " nmap <silent> <C-h> :exe "tabn " . g:Lasttab<cr>
 ]])
 
 -- Move text up and down(using nvim-gomove instead)
