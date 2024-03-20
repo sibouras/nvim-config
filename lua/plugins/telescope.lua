@@ -1,11 +1,16 @@
 return {
   {
     'nvim-telescope/telescope.nvim',
+    commit = 'c816406bd50ade6ec754474f08974154487d417c',
     cmd = 'Telescope',
     dependencies = {
       'nvim-lua/plenary.nvim',
       'smartpde/telescope-recent-files',
-      'nvim-telescope/telescope-frecency.nvim',
+      {
+        'nvim-telescope/telescope-frecency.nvim',
+        commit = '771726f7d6e7e96e9273e454b1c1f49168663a37',
+        enabled = false,
+      },
       {
         'nvim-telescope/telescope-ui-select.nvim',
         init = function()
@@ -267,7 +272,7 @@ return {
 
       pcall(require('telescope').load_extension, 'fzf')
       telescope.load_extension('recent_files')
-      telescope.load_extension('frecency')
+      -- telescope.load_extension('frecency')
     end,
   },
 }
