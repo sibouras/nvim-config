@@ -389,8 +389,10 @@ return {
       end,
       update = 'BufEnter',
       provider = function()
-        local key = require('grapple').name_or_index()
-        return '  [' .. key .. ']'
+        -- local key = require('grapple').name_or_index()
+        -- return '  [' .. key .. ']'
+        local statusline = require('grapple').statusline()
+        return statusline
       end,
       hl = { fg = 'gray' },
     }
@@ -668,6 +670,7 @@ return {
 
     local DefaultStatusline = {
       ViMode,
+      Space,
       Grapple,
       Space,
       -- FileNameBlock,
