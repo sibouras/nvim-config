@@ -10,6 +10,6 @@ return {
     -- Jump to next entry in the edit history
     vim.keymap.set('n', '<C-l>', before.jump_to_next_edit, {})
     -- Move edit history to quickfix and open it (or telescope)
-    vim.keymap.set('n', 'mo', before.show_edits, {})
+    vim.keymap.set('n', 'mo', before.show_edits_in_quickfix, {})
   end,
 }
