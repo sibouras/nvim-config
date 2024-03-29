@@ -46,7 +46,7 @@ return {
         vim.schedule(function()
           -- move the cursor to the line containing the current filename
           -- doesn't work outside of vim.schedule
-          vim.fn.search('.*' .. path)
+          -- vim.fn.search('.*' .. path)
           -- add a hl group to current file
           vim.fn.clearmatches()
           vim.fn.matchadd('GrappleCurrentFile', path)

@@ -1,6 +1,5 @@
 return {
   'echasnovski/mini.visits',
-  keys = '<leader>vs',
   opts = {
     -- How visit index is converted to list of paths
     list = {

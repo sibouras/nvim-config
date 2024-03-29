@@ -1,6 +1,6 @@
 return {
   'chrisgrieser/nvim-spider',
-  enabled = true,
+  enabled = false,
   keys = {
     { 'W', "<cmd>lua require('spider').motion('w')<CR>", mode = { 'n', 'o', 'x' } },
     { 'E', "<cmd>lua require('spider').motion('e')<CR>", mode = { 'n', 'o', 'x' } },

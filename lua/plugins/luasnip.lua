@@ -1,5 +1,6 @@
 return {
   'L3MON4D3/LuaSnip',
+  event = 'BufReadPost', -- ls.filetype_extend was not working
   keys = {
     -- stylua: ignore start
     { '<C-j>', function()

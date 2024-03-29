@@ -44,6 +44,7 @@ map('v', '>', '>gv')
 
 -- search for word under cursor without moving
 -- map('n', 'gw', '*N')
+-- map('n', 'gw', [[:%s/<C-r>=expand('<cword>')<CR>//n<CR>]])
 map('n', 'gw', '<Cmd>norm! gd<CR>')
 map('x', 'gw', [[y/\V<C-R>"<CR>N]])
 
