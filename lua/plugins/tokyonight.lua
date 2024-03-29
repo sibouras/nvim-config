@@ -30,6 +30,8 @@ return {
         hl.MiniFilesCursorLine = { link = 'Visual' }
         hl.GrappleCurrentFile = { fg = colors.blue }
         hl.TelescopeBufferLoaded = { link = 'Text' } -- telescope frecency
+        hl.TelescopePromptBorder = {}
+        hl.TelescopePromptTitle = {}
       end,
     })
 
