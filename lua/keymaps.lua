@@ -272,12 +272,13 @@ map('n', '[q', ':cprevious<CR>')
 map('n', ']q', ':cnext<CR>')
 
 -- yank to system clipboard
-map({ 'n', 'v' }, '<M-y>', '"+y')
-map('n', '<M-Y>', '"+y$')
-map({ 'n', 'v' }, '<M-p>', '"+p')
-map('i', '<M-p>', '<C-r><C-o>+', { desc = "Insert the contents of a register literally and don't auto-indent" })
-map('c', '<M-p>', '<C-r>+', { silent = false })
-map({ 'n', 'v' }, '<M-S-p>', '"+P')
+map({ 'n', 'v' }, '<leader>y', '"+y')
+map('n', '<leader>Y', '"+y$')
+map({ 'n', 'v' }, '<leader>p', '"+p')
+map('n', '<leader>P', '"+P')
+-- use the ctrl+shift+v instead
+-- map('i', '<M-p>', '<C-r><C-o>+', { desc = "Insert the contents of a register literally and don't auto-indent" })
+-- map('c', '<M-p>', '<C-r>+', { silent = false })
 
 -- paste from ditto
 map('n', '<S-Insert>', '"+p')
@@ -303,7 +304,7 @@ map('n', '<leader>D', '"_D')
 -- map("n", "X", '"_X')
 
 -- unexpected behavior when pasting above highlighted text
-map('v', '<leader>p', '"_dP')
+-- map('v', '<leader>p', '"_dP') -- already exists with P
 
 -- change directory to the file being edited and print the directory after changing
 map('n', '<leader>cd', ':cd %:p:h<CR>:pwd<CR>', { desc = 'change directory to the file being edited' })
@@ -397,7 +398,7 @@ end, { desc = 'toggle quickfix window' })
 -- Terminal Mappings
 map('t', '`', '<c-\\><c-n>', { desc = 'Enter Normal Mode' })
 map('t', '<C-r>', [['<C-\><C-n>"' . nr2char(getchar()) . 'pi']], { expr = true })
-map('t', '<M-p>', [[<C-\><C-n>"+pi]])
+-- map('t', '<M-p>', [[<C-\><C-n>"+pi]])
 
 ----------------------------------
 --- functions
