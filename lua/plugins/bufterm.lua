@@ -28,7 +28,14 @@ return {
     })
 
     local nu = require('bufterm.terminal').Terminal:new({
-      cmd = 'nu --no-std-lib',
+      cmd = function()
+        local flag = vim.opt.shellcmdflag:get()
+        vim.opt.shellcmdflag = '--no-config-file -c'
+        vim.schedule(function()
+          vim.opt.shellcmdflag = flag
+        end)
+        return 'nu --no-std-lib'
+      end,
       buflisted = false,
       termlisted = true, -- set this option to false if you treat this terminal as single independent terminal
     })
