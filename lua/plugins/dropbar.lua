@@ -1,5 +1,6 @@
 return {
   'Bekaboo/dropbar.nvim',
+  enabled = false,
   config = function()
     local menu_utils = require('dropbar.utils.menu')
 

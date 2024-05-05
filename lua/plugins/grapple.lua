@@ -18,14 +18,14 @@ return {
     {
       '<C-n>',
       function()
-        require('grapple').cycle_forward()
+        require('grapple').cycle_tags('next')
       end,
       desc = 'Cycle forwards to marked file',
     },
     {
       '<C-p>',
       function()
-        require('grapple').cycle_backward()
+        require('grapple').cycle_tags('previous')
       end,
       desc = 'Cycle backwards to marked file',
     },
