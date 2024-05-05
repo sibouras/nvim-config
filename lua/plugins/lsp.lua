@@ -376,6 +376,13 @@ return {
         })
       end,
 
+      ['emmet_language_server'] = function()
+        lspconfig.emmet_language_server.setup({
+          capabilities = capabilities,
+          filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less' },
+        })
+      end,
+
       ['marksman'] = function()
         lspconfig.marksman.setup({
           on_attach = on_attach,
