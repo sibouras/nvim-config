@@ -212,13 +212,13 @@ return {
           if vim.wo.diff and vim.b.gitsigns_head == nil then
             vim.cmd('norm! ]c')
           else
-            gitsigns.next_hunk()
+            gitsigns.nav_hunk('next')
           end
         end, function()
           if vim.wo.diff and vim.b.gitsigns_head == nil then
             vim.cmd('norm! [c')
           else
-            gitsigns.prev_hunk()
+            gitsigns.nav_hunk('prev')
           end
         end)
         -- Or, use `make_repeatable_move` or `set_last_move` functions for more control. See the code for instructions.
