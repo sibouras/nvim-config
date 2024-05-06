@@ -1,7 +1,6 @@
 return {
   {
     'nvim-telescope/telescope.nvim',
-    commit = 'c816406bd50ade6ec754474f08974154487d417c',
     cmd = 'Telescope',
     dependencies = {
       'nvim-lua/plenary.nvim',

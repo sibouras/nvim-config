@@ -49,6 +49,7 @@ return {
     ls.config.set_config({
       keep_roots = true,
       link_roots = true,
+      exit_roots = false,
       link_children = false,
       update_events = 'TextChanged,TextChangedI',
       -- region_check_events = "CursorMoved,CursorHold,InsertEnter",
