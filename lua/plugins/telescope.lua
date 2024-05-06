@@ -54,7 +54,12 @@ return {
         defaults = {
           prompt_prefix = ' ',
           selection_caret = ' ',
-          path_display = { 'shorten' },
+          -- path_display = { '' },
+          path_display = {
+            filename_first = {
+              reverse_directories = false,
+            },
+          },
           file_ignore_patterns = { '.git\\', 'node_modules', '^.nvim' },
           sorting_strategy = 'ascending',
           layout_strategy = 'flex',
@@ -159,8 +164,8 @@ return {
           -- builtin picker
           find_files = {
             hidden = true, -- show hidden files
-            path_display = { 'smart' },
-            find_command = { 'fd', '--type', 'f' },
+            -- find_command = { 'fd', '--type', 'f' },
+            find_command = { 'rg', '--files' }, -- rg is faster
             follow = true,
           },
           buffers = {
@@ -168,7 +173,6 @@ return {
               i = { ['<C-x>'] = actions.delete_buffer },
               n = { ['<C-x>'] = actions.delete_buffer },
             },
-            path_display = { 'smart' },
             initial_mode = 'normal',
             -- ignore_current_buffer = true,
             sort_mru = true,
