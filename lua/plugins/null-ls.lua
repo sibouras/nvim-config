@@ -26,7 +26,6 @@ return {
             'typescriptreact',
             'json',
             'jsonc',
-            'html',
             'css',
           },
           env = {

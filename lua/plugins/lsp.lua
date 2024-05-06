@@ -68,7 +68,7 @@ return {
       --   require('utils.toggle').inlay_hints(bufnr, true)
       -- end
 
-      if client.name == 'tsserver' then
+      if client.name == 'tsserver' or client.name == 'html' then
         client.server_capabilities.documentFormattingProvider = false
       end
 
