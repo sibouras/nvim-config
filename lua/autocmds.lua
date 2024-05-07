@@ -2,15 +2,6 @@ local function augroup(name)
   return vim.api.nvim_create_augroup('MyGroup_' .. name, { clear = true })
 end
 
--- Highlight on yank
-vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight on yank',
-  group = augroup('highlight_yank'),
-  callback = function()
-    vim.highlight.on_yank({ higroup = 'IncSearch', timeout = 200 })
-  end,
-})
-
 vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
   desc = 'disable auto-comment on o and O and enter',
   group = augroup('formatoptions'),
@@ -152,5 +143,45 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
       vim.fn.execute(current_quick_fix_index .. 'cfirst')
       vim.cmd('copen')
     end, { buffer = true })
+  end,
+})
+
+-- save small deletions and yanks to numbered registers
+-- from: https://old.reddit.com/r/neovim/comments/1ckyj9a/a_collection_of_registerrelated_hacks/
+-- gist: https://gist.github.com/MyyPo/569de2bff5644d2c351d54a0d42ad09f
+---@param reg Register
+local function shift_reg(reg)
+  ---@class Register
+  ---@field val string
+  ---@field typ string
+  for i = 8, 1, -1 do
+    vim.fn.setreg(i + 1, vim.fn.getreg(i), vim.fn.getregtype(i))
+  end
+  vim.fn.setreg('1', reg.val, reg.typ)
+end
+
+vim.g.lat_small_reg = vim.fn.getreg('-')
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight on yank, save small deletions and yanks to numbered registers',
+  group = augroup('highlight_yank'),
+  pattern = '*',
+  callback = function()
+    if vim.v.event.operator == 'y' then
+      -- Highlight the yanked area
+      vim.highlight.on_yank({ higroup = 'IncSearch', timeout = 200 })
+      -- save yanks in the numbered registers
+      shift_reg({ val = vim.fn.getreg('0'), typ = vim.fn.getregtype('0') })
+      return
+    end
+    -- Ignore regular deletes
+    if vim.v.event.regtype ~= 'v' then
+      return
+    end
+    -- Save small deletes in numbered registers
+    local small = vim.fn.getreg('-')
+    if small ~= vim.g.lat_small_reg then
+      shift_reg({ val = small, typ = vim.fn.getregtype('-') })
+      vim.g.lat_small_reg = small
+    end
   end,
 })
