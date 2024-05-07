@@ -1,5 +1,6 @@
 return {
   'dhruvasagar/vim-buffer-history',
+  enabled = false,
   event = { 'BufReadPre', 'BufNewFile' },
   keys = {
     { '<M-Right>', '<Cmd>BufferHistoryForward<CR>', mode = { 'i', 'n' }, desc = 'Buffer History Forward' },
