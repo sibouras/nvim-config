@@ -35,14 +35,34 @@ return {
     local minivisits = require('mini.visits')
     minivisits.setup(opts)
 
-    -- Create and select
-    local map_vis = function(keys, call, desc)
+    local map = function(lhs, call, desc)
       local rhs = '<Cmd>lua MiniVisits.' .. call .. '<CR>'
-      vim.keymap.set('n', '<Leader>' .. keys, rhs, { desc = desc })
+      vim.keymap.set('n', lhs, rhs, { desc = desc })
     end
 
-    map_vis('vs', 'select_path()', 'MiniVisits Select path')
-    map_vis('vv', 'add_path()', 'MiniVisits Add path')
-    map_vis('vV', 'remove_path()', 'MiniVisits Remove path')
+    map('<leader>vv', 'add_path()', 'MiniVisits Add path')
+    map('<leader>vV', 'remove_path()', 'MiniVisits Remove path')
+
+    -- Select approach keymaps
+    local make_select_path = function(select_global, recency_weight)
+      local visits = require('mini.visits')
+      local sort = visits.gen_sort.default({ recency_weight = recency_weight })
+      local select_opts = { sort = sort }
+      return function()
+        local cwd = select_global and '' or vim.fs.normalize(vim.fn.getcwd())
+        visits.select_path(cwd, select_opts)
+      end
+    end
+
+    local map_select = function(lhs, desc, ...)
+      vim.keymap.set('n', lhs, make_select_path(...), { desc = desc })
+    end
+
+    map_select('<leader>vR', 'MiniVisits select recent (all)', true, 1)
+    map_select('<leader>vr', 'MiniVisits select recent (cwd)', false, 1)
+    map_select('<leader>vS', 'MiniVisits select frecent (all)', true, 0.5)
+    map_select('<leader>vs', 'MiniVisits select frecent (cwd)', false, 0.5)
+    map_select('<leader>vF', 'MiniVisits select frequent (all)', true, 0)
+    map_select('<leader>vf', 'MiniVisits select frequent (cwd)', false, 0)
   end,
 }
