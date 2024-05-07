@@ -236,9 +236,9 @@ return {
           recent_files = {
             only_cwd = true,
             show_current_file = true,
-            path_display = function(_, path)
-              return vim.fn.fnamemodify(path, ':.')
-            end,
+            -- path_display = function(_, path)
+            --   return vim.fn.fnamemodify(path, ':.')
+            -- end,
           },
           frecency = {
             default_workspace = 'CWD',
