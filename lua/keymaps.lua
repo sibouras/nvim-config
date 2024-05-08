@@ -53,8 +53,9 @@ map('n', '<M-Down>', '<cmd>m .+1<cr>==', { desc = 'Move down' })
 map('n', '<M-Up>', '<cmd>m .-2<cr>==', { desc = 'Move up' })
 map('i', '<M-Down>', '<esc><cmd>m .+1<cr>==gi', { desc = 'Move down' })
 map('i', '<M-Up>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move up' })
-map('v', '<M-Down>', ":m '>+1<cr>gv=gv", { desc = 'Move down' })
-map('v', '<M-Up>', ":m '<-2<cr>gv=gv", { desc = 'Move up' })
+-- NOTE: using these mappings for small.nvim treeselect
+-- map('v', '<M-Down>', ":m '>+1<cr>gv=gv", { desc = 'Move down' })
+-- map('v', '<M-Up>', ":m '<-2<cr>gv=gv", { desc = 'Move up' })
 
 -- Resize window using <ctrl> arrow keys
 map('n', '<C-Up>', '<cmd>resize +2<cr>', { desc = 'Increase window height' })
@@ -565,9 +566,25 @@ map('n', '<leader>lww', ':Telescope lsp_dynamic_workspace_symbols<CR>', { desc =
 -- map("n", "<C-j>", "<Plug>(buf-surf-forward)")
 -- map("n", "<C-k>", "<Plug>(buf-surf-back)")
 
+---------------------------------------------------------------
+-- => small.nvim
+---------------------------------------------------------------
+require('small.highlight_selected').setup()
+
+-- stylua: ignore start
+map('n', '<leader>i', function() require('small.bufend').run() end, { desc = 'Bufend' })
+
+local treeselect = require('small.treeselect')
+map('x', '<M-Right>', function() treeselect.next() end, { desc = 'TreeSelect next node' })
+map('x', '<M-Left>', function() treeselect.prev() end, { desc = 'TreeSelect prev node' })
+map('x', '<M-Up>', function() treeselect.up() end, { desc = 'TreeSelect parent node' })
+map('x', '<M-Down>', function() treeselect.down() end, { desc = 'TreeSelect child node' })
+map('n', '<M-Home>', function() treeselect.current() end, { desc = 'TreeSelect current node' })
+map('n', '<M-End>', function() treeselect.line() end, { desc = 'TreeSelect current node linewise' })
+-- stylua: ignore end
+
 local fn = vim.fn
 local api = vim.api
-
 -- move around indents
 -- from https://github.com/tj-moody/.dotfiles/blob/c2afec06b68cd0413c20d332672907c11f0a9c47/nvim/lua/mappings.lua#L171C1-L171C1
 -- Adapted from https://vi.stackexchange.com/a/12870

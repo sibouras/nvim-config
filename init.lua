@@ -47,9 +47,3 @@ require('keymaps')
 require('options')
 require('autocmds')
 require('close-unused-buffers')
-
--- small.nvim
-require('small.highlight_selected').setup()
-vim.keymap.set('n', '<leader>i', function()
-  require('small.bufend').run()
-end)
