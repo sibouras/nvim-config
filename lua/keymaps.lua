@@ -174,7 +174,8 @@ function! ScrollGolden(move)
     let key='gj'
     let post='zb'
   endif
-  execute 'keepjumps normal! ' . prep . float2nr(round(height*0.24)) . key . post
+  "execute 'keepjumps normal! ' . prep . float2nr(round(height*0.24)) . key . post
+  execute 'keepjumps normal! ' . prep . 5 . key . post
 endfunction
 nnoremap <silent> <C-k> <cmd>call ScrollGolden('up')<CR>
 vnoremap <silent> <C-k> <cmd>call ScrollGolden('up')<CR>
@@ -549,11 +550,35 @@ map('n', '<leader>ld', ':Telescope diagnostics<CR>', { desc = 'Telescope diagnos
 map('n', '<leader>ft', ':Telescope treesitter previewer=true<CR>', { desc = 'Telescope treesitter' })
 map(
   'n',
-  '<leader>ls',
+  '<leader>lS',
   ':Telescope lsp_document_symbols previewer=true<CR>',
-  { desc = 'Telescope lsp_document_symbols' }
+  { desc = 'Telescope lsp_document_symbols all' }
 )
-map('n', '<leader>lww', ':Telescope lsp_dynamic_workspace_symbols<CR>', { desc = 'LSP: [W]orkspace [S]ymbols' })
+map('n', '<leader>lwW', ':Telescope lsp_dynamic_workspace_symbols<CR>', { desc = 'LSP: [W]orkspace [S]ymbols' })
+local symbols = {
+  'Class',
+  'Function',
+  'Method',
+  'Constructor',
+  'Interface',
+  'Module',
+  'Struct',
+  'Trait',
+  'Field',
+  'Property',
+}
+map('n', '<leader>ls', function()
+  require('telescope.builtin').lsp_document_symbols({
+    previewer = true,
+    symbols = symbols,
+  })
+end, { desc = 'Telescope lsp_document_symbols' })
+map('n', '<leader>lww', function()
+  require('telescope.builtin').lsp_dynamic_workspace_symbols({
+    previewer = true,
+    symbols = symbols,
+  })
+end, { desc = 'Telescope lsp_document_symbols' })
 
 ---------------------------------------------------------------
 -- => document-color.nvim
@@ -628,14 +653,6 @@ map({ 'n', 'x' }, 'gj', indent_traverse(1, true)) -- next equal indent
 map({ 'n', 'x' }, 'gk', indent_traverse(-1, true)) -- previous equal indent
 map({ 'n', 'x' }, 'gJ', indent_traverse(1, false)) -- next bigger indent
 map({ 'n', 'x' }, 'gK', indent_traverse(-1, false)) -- previous bigger indent
-
--- For moving quickly up and down,
--- Goes to the first line above/below that isn't whitespace
--- Thanks to: http://vi.stackexchange.com/a/213
-vim.cmd([[
-  nnoremap <silent> <leader>j :let _=&lazyredraw<CR>:set lazyredraw<CR>/\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>:let &lazyredraw=_<CR>
-  nnoremap <silent> <leader>k :let _=&lazyredraw<CR>:set lazyredraw<CR>?\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>:let &lazyredraw=_<CR>
-]])
 
 -- toggle options
 local toggle = require('utils.toggle')
