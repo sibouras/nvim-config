@@ -11,13 +11,13 @@ return {
     },
     opts = {
       ensure_installed = {
-        -- "html",
-        -- "css",
-        -- "javascript",
-        -- "tsx",
-        -- "typescript",
-        -- "markdown",
-        -- "markdown_inline",
+        'html',
+        'css',
+        'javascript',
+        'tsx',
+        'typescript',
+        'markdown',
+        'markdown_inline',
       },
       sync_install = false,
       -- Automatically install missing parsers when entering buffer
