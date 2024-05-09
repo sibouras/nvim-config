@@ -11,6 +11,10 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- LazyFile event ot Properly load file based plugins without blocking the UI
+-- WARNING: load before Lazy
+require('utils.plugin').lazy_file()
+
 -- Remap space as leader key
 vim.g.mapleader = ' ' -- Make sure to set `mapleader` before lazy so your mappings are correct
 vim.g.maplocalleader = ' '

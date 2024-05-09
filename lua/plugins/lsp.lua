@@ -3,7 +3,7 @@ return {
   -- LSP Configuration & Plugins
   'neovim/nvim-lspconfig',
   -- commit = '1393aaca8a59a9ce586ed55770b3a02155a56ac2',
-  event = { 'BufReadPre', 'BufNewFile' },
+  event = 'LazyFile',
   dependencies = {
     -- Automatically install LSPs to stdpath for neovim
     'williamboman/mason.nvim',

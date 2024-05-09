@@ -3,7 +3,7 @@ return {
     'nvim-treesitter/nvim-treesitter',
     -- build = ":TSUpdate",
     -- event = "BufEnter",
-    event = { 'BufReadPost', 'BufNewFile' },
+    event = { 'LazyFile', 'VeryLazy' },
     cmd = { 'TSUpdateSync', 'TSUpdate', 'TSInstall', 'TSInstallInfo' },
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
