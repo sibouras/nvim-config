@@ -68,6 +68,12 @@ return {
       --   require('utils.toggle').inlay_hints(bufnr, true)
       -- end
 
+      -- -- disable semantic tokens
+      -- -- NOTE: get the method names from: $vimruntime\lua\vim\lsp\protocol.lua
+      -- if client.supports_method('textDocument/semanticTokens') then
+      --   client.server_capabilities.semanticTokensProvider = nil
+      -- end
+
       if client.name == 'tsserver' or client.name == 'html' then
         client.server_capabilities.documentFormattingProvider = false
       end

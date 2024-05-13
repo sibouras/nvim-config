@@ -663,6 +663,7 @@ map('n', '<leader>un', function() toggle('number') end, { desc = 'Toggle Number'
 map('n', '<leader>ul', function() toggle('relativenumber') end, { desc = 'Toggle Relative Line Numbers' })
 map('n', '<leader>uL', function() toggle.number() end, { desc = 'Toggle Line Numbers' })
 map('n', '<leader>ud', function() toggle.diagnostics() end, { desc = 'Toggle Diagnostics' })
+map('n', '<leader>uT', function() toggle.buffer_semantic_tokens() end)
 
 local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 2
 map('n', '<leader>uc', function() toggle('conceallevel', false, { 0, conceallevel }) end, { desc = 'Toggle Conceal' })

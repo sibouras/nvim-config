@@ -62,6 +62,26 @@ function M.inlay_hints(buf, value)
   end
 end
 
+--- Toggle buffer semantic token highlighting for all language servers that support it
+---@param bufnr? integer the buffer to toggle the clients on
+---@param silent? boolean if true then don't sent a notification
+function M.buffer_semantic_tokens(bufnr, silent)
+  bufnr = bufnr or vim.api.nvim_get_current_buf()
+  vim.b[bufnr].semantic_tokens = not vim.b[bufnr].semantic_tokens
+  local toggled = false
+  for _, client in ipairs((vim.lsp.get_clients)({ bufnr = bufnr })) do
+    if client.server_capabilities.semanticTokensProvider then
+      vim.lsp.semantic_tokens[vim.b[bufnr].semantic_tokens and 'start' or 'stop'](bufnr, client.id)
+      toggled = true
+    end
+  end
+  if not silent then
+    if toggled then
+      vim.notify(('%s semantic highlighting'):format(vim.b[bufnr].semantic_tokens and 'Enabled' or 'Disabled'))
+    end
+  end
+end
+
 setmetatable(M, {
   __call = function(m, ...)
     return m.option(...)
