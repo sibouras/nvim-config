@@ -175,7 +175,7 @@ function! ScrollGolden(move)
     let post='zb'
   endif
   "execute 'keepjumps normal! ' . prep . float2nr(round(height*0.24)) . key . post
-  execute 'keepjumps normal! ' . prep . 5 . key . post
+  execute 'keepjumps normal! ' . prep . 5 . key
 endfunction
 nnoremap <silent> <C-k> <cmd>call ScrollGolden('up')<CR>
 vnoremap <silent> <C-k> <cmd>call ScrollGolden('up')<CR>
