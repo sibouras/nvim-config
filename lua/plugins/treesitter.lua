@@ -2,7 +2,6 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     -- build = ":TSUpdate",
-    -- event = "BufEnter",
     event = { 'LazyFile', 'VeryLazy' },
     cmd = { 'TSUpdateSync', 'TSUpdate', 'TSInstall', 'TSInstallInfo' },
     init = function(plugin)
