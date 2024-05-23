@@ -13,10 +13,7 @@ return {
       require('lazy.core.loader').add_to_rtp(plugin)
       require('nvim-treesitter.query_predicates')
     end,
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter-textobjects',
-      'windwp/nvim-ts-autotag',
-    },
+    dependencies = 'nvim-treesitter/nvim-treesitter-textobjects',
     opts = {
       ensure_installed = {
         'html',
@@ -33,9 +30,6 @@ return {
       auto_install = false,
       -- ignore_install = { "tlaplus" }, -- List of parsers to ignore installing
       autopairs = {
-        enable = true,
-      },
-      autotag = {
         enable = true,
       },
       highlight = {
@@ -266,5 +260,10 @@ return {
         map({ 'n', 'x', 'o' }, '[t', prev_treesitter, { desc = 'Treesitter forward' })
       end
     end,
+  },
+  {
+    'windwp/nvim-ts-autotag',
+    event = 'LazyFile',
+    opts = {},
   },
 }
