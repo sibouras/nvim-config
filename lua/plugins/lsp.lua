@@ -68,11 +68,24 @@ return {
       --   require('utils.toggle').inlay_hints(bufnr, true)
       -- end
 
-      -- -- disable semantic tokens
-      -- -- NOTE: get the method names from: $vimruntime\lua\vim\lsp\protocol.lua
-      -- if client.supports_method('textDocument/semanticTokens') then
-      --   client.server_capabilities.semanticTokensProvider = nil
-      -- end
+      -- semantic tokens
+      -- NOTE: get the method names from: vim.lsp.protocol.Methods
+      if client.supports_method('textDocument/semanticTokens') then
+        -- client.server_capabilities.semanticTokensProvider = nil
+        if client.name == 'lua_ls' then
+          -- override tokenTypes table because i only want to highlight parameters
+          client.server_capabilities.semanticTokensProvider.legend.tokenTypes = {
+            'namespace',
+            'type',
+            'class',
+            'enum',
+            'interface',
+            'struct',
+            'typeParameter',
+            'parameter',
+          }
+        end
+      end
 
       if client.name == 'tsserver' or client.name == 'html' then
         client.server_capabilities.documentFormattingProvider = false
