@@ -184,6 +184,9 @@ return {
             --   preview_cutoff = 120,
             -- },
           },
+          git_status = {
+            previewer = true,
+          },
           marks = {
             mappings = {
               i = { ['<C-x>'] = actions.delete_mark },
