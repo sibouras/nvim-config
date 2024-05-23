@@ -1,6 +1,7 @@
 return {
   'chrisgrieser/nvim-various-textobjs',
   lazy = false,
+  enabled = false,
   config = function()
     local map = vim.keymap.set
 
@@ -12,8 +13,6 @@ return {
     map({ 'o', 'x' }, '<CR>', "<Cmd>lua require('various-textobjs').restOfParagraph()<CR>")
     -- rest of indentation
     map({ 'o', 'x' }, 'R', "<Cmd>lua require('various-textobjs').restOfIndentation()<CR>")
-    -- from cursor to next closing ], ), or }
-    map({ 'o', 'x' }, 'T', "<Cmd>lua require('various-textobjs').toNextClosingBracket()<CR>")
     -- column down until indent or shorter line.
     map({ 'o', 'x' }, '|', "<Cmd>lua require('various-textobjs').column()<CR>")
     -- entire buffer
