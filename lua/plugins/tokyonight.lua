@@ -34,6 +34,7 @@ return {
         hl.TelescopePromptBorder = {}
         hl.TelescopePromptTitle = {}
         hl.TelescopeResultsComment = { fg = colors.dark5 }
+        hl.CursorLineNr = { fg = colors.dark5, bold = true }
       end,
     })
 
