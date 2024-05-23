@@ -1,6 +1,12 @@
 return {
   {
+    'folke/ts-comments.nvim',
+    event = 'VeryLazy',
+    opts = {},
+  },
+  {
     'JoosepAlviste/nvim-ts-context-commentstring',
+    enabled = false,
     lazy = true,
     opts = {
       enable_autocmd = false,
@@ -25,7 +31,7 @@ return {
   },
   {
     'numToStr/Comment.nvim',
-    enabled = true,
+    enabled = false,
     keys = {
       { 'gc', mode = { 'n', 'x' }, desc = 'Coment toggle linewise' },
       { 'gb', mode = { 'n', 'x' }, desc = 'Coment toggle blockwise' },
