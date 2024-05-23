@@ -376,7 +376,7 @@ augroup END
 -- map('t', '<C-t>', [[<C-\><C-n>:call ToggleZoom(v:true)<CR>i]])
 
 -- open current file in explorer
-map('n', '<leader>ul', ':silent !start %:p:h<CR>', { desc = 'open current file in explorer' })
+map('n', '<leader>ue', ':silent !start %:p:h<CR>', { desc = 'Open current file in explorer' })
 
 -- Toggle quickfix window
 map('n', '<leader>x', function()
@@ -659,11 +659,11 @@ local toggle = require('utils.toggle')
 -- stylua: ignore start
 map('n', '<leader>us', function() toggle('spell') end, { desc = 'Toggle Spelling' })
 map('n', '<leader>uw', function() toggle('wrap') end, { desc = 'Toggle Word Wrap' })
-map('n', '<leader>un', function() toggle('number') end, { desc = 'Toggle Number' })
-map('n', '<leader>ul', function() toggle('relativenumber') end, { desc = 'Toggle Relative Line Numbers' })
-map('n', '<leader>uL', function() toggle.number() end, { desc = 'Toggle Line Numbers' })
+map('n', '<leader>ul', function() toggle('list') end, { desc = 'Toggle List' })
+map('n', '<leader>ur', function() toggle('relativenumber') end, { desc = 'Toggle Relative Line Numbers' })
+map('n', '<leader>un', function() toggle.number() end, { desc = 'Toggle Line Numbers' })
 map('n', '<leader>ud', function() toggle.diagnostics() end, { desc = 'Toggle Diagnostics' })
-map('n', '<leader>uT', function() toggle.buffer_semantic_tokens() end)
+map('n', '<leader>uT', function() toggle.buffer_semantic_tokens() end, { desc = 'Toggle Semantic Tokens' })
 
 local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 2
 map('n', '<leader>uc', function() toggle('conceallevel', false, { 0, conceallevel }) end, { desc = 'Toggle Conceal' })
