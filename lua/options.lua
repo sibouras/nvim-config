@@ -63,7 +63,8 @@ vim.opt.cpoptions:append('>') -- When appending to a register, put a line break 
 -- vim.opt.concealcursor:append("nc")
 -- view: When you jump around, or switch buffers with ctrl-^ the viewport is
 -- restored instead of resetting/recentering vertically.
-vim.opt.jumpoptions:append('stack') -- stack:browser-like jumplist behavior
+-- vim.opt.jumpoptions:append('stack') -- stack:browser-like jumplist behavior
+vim.opt.jumpoptions = 'stack,view'
 vim.opt.diffopt:append('linematch:60')
 vim.opt.path = ',,.' -- the default '.,,' doesn't work
 -- the lazy way(slow): https://gist.github.com/romainl/7e2b425a1706cd85f04a0bd8b3898805#the-lazy-way
