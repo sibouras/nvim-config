@@ -128,13 +128,16 @@ function M.statuscolumn()
   -- They show when either number or relativenumber is true
   local is_num = vim.wo[win].number
   local is_relnum = vim.wo[win].relativenumber
-  if (is_num or is_relnum) and vim.v.virtnum == 0 then
-    if vim.v.relnum == 0 then
-      components[2] = is_num and '%l' or '%r' -- the current line
-    else
-      components[2] = is_relnum and '%r' or '%l' -- other lines
-    end
-    components[2] = '%=' .. components[2] .. ' ' -- right align
+  -- Gitsigns travels when using wrap=true
+  -- from: https://github.com/LazyVim/LazyVim/pull/1980
+  if is_num and is_relnum then
+    components[2] = '%=%{v:relnum?(v:virtnum>0?"":v:relnum):(v:virtnum>0?"":v:lnum)} '
+  elseif is_num and not is_relnum then
+    components[2] = '%=%{v:virtnum>0?"":v:lnum} '
+  elseif is_relnum and not is_num then
+    components[2] = '%=%{v:virtnum>0?"":v:relnum} '
+  else
+    components[2] = ''
   end
 
   return table.concat(components, '')
