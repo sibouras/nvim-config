@@ -18,6 +18,7 @@ require('utils.plugin').lazy_file()
 -- Remap space as leader key
 vim.g.mapleader = ' ' -- Make sure to set `mapleader` before lazy so your mappings are correct
 vim.g.maplocalleader = ' '
+vim.g.is_win = vim.uv.os_uname().sysname:find('Windows') ~= nil
 vim.keymap.set('n', '<Space><Esc>', '<Nop>') -- prevent cursor jumping when escaping bofore which-key pops
 
 require('lazy').setup('plugins', {
