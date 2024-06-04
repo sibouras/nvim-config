@@ -27,14 +27,17 @@ return {
       end,
     })
 
-    local nu = require('bufterm.terminal').Terminal:new({
+    local shell = require('bufterm.terminal').Terminal:new({
       cmd = function()
-        local flag = vim.opt.shellcmdflag:get()
-        vim.opt.shellcmdflag = '--no-config-file -c'
-        vim.schedule(function()
-          vim.opt.shellcmdflag = flag
-        end)
-        return 'nu --no-std-lib'
+        if vim.g.is_win then
+          local flag = vim.opt.shellcmdflag:get()
+          vim.opt.shellcmdflag = '--no-config-file -c'
+          vim.schedule(function()
+            vim.opt.shellcmdflag = flag
+          end)
+          return 'nu --no-std-lib'
+        end
+        return vim.o.shell
       end,
       buflisted = false,
       termlisted = true, -- set this option to false if you treat this terminal as single independent terminal
@@ -53,8 +56,8 @@ return {
         recent_bufnr = cur_bufnr
         vim.cmd('close')
       elseif recent_bufnr == nil then
-        nu:spawn()
-        require('bufterm.ui').toggle_float(nu.bufnr)
+        shell:spawn()
+        require('bufterm.ui').toggle_float(shell.bufnr)
       elseif require('bufterm.ui').toggle_float(recent_bufnr) then
         vim.cmd('BufTermEnter')
       end
@@ -85,8 +88,8 @@ return {
           vim.opt_local.sidescrolloff = 10
         end)
       elseif recent_bufnr == nil then
-        nu:spawn()
-        vim.cmd('b' .. nu.bufnr)
+        shell:spawn()
+        vim.cmd('b' .. shell.bufnr)
       else
         vim.cmd('b' .. recent_bufnr)
       end
@@ -98,8 +101,8 @@ return {
         recent_bufnr = cur_bufnr
         vim.cmd('close')
       elseif recent_bufnr == nil then
-        nu:spawn()
-        vim.cmd('sb' .. nu.bufnr)
+        shell:spawn()
+        vim.cmd('sb' .. shell.bufnr)
         if type(vim.g.termheight) == 'number' and vim.g.termheight > 0 then
           vim.cmd('resize' .. vim.g.termheight)
         end
@@ -117,8 +120,8 @@ return {
         recent_bufnr = cur_bufnr
         vim.cmd('close')
       elseif recent_bufnr == nil then
-        nu:spawn()
-        vim.cmd('vertical sb' .. nu.bufnr)
+        shell:spawn()
+        vim.cmd('vertical sb' .. shell.bufnr)
         if type(vim.g.termwidth) == 'number' and vim.g.termwidth > 0 then
           vim.cmd('vertical resize' .. vim.g.termwidth)
         end

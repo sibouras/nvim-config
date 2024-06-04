@@ -36,13 +36,13 @@ return {
     end
     map('n', '<M-F>', function()
       vim.lsp.buf.format({ async = true })
-      if vim.fn.has('nvim-0.10') == 1 then
+      if vim.g.is_win then
         restoreTitle()
       end
     end)
     map('v', '<M-F>', function()
       vim.lsp.buf.format({ async = true, range = true })
-      if vim.fn.has('nvim-0.10') == 1 then
+      if vim.g.is_win == 1 then
         restoreTitle()
       end
     end)
@@ -399,14 +399,6 @@ return {
         lspconfig.emmet_language_server.setup({
           capabilities = capabilities,
           filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less' },
-        })
-      end,
-
-      ['marksman'] = function()
-        lspconfig.marksman.setup({
-          on_attach = on_attach,
-          capabilities = capabilities,
-          cmd = { 'marksman.cmd', 'server' },
         })
       end,
 
