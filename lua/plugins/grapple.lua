@@ -4,7 +4,11 @@ return {
     {
       '<leader>w',
       function()
-        vim.g.grapple_current_file = string.gsub(vim.fn.expand('%'), '[/\\]', '\\\\')
+        if vim.g.is_win then
+          vim.g.grapple_current_file = string.gsub(vim.fn.expand('%'), '[/\\]', '\\\\')
+        else
+          vim.g.grapple_current_file = vim.fn.expand('%')
+        end
         require('grapple').toggle_tags()
       end,
     },

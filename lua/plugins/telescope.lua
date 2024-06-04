@@ -60,7 +60,7 @@ return {
               reverse_directories = false,
             },
           },
-          file_ignore_patterns = { '.git\\', 'node_modules', '^.nvim' },
+          file_ignore_patterns = { '.git[\\/]', 'node_modules', '^.nvim' },
           sorting_strategy = 'ascending',
           layout_strategy = 'flex',
           layout_config = {
