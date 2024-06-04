@@ -172,43 +172,45 @@ aunmenu PopUp.How-to\ disable\ mouse
 aunmenu PopUp.-1-
 ]])
 
---> nushell as shell
-vim.opt.shell = 'nu --no-std-lib'
--- `--stdin`: redirect all input to -c
--- `--no-newline`: do not append `\n` to stdout
--- `-c`: execute a command
-vim.opt.shellcmdflag = '--stdin --no-newline --no-config-file -c'
--- disable all escaping and quoting
-vim.opt.shellxescape = ''
-vim.opt.shellxquote = ''
-vim.opt.shellquote = ''
+if vim.g.is_win then
+  --> nushell as shell
+  vim.opt.shell = 'nu --no-std-lib'
+  -- `--stdin`: redirect all input to -c
+  -- `--no-newline`: do not append `\n` to stdout
+  -- `-c`: execute a command
+  vim.opt.shellcmdflag = '--stdin --no-newline --no-config-file -c'
+  -- disable all escaping and quoting
+  vim.opt.shellxescape = ''
+  vim.opt.shellxquote = ''
+  vim.opt.shellquote = ''
 
--- WARN: disable the usage of temp files for shell commands
--- because Nu doesn't support `input redirection` which Neovim uses to send buffer content to a command:
---      `{shell_command} < {temp_file_with_selected_buffer_content}`
--- When set to `false` the stdin pipe will be used instead.
--- NOTE: some info about `shelltemp`: https://github.com/neovim/neovim/issues/1008
-vim.opt.shelltemp = false
+  -- WARN: disable the usage of temp files for shell commands
+  -- because Nu doesn't support `input redirection` which Neovim uses to send buffer content to a command:
+  --      `{shell_command} < {temp_file_with_selected_buffer_content}`
+  -- When set to `false` the stdin pipe will be used instead.
+  -- NOTE: some info about `shelltemp`: https://github.com/neovim/neovim/issues/1008
+  vim.opt.shelltemp = false
 
--- string to be used to put the output of shell commands in a temp file
--- 1. when 'shelltemp' is `true`
--- 2. in the `diff-mode` (`nvim -d file1 file2`) when `diffopt` is set
---    to use an external diff command: `set diffopt-=internal`
-vim.opt.shellredir = 'out+err> %s'
+  -- string to be used to put the output of shell commands in a temp file
+  -- 1. when 'shelltemp' is `true`
+  -- 2. in the `diff-mode` (`nvim -d file1 file2`) when `diffopt` is set
+  --    to use an external diff command: `set diffopt-=internal`
+  vim.opt.shellredir = 'out+err> %s'
 
--- string to be used with `:make` command to:
--- 1. save the stderr of `makeprg` in the temp file which Neovim reads using `errorformat` to populate the `quickfix` buffer
--- 2. show the stdout, stderr and the return_code on the screen
--- NOTE: `ansi strip` removes all ansi coloring from nushell errors
-vim.opt.shellpipe =
-  '| complete | update stderr { ansi strip } | tee { get stderr | save --force --raw %s } | into record'
+  -- string to be used with `:make` command to:
+  -- 1. save the stderr of `makeprg` in the temp file which Neovim reads using `errorformat` to populate the `quickfix` buffer
+  -- 2. show the stdout, stderr and the return_code on the screen
+  -- NOTE: `ansi strip` removes all ansi coloring from nushell errors
+  vim.opt.shellpipe =
+    '| complete | update stderr { ansi strip } | tee { get stderr | save --force --raw %s } | into record'
 
--- custom `:Term` command that executes `:term` without `--stdin` flag
-vim.api.nvim_create_user_command('Term', function(ctx)
-  local flag = vim.opt.shellcmdflag:get()
-  vim.opt.shellcmdflag = '--no-config-file -c'
-  vim.cmd('term ' .. ctx.args)
-  vim.opt.shellcmdflag = flag
-end, { nargs = '?' })
+  -- custom `:Term` command that executes `:term` without `--stdin` flag
+  vim.api.nvim_create_user_command('Term', function(ctx)
+    local flag = vim.opt.shellcmdflag:get()
+    vim.opt.shellcmdflag = '--no-config-file -c'
+    vim.cmd('term ' .. ctx.args)
+    vim.opt.shellcmdflag = flag
+  end, { nargs = '?' })
 
-vim.cmd('cabbrev term Term')
+  vim.cmd('cabbrev term Term')
+end
