@@ -1,4 +1,4 @@
-vim.opt_local.commentstring = '#%s'
+vim.opt_local.commentstring = '# %s'
 
 if vim.g.is_win then
   -- from: https://discord.com/channels/601130461678272522/1235711557778804746/1235711946934845571
