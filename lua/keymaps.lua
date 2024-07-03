@@ -318,8 +318,19 @@ map('n', '<Leader>cl', function()
   print('Copied: ' .. path)
 end, { desc = 'Copy absolute file name to clipboard' })
 
+-- Saner behavior of n and N(from vim-galore)
+vim.cmd([[
+nnoremap <expr> n 'Nn'[v:searchforward]
+xnoremap <expr> n 'Nn'[v:searchforward]
+onoremap <expr> n 'Nn'[v:searchforward]
+
+nnoremap <expr> N 'nN'[v:searchforward]
+xnoremap <expr> N 'nN'[v:searchforward]
+onoremap <expr> N 'nN'[v:searchforward]
+]])
+
 -- Quickly edit your macros(from vim-galore)
--- Use it like this <leader>m or "q<leader>m.
+-- Use it like this <leader>me or "q<leader>me.
 map(
   'n',
   '<leader>me',
