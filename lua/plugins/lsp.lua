@@ -111,6 +111,7 @@ return {
 
       -- See `:help K` for why this keymap
       nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+      nmap('<leader>k', vim.lsp.buf.hover, 'Hover Documentation')
 
       local bufopts = { noremap = true, silent = true, buffer = bufnr, desc = 'Signature Documentation' }
       vim.keymap.set({ 'n', 'i' }, '<M-/>', vim.lsp.buf.signature_help, bufopts)
