@@ -36,11 +36,11 @@ return {
       -- Whether to show preview of file/directory under cursor
       preview = false,
       -- Width of focused window
-      width_focus = 40,
+      width_focus = 35,
       -- Width of non-focused window
       width_nofocus = 20,
       -- Width of preview window
-      width_preview = 25,
+      width_preview = 30,
     },
   },
   config = function(_, opts)
