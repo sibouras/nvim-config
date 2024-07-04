@@ -50,6 +50,21 @@ return {
         print('Yanked: ' .. entry)
       end
 
+      -- from:https://github.com/nvim-telescope/telescope.nvim/issues/2778#issuecomment-2202572413 
+      local focus_preview = function(prompt_bufnr)
+        local action_state = require('telescope.actions.state')
+        local picker = action_state.get_current_picker(prompt_bufnr)
+        local prompt_win = picker.prompt_win
+        local previewer = picker.previewer
+        local winid = previewer.state.winid
+        local bufnr = previewer.state.bufnr
+        vim.keymap.set({ 'n', 'i' }, '<C-o>', function()
+          vim.cmd(string.format('noautocmd lua vim.api.nvim_set_current_win(%s)', prompt_win))
+        end, { buffer = bufnr })
+        vim.cmd(string.format('noautocmd lua vim.api.nvim_set_current_win(%s)', winid))
+        -- api.nvim_set_current_win(winid)
+      end
+
       telescope.setup({
         defaults = {
           prompt_prefix = ' ',
@@ -114,6 +129,7 @@ return {
               ['<c-t>'] = open_with_trouble,
               ['<M-t>'] = open_selected_with_trouble,
               ['<C-y>'] = yank_selected_entry,
+              ['<C-o>'] = focus_preview,
             },
             n = {
               ['`'] = actions.close,
@@ -151,6 +167,7 @@ return {
               ['<C-t>'] = open_with_trouble,
               ['<M-t>'] = open_selected_with_trouble,
               ['<C-y>'] = yank_selected_entry,
+              ['<C-o>'] = focus_preview,
             },
           },
         },
