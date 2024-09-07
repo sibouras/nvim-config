@@ -373,6 +373,9 @@ return {
         lspconfig.cssls.setup({
           on_attach = on_attach,
           capabilities = capabilities,
+          init_options = {
+            provideFormatter = false,
+          },
           settings = {
             css = {
               validate = true,

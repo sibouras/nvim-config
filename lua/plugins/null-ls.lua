@@ -26,7 +26,6 @@ return {
             'typescriptreact',
             'json',
             'jsonc',
-            'css',
           },
           env = {
             PRETTIERD_DEFAULT_CONFIG = vim.fn.stdpath('config') .. '/linter-config/.prettierrc.json',
