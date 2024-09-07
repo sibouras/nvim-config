@@ -186,7 +186,7 @@ return {
           find_files = {
             hidden = true, -- show hidden files
             -- find_command = { 'fd', '--type', 'f' },
-            find_command = { 'rg', '--files' }, -- rg is faster
+            find_command = { 'rg', '--files', '--sortr=modified' }, -- rg is faster
             follow = true,
           },
           buffers = {
