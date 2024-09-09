@@ -112,7 +112,7 @@ return {
     -- Add minifiles split keymaps
     local function map_split(buf_id, lhs, direction)
       local function rhs()
-        local window = minifiles.get_target_window()
+        local window = minifiles.get_explorer_state().target_window
         -- Noop if the explorer isn't open or the cursor is on a directory.
         if window == nil or minifiles.get_fs_entry().fs_type == 'directory' then
           return
@@ -140,7 +140,7 @@ return {
       callback = function(args)
         local buf_id = args.data.buf_id
         map_split(buf_id, '<C-h>', 'belowright horizontal')
-        map_split(buf_id, '<C-v>', 'belowright vertical')
+        map_split(buf_id, '<C-l>', 'belowright vertical')
       end,
     })
 
