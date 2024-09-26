@@ -211,17 +211,18 @@ return {
       local gitsigns_ok, gitsigns = pcall(require, 'gitsigns')
       if gitsigns_ok then
         local next_hunk_repeat, prev_hunk_repeat = ts_repeat_move.make_repeatable_move_pair(function()
-          -- use next_hunk() when gitsigns is available to keep the preview open
-          if vim.wo.diff and vim.b.gitsigns_head == nil then
-            vim.cmd('norm! ]c')
+          -- use nav_hunk() when gitsigns is available to keep the preview open
+          -- if vim.wo.diff and vim.b.gitsigns_head == nil then
+          if vim.wo.diff then
+            vim.cmd.normal({ ']c', bang = true })
           else
-            gitsigns.nav_hunk('next')
+            gitsigns.nav_hunk('next', { target = 'all' })
           end
         end, function()
-          if vim.wo.diff and vim.b.gitsigns_head == nil then
-            vim.cmd('norm! [c')
+          if vim.wo.diff then
+            vim.cmd.normal({ '[c', bang = true })
           else
-            gitsigns.nav_hunk('prev')
+            gitsigns.nav_hunk('prev', { target = 'all' })
           end
         end)
         -- Or, use `make_repeatable_move` or `set_last_move` functions for more control. See the code for instructions.
