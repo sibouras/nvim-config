@@ -10,8 +10,16 @@ return {
       changedelete = { text = '▎' },
       untracked = { text = '▎' },
     },
+    preview_config = {
+      border = 'rounded',
+    },
     -- base = 'FILE',
     on_attach = function(buffer)
+      if vim.fn.bufname('#'):match('LOCAL') then
+        -- Don't attach in mergetool
+        return false
+      end
+
       local gitsigns = require('gitsigns')
 
       local function map(mode, l, r, desc)

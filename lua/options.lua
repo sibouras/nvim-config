@@ -129,7 +129,7 @@ vim.opt.fillchars = {
   fold = '⸱',
   -- fold = ' ',
   foldsep = ' ',
-  diff = '╱',
+  diff = ' ',
   eob = ' ',
 }
 
