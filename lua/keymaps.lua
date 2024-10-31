@@ -49,13 +49,13 @@ map('n', 'gw', '<Cmd>norm! gd<CR>')
 map('x', 'gw', [[y/\V<C-R>"<CR>N]])
 
 -- Move Lines
-map('n', '<M-Down>', '<cmd>m .+1<cr>==', { desc = 'Move down' })
-map('n', '<M-Up>', '<cmd>m .-2<cr>==', { desc = 'Move up' })
+map('n', '<M-Down>', "<cmd>execute 'move .+' . v:count1<cr>==", { desc = 'Move Down' })
+map('n', '<M-Up>', "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==", { desc = 'Move Up' })
 map('i', '<M-Down>', '<esc><cmd>m .+1<cr>==gi', { desc = 'Move down' })
 map('i', '<M-Up>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move up' })
 -- NOTE: using these mappings for small.nvim treeselect
--- map('v', '<M-Down>', ":m '>+1<cr>gv=gv", { desc = 'Move down' })
--- map('v', '<M-Up>', ":m '<-2<cr>gv=gv", { desc = 'Move up' })
+-- map('v', '<M-Down>', ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", { desc = 'Move Down' })
+-- map('v', '<M-Up>', ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", { desc = 'Move Up' })
 
 -- Resize window using <ctrl> arrow keys
 map('n', '<C-Up>', '<cmd>resize +2<cr>', { desc = 'Increase window height' })
