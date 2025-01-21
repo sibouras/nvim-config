@@ -16,8 +16,11 @@ map('n', '<M-C-S-F6>', '<C-i>')
 -- de-tab
 map('i', '<S-Tab>', '<C-d>')
 
--- change mapping for diagraphs
+-- change mapping for digraphs
 map('i', '<C-f>', '<C-k>')
+
+-- helix muscle memory
+map('n', 'U', ':redo<CR>')
 
 -- Quit vim
 map('n', '<M-F4>', ':qa!<CR>')
@@ -45,8 +48,8 @@ map('v', '>', '>gv')
 -- search for word under cursor without moving
 -- map('n', 'gw', '*N')
 -- map('n', 'gw', [[:%s/<C-r>=expand('<cword>')<CR>//n<CR>]])
-map('n', 'gw', '<Cmd>norm! gd<CR>')
-map('x', 'gw', [[y/\V<C-R>"<CR>N]])
+map('n', 'gW', '<Cmd>norm! gd<CR>')
+map('x', 'gW', [[y/\V<C-R>"<CR>N]])
 
 -- Move Lines
 map('n', '<M-Down>', "<cmd>execute 'move .+' . v:count1<cr>==", { desc = 'Move Down' })
@@ -214,12 +217,15 @@ vim.cmd([[
   onoremap <silent> ig :normal vig<CR>
 
   " better start and end of line
-  nnoremap gh _
-  xnoremap gh _
-  onoremap <silent> gh :normal vgh<CR>
+  nnoremap gs _
+  xnoremap gs _
+  onoremap <silent> gs :normal vgs<CR>
   nnoremap gl g_
   xnoremap gl g_
   onoremap <silent> gl :normal vgl<CR>
+  nnoremap gh 0
+  xnoremap gh 0
+  onoremap <silent> gh :normal hv0<CR>
 ]])
 
 -- limit the search in the visual selection

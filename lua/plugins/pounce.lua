@@ -5,8 +5,8 @@ return {
     keys = {
       { 's', '<Cmd>Pounce<CR>', mode = { 'n', 'x', 'o' } },
       { 'S', '<Cmd>PounceRepeat<CR>', mode = 'n' },
-      { 'gs', '<Cmd>PounceExpand <cword><CR>', mode = 'n', desc = 'Pounce with the current word' },
-      { 'gs', 'y<Cmd>PounceReg "<CR>', mode = 'x', desc = 'Pounce using the selection as the input' },
+      { 'gw', '<Cmd>PounceExpand <cword><CR>', mode = 'n', desc = 'Pounce with the current word' },
+      { 'gw', 'y<Cmd>PounceReg "<CR>', mode = 'x', desc = 'Pounce using the selection as the input' },
     },
     opts = {
       accept_keys = 'JKLSDFAGHNUVRBYTMICEOXWPQZ',
