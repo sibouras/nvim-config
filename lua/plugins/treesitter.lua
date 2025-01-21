@@ -178,7 +178,8 @@ return {
 
       local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
 
-      -- tree-sitter-nu with neovim v0.10.2 (stable): https://discord.com/channels/601130461678272522/1066353495638278194/1312066978919219231
+      -- tree-sitter-nu with neovim v0.10.3 (stable): https://discord.com/channels/601130461678272522/1066353495638278194/1312066978919219231
+      -- according to this: https://github.com/neovim/neovim/blob/v0.10.3/cmake.deps/deps.txt#L56, the latest stable release (v0.10.3) still uses treesitter v0.22.6.
       local TREE_SITTER_NU_DIR = vim.fs.normalize('~/code/treesitter/tree-sitter-nu')
       parser_config.nu = {
         install_info = {
