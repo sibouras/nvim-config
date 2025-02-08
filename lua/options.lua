@@ -213,3 +213,25 @@ if vim.g.is_win then
 
   vim.cmd('cabbrev term Term')
 end
+
+-- remove `cr` when pasting in wsl. https://stackoverflow.com/a/76388417
+if vim.fn.has('wsl') == 1 then
+  if vim.env.WAYLAND_DISPLAY and vim.fn.executable('wl-copy') and vim.fn.executable('wl-paste') then
+    vim.g.clipboard = {
+      name = 'wl-clipboard (wsl)',
+      copy = {
+        ['+'] = 'wl-copy --type text/plain',
+        ['*'] = 'wl-copy --primary --type text/plain',
+      },
+      paste = {
+        ['+'] = function()
+          return vim.fn.systemlist("wl-paste --no-newline | sed -e 's/\r$//'", { '' }, 1) -- '1' keeps empty lines
+        end,
+        ['*'] = function()
+          return vim.fn.systemlist("wl-paste --primary --no-newline | sed -e 's/\r$//'", { '' }, 1)
+        end,
+      },
+      cache_enabled = true,
+    }
+  end
+end
