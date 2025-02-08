@@ -41,7 +41,7 @@ require('lazy').setup('plugins', {
         -- 'matchit', -- matches html tags
         'matchparen', -- replaced with sentiment.nvim
         'tohtml',
-        'man',
+        jit.os:find('Windows') and 'man',
         'spellfile',
       },
     },
