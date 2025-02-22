@@ -35,7 +35,7 @@ return {
           vim.schedule(function()
             vim.opt.shellcmdflag = flag
           end)
-          return 'nu --no-std-lib'
+          return 'nu'
         end
         return vim.o.shell
       end,

@@ -87,8 +87,9 @@ return {
         end
       end
 
-      if client.name == 'tsserver' or client.name == 'html' then
+      if client.name == 'ts_ls' or client.name == 'html' then
         client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.documentRangeFormattingProvider = false
       end
 
       if client.name == 'denols' then
