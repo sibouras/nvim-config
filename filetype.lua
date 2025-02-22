@@ -3,6 +3,7 @@ vim.filetype.add({
     conf = 'conf',
     ejs = 'ejs',
     json = 'jsonc',
+    ahk2 = 'autohotkey',
   },
   filename = {
     ['.eslintrc'] = 'jsonc',

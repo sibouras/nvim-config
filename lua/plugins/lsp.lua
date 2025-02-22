@@ -461,5 +461,26 @@ return {
       root_dir = lspconfig.util.root_pattern('biome.json', 'biome.jsonc'),
       single_file_support = false,
     })
+
+    -- https://github.com/thqby/vscode-autohotkey2-lsp?tab=readme-ov-file#nvim-lspconfig
+    local ahk2_configs = {
+      autostart = true,
+      single_file_support = true,
+      on_attach = on_attach,
+      capabilities = capabilities,
+      filetypes = { 'ahk', 'autohotkey', 'ahk2' },
+      cmd = { 'node', vim.fn.expand('$HOME/src/vscode-autohotkey2-lsp/server/dist/server.js'), '--stdio' },
+      init_options = {
+        ActionWhenV1IsDetected = 'Stop',
+        locale = 'en-us',
+        InterpreterPath = 'C:/Program Files/AutoHotkey/v2/AutoHotkey.exe',
+      },
+      flags = { debounce_text_changes = 500 },
+    }
+
+    local configs = require('lspconfig.configs')
+    configs.ahk2 = { default_config = ahk2_configs }
+    local nvim_lsp = require('lspconfig')
+    nvim_lsp.ahk2.setup({})
   end,
 }
