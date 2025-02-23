@@ -180,7 +180,7 @@ return {
 
       -- tree-sitter-nu with neovim v0.10.3 (stable): https://discord.com/channels/601130461678272522/1066353495638278194/1312066978919219231
       -- according to this: https://github.com/neovim/neovim/blob/v0.10.3/cmake.deps/deps.txt#L56, the latest stable release (v0.10.3) still uses treesitter v0.22.6.
-      local TREE_SITTER_NU_DIR = vim.fs.normalize('~/code/treesitter/tree-sitter-nu')
+      local TREE_SITTER_NU_DIR = vim.fs.normalize('~/src/treesitter/tree-sitter-nu')
       parser_config.nu = {
         install_info = {
           url = TREE_SITTER_NU_DIR, -- local path or git repo
