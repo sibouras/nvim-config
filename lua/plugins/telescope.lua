@@ -33,11 +33,7 @@ return {
       local actions = require('telescope.actions')
 
       local open_with_trouble = function(...)
-        return require('trouble.providers.telescope').open_with_trouble(...)
-      end
-
-      local open_selected_with_trouble = function(...)
-        return require('trouble.providers.telescope').open_selected_with_trouble(...)
+        return require('trouble.sources.telescope').open(...)
       end
 
       local function yank_selected_entry(prompt_bufnr)
@@ -130,7 +126,6 @@ return {
               ['<C-q>'] = actions.send_to_qflist + actions.open_qflist,
               ['<M-q>'] = actions.send_selected_to_qflist + actions.open_qflist,
               ['<c-t>'] = open_with_trouble,
-              ['<M-t>'] = open_selected_with_trouble,
               ['<C-y>'] = yank_selected_entry,
               ['<C-o>'] = focus_preview,
             },
@@ -169,7 +164,6 @@ return {
               ['<C-q>'] = actions.send_to_qflist + actions.open_qflist,
               ['<M-q>'] = actions.send_selected_to_qflist + actions.open_qflist,
               ['<C-t>'] = open_with_trouble,
-              ['<M-t>'] = open_selected_with_trouble,
               ['<C-y>'] = yank_selected_entry,
               ['<C-o>'] = focus_preview,
             },
