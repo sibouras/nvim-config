@@ -49,7 +49,7 @@ return {
           -- end
 
           -- disable slow treesitter highlight for large files
-          local max_filesize = 200 * 1024 -- 200 KB
+          local max_filesize = 500 * 1024 -- 500 KB
           local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
           if ok and stats and stats.size > max_filesize then
             return true
@@ -117,7 +117,7 @@ return {
           set_jumps = true, -- whether to set jumps in the jumplist
           goto_next_start = {
             [']m'] = '@function.outer',
-            [']]'] = '@class.outer',
+            -- [']]'] = '@class.outer', -- conflicts with jump to text sections in markdown
             [']a'] = '@parameter.inner',
             [']f'] = '@call.outer',
             [']b'] = '@block.outer',
@@ -130,14 +130,14 @@ return {
           },
           goto_next_end = {
             [']M'] = '@function.outer',
-            [']['] = '@class.outer',
+            -- [']['] = '@class.outer',
             [']A'] = '@parameter.inner',
             [']F'] = '@call.outer',
             [']B'] = '@block.outer',
           },
           goto_previous_start = {
             ['[m'] = '@function.outer',
-            ['[['] = '@class.outer',
+            -- ['[['] = '@class.outer',
             ['[a'] = '@parameter.inner',
             ['[f'] = '@call.outer',
             ['[b'] = '@block.inner',
@@ -148,7 +148,7 @@ return {
           },
           goto_previous_end = {
             ['[M'] = '@function.outer',
-            ['[]'] = '@class.outer',
+            -- ['[]'] = '@class.outer',
             ['[A'] = '@parameter.inner',
             ['[F'] = '@call.outer',
             ['[B'] = '@block.outer',

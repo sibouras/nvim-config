@@ -435,8 +435,11 @@ end
 map('n', 'dd', smart_dd, { expr = true })
 
 -- Quickly add empty lines
-map('n', '[<space>', "<Cmd>call append(line('.') - 1, repeat([''], v:count1))<CR>", { desc = 'Put empty line above' })
-map('n', ']<space>', "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR>", { desc = 'Put empty line below' })
+-- NOTE: available by default in 0.11 with dot repeat
+if vim.fn.has('nvim-0.11') == 0 then
+  map('n', '[<space>', "<Cmd>call append(line('.') - 1, repeat([''], v:count1))<CR>", { desc = 'Put empty line above' })
+  map('n', ']<space>', "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR>", { desc = 'Put empty line below' })
+end
 
 -- autoload/functions.vim
 map('v', '<leader>cy', ':call functions#CompleteYank()<CR>')
@@ -546,7 +549,7 @@ map('n', '<leader>fs', ':Telescope find_files<CR>', { desc = 'Telescope find_fil
 map('n', '<leader>b', ':Telescope buffers<CR>', { desc = 'Telescope buffers' })
 map('n', '<leader>fn', ':Telescope git_files<CR>', { desc = 'Telescope git_files' })
 map('n', '<leader>fi', ':Telescope git_status<CR>', { desc = 'Telescope git_status' })
-map('n', '<leader>fe', ':Telescope resume<CR>', { desc = 'Telescope resume' })
+map('n', "<leader>'", ':Telescope resume<CR>', { desc = 'Telescope resume' })
 map('n', '<leader>fr', ':Telescope registers<CR>', { desc = 'Telescope registers' })
 map('n', '<leader>fq', ':Telescope quickfix<CR>', { desc = 'Telescope quickfix' })
 map('n', '<leader>fv', ':Telescope vim_options<CR>', { desc = 'Telescope vim_options' })
@@ -679,7 +682,7 @@ map('n', '<leader>uw', function() toggle('wrap') end, { desc = 'Toggle Word Wrap
 map('n', '<leader>ul', function() toggle('list') end, { desc = 'Toggle List' })
 map('n', '<leader>ur', function() toggle('relativenumber') end, { desc = 'Toggle Relative Line Numbers' })
 map('n', '<leader>un', function() toggle.number() end, { desc = 'Toggle Line Numbers' })
-map('n', '<leader>ud', function() toggle.diagnostics() end, { desc = 'Toggle Diagnostics' })
+map('n', '<leader>uD', function() toggle.diagnostics() end, { desc = 'Toggle Diagnostics' })
 map('n', '<leader>uT', function() toggle.buffer_semantic_tokens() end, { desc = 'Toggle Semantic Tokens' })
 
 local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 2
@@ -694,6 +697,11 @@ map('n', '<leader>ut', function()
   else vim.treesitter.start() vim.opt.emoji = true end
 end, { desc = 'Toggle Treesitter Highlight' })
 -- stylua: ignore end
+
+vim.keymap.set('n', '<leader>ud', function()
+  local new_config = not vim.diagnostic.config().virtual_lines
+  vim.diagnostic.config({ virtual_lines = new_config })
+end, { desc = 'Toggle diagnostic virtual_lines' })
 
 map('n', '<leader>la', '<Cmd>Lazy<CR>', { desc = 'Lazy' })
 map('n', '<leader>uf', vim.show_pos, { desc = 'Inspect Pos' })

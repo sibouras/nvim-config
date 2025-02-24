@@ -27,6 +27,7 @@ augroup END
 
 -- go to last loc when opening a buffer
 vim.api.nvim_create_autocmd('BufReadPost', {
+  desc = 'go to last loc when opening a buffer',
   group = augroup('last_loc'),
   callback = function(event)
     local exclude = { 'gitcommit' }
@@ -82,7 +83,9 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   desc = 'Disable diagnostics in node_modules',
   group = augroup('disable_diagnostics'),
   pattern = '*/node_modules/*',
-  command = 'lua vim.diagnostic.disable(0)',
+  callback = function()
+    vim.diagnostic.enable(false, { bufnr = 0 })
+  end,
 })
 
 -- Enable spell checking for certain file types

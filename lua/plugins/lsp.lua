@@ -131,28 +131,15 @@ return {
       end, { desc = 'Format current buffer with LSP' })
     end
 
-    -- :LspInfo border
-    require('lspconfig.ui.windows').default_options.border = 'rounded'
-
-    local signs = {
-      { name = 'DiagnosticSignError', text = '✘' },
-      { name = 'DiagnosticSignWarn', text = '▲' },
-      { name = 'DiagnosticSignHint', text = '⚑' },
-      { name = 'DiagnosticSignInfo', text = '' },
-    }
-
-    for _, sign in ipairs(signs) do
-      vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = '' })
-    end
-
     local config = {
       -- virtual_text = { prefix = "" },
-      -- disable virtual text
       virtual_text = false,
-      -- show signs
-      -- signs = {
-      --   active = signs,
-      -- },
+      virtual_lines = false,
+      signs = {
+        -- set sign by using extmark
+        -- https://github.com/neovim/neovim/pull/26193
+        text = { ['ERROR'] = '✘', ['WARN'] = '▲', ['HINT'] = '⚑', ['INFO'] = '' },
+      },
       update_in_insert = false,
       underline = true,
       severity_sort = true,
@@ -168,30 +155,55 @@ return {
 
     vim.diagnostic.config(config)
 
-    vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-      border = 'rounded',
-    })
-
-    -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    --   border = "rounded",
-    -- })
-
-    -- disable notifications in vim.lsp.buf.hover
-    -- from: https://github.com/neovim/neovim/issues/20457
-    ---@diagnostic disable-next-line: redefined-local
-    vim.lsp.handlers['textDocument/hover'] = function(_, result, ctx, config)
-      config = config or { border = 'rounded' }
-      config.focus_id = ctx.method
-      if not (result and result.contents) then
-        return
+    if vim.fn.has('nvim-0.11') == 1 then
+      local signature_help = vim.lsp.buf.signature_help
+      vim.lsp.buf.signature_help = function()
+        ---@diagnostic disable-next-line: redundant-parameter
+        return signature_help({
+          border = 'rounded',
+          max_width = 100,
+          -- max_height = math.floor(vim.o.lines * 0.5),
+          -- max_width = math.floor(vim.o.columns * 0.4),
+        })
       end
-      local markdown_lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
-      ---@diagnostic disable-next-line: deprecated
-      markdown_lines = vim.lsp.util.trim_empty_lines(markdown_lines)
-      if vim.tbl_isempty(markdown_lines) then
-        return
+    else
+      vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+        border = 'rounded',
+      })
+    end
+
+    -- NOTE: 0.11 supports multiple clients for vim.lsp.buf.hover()
+    -- https://github.com/neovim/neovim/pull/30935
+    if vim.fn.has('nvim-0.11') == 1 then
+      -- or just call vim.lsp.buf.hover({border = 'rounded'}) directly.
+      local hover = vim.lsp.buf.hover
+      vim.lsp.buf.hover = function()
+        ---@diagnostic disable-next-line: redundant-parameter
+        return hover({
+          border = 'rounded',
+          max_width = 100,
+          -- max_height = math.floor(vim.o.lines * 0.5),
+          -- max_width = math.floor(vim.o.columns * 0.4),
+        })
       end
-      return vim.lsp.util.open_floating_preview(markdown_lines, 'markdown', config)
+    else
+      -- disable notifications in vim.lsp.buf.hover
+      -- from: https://github.com/neovim/neovim/issues/20457
+      ---@diagnostic disable-next-line: redefined-local
+      vim.lsp.handlers['textDocument/hover'] = function(_, result, ctx, config)
+        config = config or { border = 'rounded' }
+        config.focus_id = ctx.method
+        if not (result and result.contents) then
+          return
+        end
+        local markdown_lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
+        ---@diagnostic disable-next-line: deprecated
+        markdown_lines = vim.lsp.util.trim_empty_lines(markdown_lines)
+        if vim.tbl_isempty(markdown_lines) then
+          return
+        end
+        return vim.lsp.util.open_floating_preview(markdown_lines, 'markdown', config)
+      end
     end
 
     -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
