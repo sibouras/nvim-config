@@ -16,7 +16,7 @@ return {
     local select_opts = { behavior = cmp.SelectBehavior.Select }
     vim.g.cmp_active = true
 
-    vim.keymap.set({ 'i', 'n' }, '<C-c>', function()
+    vim.keymap.set('n', '<leader>ub', function()
       if vim.g.cmp_active == true then
         vim.g.cmp_active = false
         print('Disabled cmp')

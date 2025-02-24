@@ -1,6 +1,9 @@
 ---@class utils.plugin
 local M = {}
 
+-- NOTE: try the new logic
+-- https://github.com/LazyVim/LazyVim/commit/965a469ca8cb1d58b49c4e5d8b85430e8c6c0a25
+
 M.use_lazy_file = true
 M.lazy_file_events = { 'BufReadPost', 'BufNewFile', 'BufWritePre' }
 

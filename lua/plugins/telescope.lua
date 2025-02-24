@@ -95,7 +95,7 @@ return {
             },
           },
           preview = {
-            hide_on_startup = true, -- hide previewer when picker starts
+            hide_on_startup = false, -- hide previewer when picker starts
             filesize_limit = 25, -- The maximum file size in MB attempted to be previewed. Default: 25mb
             highlight_limit = 1, -- The maximum file size in MB attempted to be highlighted. Default: 1mb
           },
@@ -198,7 +198,7 @@ return {
             -- ignore_current_buffer = true,
             sort_mru = true,
             -- sort_lastused = true,
-            previewer = false,
+            -- previewer = false,
             -- layout_config = {
             --   width = 0.5,
             --   height = 0.5,
