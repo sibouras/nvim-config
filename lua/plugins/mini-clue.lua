@@ -62,8 +62,8 @@ return {
         miniclue.gen_clues.marks(),
         miniclue.gen_clues.registers(),
         miniclue.gen_clues.windows({
-          submode_move = true,
-          submode_navigate = true,
+          -- submode_move = true,
+          -- submode_navigate = true,
           submode_resize = true,
         }),
       },

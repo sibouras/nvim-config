@@ -76,8 +76,8 @@ return {
         -- Next/last variants
         around_next = 'an',
         inside_next = 'in',
-        around_last = '',
-        inside_last = '',
+        around_last = 'aN',
+        inside_last = 'iN',
 
         -- Move cursor to corresponding edge of `a` textobject
         goto_left = 'g[',

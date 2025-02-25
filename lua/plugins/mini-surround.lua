@@ -11,7 +11,7 @@ return {
       replace = 'mr', -- Replace surrounding
       update_n_lines = 'mn', -- Update `n_lines`
 
-      suffix_last = 'p', -- Suffix to search with "prev" method
+      suffix_last = 'N', -- Suffix to search with "prev" method
       suffix_next = 'n', -- Suffix to search with "next" method
     },
     -- Whether to respect selection type:
