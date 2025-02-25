@@ -51,15 +51,6 @@ map('v', '>', '>gv')
 map('n', 'gW', '<Cmd>norm! gd<CR>')
 map('x', 'gW', [[y/\V<C-R>"<CR>N]])
 
--- Move Lines
-map('n', '<M-Down>', "<cmd>execute 'move .+' . v:count1<cr>==", { desc = 'Move Down' })
-map('n', '<M-Up>', "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==", { desc = 'Move Up' })
-map('i', '<M-Down>', '<esc><cmd>m .+1<cr>==gi', { desc = 'Move down' })
-map('i', '<M-Up>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move up' })
--- NOTE: using these mappings for small.nvim treeselect
--- map('v', '<M-Down>', ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", { desc = 'Move Down' })
--- map('v', '<M-Up>', ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", { desc = 'Move Up' })
-
 -- Resize window using <ctrl> arrow keys
 map('n', '<C-Up>', '<cmd>resize +2<cr>', { desc = 'Increase window height' })
 map('n', '<C-Down>', '<cmd>resize -2<cr>', { desc = 'Decrease window height' })
@@ -619,14 +610,26 @@ require('small.highlight_selected').setup()
 -- stylua: ignore start
 map('n', '<leader>i', function() require('small.bufend').run() end, { desc = 'Bufend' })
 
-local treeselect = require('small.treeselect')
-map('x', '<M-Right>', function() treeselect.next() end, { desc = 'TreeSelect next node' })
-map('x', '<M-Left>', function() treeselect.prev() end, { desc = 'TreeSelect prev node' })
-map('x', '<M-Up>', function() treeselect.up() end, { desc = 'TreeSelect parent node' })
-map('x', '<M-Down>', function() treeselect.down() end, { desc = 'TreeSelect child node' })
-map('n', '<M-Home>', function() treeselect.current() end, { desc = 'TreeSelect current node' })
-map('n', '<M-End>', function() treeselect.line() end, { desc = 'TreeSelect current node linewise' })
+-- NOTE: using treewalker.nvim instead of this
+-- local treeselect = require('small.treeselect')
+-- map('x', '<M-Right>', function() treeselect.next() end, { desc = 'TreeSelect next node' })
+-- map('x', '<M-Left>', function() treeselect.prev() end, { desc = 'TreeSelect prev node' })
+-- map('x', '<M-Up>', function() treeselect.up() end, { desc = 'TreeSelect parent node' })
+-- map('x', '<M-Down>', function() treeselect.down() end, { desc = 'TreeSelect child node' })
+-- map('n', '<M-Home>', function() treeselect.current() end, { desc = 'TreeSelect current node' })
+-- map('n', '<M-End>', function() treeselect.line() end, { desc = 'TreeSelect current node linewise' })
 -- stylua: ignore end
+
+-- NOTE: using these mappings for treewalker.nvim
+-- Move Lines
+-- map('n', '<M-Down>', "<cmd>execute 'move .+' . v:count1<cr>==", { desc = 'Move Down' })
+-- map('n', '<M-Up>', "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==", { desc = 'Move Up' })
+-- map('i', '<M-Down>', '<esc><cmd>m .+1<cr>==gi', { desc = 'Move down' })
+-- map('i', '<M-Up>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move up' })
+
+-- NOTE: using these mappings for small.nvim treeselect
+-- map('v', '<M-Down>', ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", { desc = 'Move Down' })
+-- map('v', '<M-Up>', ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", { desc = 'Move Up' })
 
 local fn = vim.fn
 local api = vim.api
