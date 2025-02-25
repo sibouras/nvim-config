@@ -50,7 +50,7 @@ return {
       -- Table with textobject id as fields, textobject specification as values.
       -- Also use this to disable builtin textobjects. See |MiniAi.config|.
       custom_textobjects = {
-        b = miniai.gen_spec.treesitter({ -- code block
+        j = miniai.gen_spec.treesitter({ -- code block
           a = { '@block.outer', '@conditional.outer', '@loop.outer' },
           i = { '@block.inner', '@conditional.inner', '@loop.inner' },
         }),
@@ -58,7 +58,7 @@ return {
         f = miniai.gen_spec.treesitter({ a = '@call.outer', i = '@call.inner' }), -- function call
         c = miniai.gen_spec.treesitter({ a = '@class.outer', i = '@class.inner' }), -- class
         ['='] = miniai.gen_spec.treesitter({ a = '@assignment.outer', i = '@assignment.inner' }), -- assignment
-        o = { { '%b()', '%b[]', '%b{}' }, '^.().*().$' }, -- Pair of balanced brackets from set (used for builtin `b` identifier)
+        -- b = { { '%b()', '%b[]', '%b{}' }, '^.().*().$' }, -- Pair of balanced brackets from set (used for builtin `b` identifier)
         d = { '%f[%d]%d+' }, -- digits
         e = { -- Word with case
           { '%u[%l%d]+%f[^%l%d]', '%f[%S][%l%d]+%f[^%l%d]', '%f[%P][%l%d]+%f[^%l%d]', '^[%l%d]+%f[^%l%d]' },

@@ -81,26 +81,26 @@ return {
       },
       textobjects = {
         select = {
-          enable = true,
+          -- NOTE: using mini.ai instead
+          enable = false,
           -- Automatically jump forward to textobj, similar to targets.vim
           lookahead = true,
           keymaps = {
-            -- NOTE: using mini.ai instead
             -- You can use the capture groups defined in textobjects.scm
-            -- ['am'] = '@function.outer',
-            -- ['im'] = '@function.inner',
-            -- ['ab'] = '@block.outer',
-            -- ['ib'] = '@block.inner',
-            -- ['aa'] = '@parameter.outer',
-            -- ['ia'] = '@parameter.inner',
-            -- ['af'] = '@call.outer',
-            -- ['if'] = '@call.inner',
-            -- ['in'] = '@number.inner',
-            --
-            -- ['a='] = '@assignment.outer',
-            -- ['i='] = '@assignment.inner',
-            -- ['<Left>'] = '@assignment.lhs',
-            -- ['<Right>'] = '@assignment.rhs',
+            ['am'] = '@function.outer',
+            ['im'] = '@function.inner',
+            ['aj'] = '@block.outer',
+            ['ij'] = '@block.inner',
+            ['aa'] = '@parameter.outer',
+            ['ia'] = '@parameter.inner',
+            ['af'] = '@call.outer',
+            ['if'] = '@call.inner',
+            ['in'] = '@number.inner',
+
+            ['a='] = '@assignment.outer',
+            ['i='] = '@assignment.inner',
+            ['<Left>'] = '@assignment.lhs',
+            ['<Right>'] = '@assignment.rhs',
           },
         },
         swap = {
@@ -120,7 +120,7 @@ return {
             -- [']]'] = '@class.outer', -- conflicts with jump to text sections in markdown
             [']a'] = '@parameter.inner',
             [']f'] = '@call.outer',
-            [']b'] = '@block.outer',
+            [']j'] = '@block.outer',
             [']n'] = '@number.inner',
 
             -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
@@ -133,14 +133,14 @@ return {
             -- [']['] = '@class.outer',
             [']A'] = '@parameter.inner',
             [']F'] = '@call.outer',
-            [']B'] = '@block.outer',
+            [']J'] = '@block.outer',
           },
           goto_previous_start = {
             ['[m'] = '@function.outer',
             -- ['[['] = '@class.outer',
             ['[a'] = '@parameter.inner',
             ['[f'] = '@call.outer',
-            ['[b'] = '@block.inner',
+            ['[j'] = '@block.outer',
             ['[n'] = '@number.inner',
 
             ['[s'] = { query = '@scope', query_group = 'locals', desc = 'Previous scope' },
@@ -151,7 +151,7 @@ return {
             -- ['[]'] = '@class.outer',
             ['[A'] = '@parameter.inner',
             ['[F'] = '@call.outer',
-            ['[B'] = '@block.outer',
+            ['[J'] = '@block.outer',
           },
           -- Below will go to either the start or the end, whichever is closer.
           -- Use if you want more granular movements
