@@ -1,5 +1,6 @@
 return {
   'wfxr/minimap.vim',
+  enabled = false,
   keys = {
     { '<leader>mm', ':MinimapToggle<CR>', desc = 'Minimap Toggle', silent = true },
     { '<leader>mr', ':MinimapRefresh<CR>', desc = 'Minimap Refresh', silent = true },

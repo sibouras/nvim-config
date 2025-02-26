@@ -30,7 +30,7 @@ map('n', '<C-q>', ':qa!<CR>')
 map('i', '<C-CR>', '<C-o>o')
 
 -- remove highlight
-map('n', '<Esc>', '<Cmd>noh | stopinsert<CR>', { desc = 'Escape and clear hlsearch/messages' })
+map('n', '<Esc>', ':noh | stopinsert<CR>', { desc = 'Escape and clear hlsearch/messages' })
 
 -- Clear search, diff update and redraw
 -- taken from runtime/lua/_editor.lua
@@ -681,6 +681,7 @@ map('n', '<leader>ur', function() toggle('relativenumber') end, { desc = 'Toggle
 map('n', '<leader>un', function() toggle.number() end, { desc = 'Toggle Line Numbers' })
 map('n', '<leader>uD', function() toggle.diagnostics() end, { desc = 'Toggle Diagnostics' })
 map('n', '<leader>uT', function() toggle.buffer_semantic_tokens() end, { desc = 'Toggle Semantic Tokens' })
+map('n', '<leader>uH', ':let v:hlsearch = 1 - v:hlsearch<CR>', { desc = 'Toggle hlsearch', silent = true })
 
 local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 2
 map('n', '<leader>uc', function() toggle('conceallevel', false, { 0, conceallevel }) end, { desc = 'Toggle Conceal' })
