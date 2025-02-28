@@ -208,7 +208,8 @@ return {
 
     -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
     local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+    -- capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+    capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
 
     -- Setup mason so it can manage external tooling
     require('mason').setup({
@@ -412,6 +413,9 @@ return {
 
       ['emmet_language_server'] = function()
         lspconfig.emmet_language_server.setup({
+          on_attach = function(client)
+            client.server_capabilities.completionProvider.triggerCharacters = {}
+          end,
           capabilities = capabilities,
           filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less' },
         })
