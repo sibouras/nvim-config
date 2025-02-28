@@ -1,5 +1,6 @@
 return {
   'famiu/bufdelete.nvim',
+  cmd = 'BdeleteHidden',
   keys = {
     { '<M-d>', '<Cmd>Bdelete<CR>' },
     { '<M-c>', '<Cmd>Bwipeout<CR>' },

@@ -35,6 +35,9 @@ return {
         hl.TelescopePromptTitle = {}
         hl.TelescopeResultsComment = { fg = colors.dark5 }
         hl.CursorLineNr = { fg = colors.dark5, bold = true }
+        hl.IlluminatedWordText = { bg = '#272c41' }
+        hl.IlluminatedWordRead = { bg = '#272c41' }
+        hl.IlluminatedWordWrite = { bg = '#272c41' }
       end,
     })
 
