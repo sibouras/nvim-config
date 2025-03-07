@@ -474,6 +474,11 @@ return {
     })
 
     lspconfig.biome.setup({
+      on_attach = function(client)
+        -- formatting modifies the buffer even when there's no changes, use null-ls instead
+        client.capabilities.textDocument.formatting.dynamicRegistration = false
+        client.capabilities.textDocument.rangeFormatting.dynamicRegistration = false
+      end,
       root_dir = lspconfig.util.root_pattern('biome.json', 'biome.jsonc'),
       single_file_support = false,
     })
