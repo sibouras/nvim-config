@@ -263,31 +263,6 @@ return {
             show_scores = true,
             hide_current_buffer = false,
           },
-          tailiscope = {
-            -- initial_mode = "normal",
-            -- theme = "dropdown",
-            -- layout_strategy = "vertical",
-            -- layout_config = { height = 0.95 },
-            layout_config = {
-              vertical = {
-                preview_height = 0.2,
-              },
-            },
-            preview = {
-              hide_on_startup = false,
-            },
-            register = '"',
-            maps = {
-              i = {
-                back = '<C-h>',
-                open_doc = '<C-o>',
-              },
-              n = {
-                back = 'h',
-                open_doc = 'o',
-              },
-            },
-          },
         },
       })
 

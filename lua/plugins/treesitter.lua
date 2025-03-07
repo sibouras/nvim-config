@@ -29,9 +29,6 @@ return {
       -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
       auto_install = false,
       -- ignore_install = { "tlaplus" }, -- List of parsers to ignore installing
-      autopairs = {
-        enable = true,
-      },
       highlight = {
         enable = true, -- false will disable the whole extension
         -- disable = { "" }, -- list of language that will be disabled
@@ -71,14 +68,6 @@ return {
         },
       },
       indent = { enable = true, disable = { 'yaml' } },
-      rainbow = {
-        enable = false,
-        -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
-        extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-        max_file_lines = nil, -- Do not enable for files with more than n lines, int
-        -- colors = {}, -- table of hex strings
-        -- termcolors = {} -- table of colour name strings
-      },
       textobjects = {
         select = {
           -- NOTE: using mini.ai instead
