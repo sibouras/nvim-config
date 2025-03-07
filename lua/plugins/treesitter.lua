@@ -59,12 +59,13 @@ return {
         additional_vim_regex_highlighting = false,
       },
       incremental_selection = {
-        enable = true,
+        enable = false,
         keymaps = {
-          init_selection = '<M-C-S-F5>', -- ctrl+space
-          node_incremental = '<C-o>', -- set to `false` to disable one of the mappings
-          node_decremental = '<M-C-S-F6>', -- <C-i>
-          scope_incremental = '.',
+          -- set to `false` to disable one of the mappings
+          init_selection = '<M-Up>',
+          node_incremental = '<M-Up>',
+          scope_incremental = '<M-Home>',
+          node_decremental = '<M-Down>',
         },
       },
       indent = { enable = true, disable = { 'yaml' } },

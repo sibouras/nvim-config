@@ -604,17 +604,16 @@ require('small.highlight_selected').setup()
 -- stylua: ignore start
 map('n', '<leader>i', function() require('small.bufend').run() end, { desc = 'Bufend' })
 
--- NOTE: using treewalker.nvim instead of this
--- local treeselect = require('small.treeselect')
--- map('x', '<M-Right>', function() treeselect.next() end, { desc = 'TreeSelect next node' })
--- map('x', '<M-Left>', function() treeselect.prev() end, { desc = 'TreeSelect prev node' })
--- map('x', '<M-Up>', function() treeselect.up() end, { desc = 'TreeSelect parent node' })
--- map('x', '<M-Down>', function() treeselect.down() end, { desc = 'TreeSelect child node' })
--- map('n', '<M-Home>', function() treeselect.current() end, { desc = 'TreeSelect current node' })
--- map('n', '<M-End>', function() treeselect.line() end, { desc = 'TreeSelect current node linewise' })
+local treeselect = require('small.treeselect')
+map('x', '<M-Right>', function() treeselect.next() end, { desc = 'TreeSelect next node' })
+map('x', '<M-Left>', function() treeselect.prev() end, { desc = 'TreeSelect prev node' })
+map({'n', 'x'}, '<M-End>', function() treeselect.line() end, { desc = 'TreeSelect current node linewise' })
+map('n', '<M-Up>', function() treeselect.current() end, { desc = 'TreeSelect current node' })
+map('x', '<M-Up>', function() treeselect.up() end, { desc = 'TreeSelect parent node' })
+map('x', '<M-Down>', function() treeselect.down() end, { desc = 'TreeSelect child node' })
 -- stylua: ignore end
 
--- NOTE: using these mappings for treewalker.nvim
+-- NOTE: using these mappings for small.nvim treeselect
 -- Move Lines
 -- map('n', '<M-Down>', "<cmd>execute 'move .+' . v:count1<cr>==", { desc = 'Move Down' })
 -- map('n', '<M-Up>', "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==", { desc = 'Move Up' })
