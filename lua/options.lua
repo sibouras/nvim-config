@@ -176,7 +176,7 @@ aunmenu PopUp.-1-
 
 if vim.g.is_win then
   --> nushell as shell
-  vim.opt.shell = 'nu --no-std-lib'
+  vim.opt.shell = 'nu'
   -- `--stdin`: redirect all input to -c
   -- `--no-newline`: do not append `\n` to stdout
   -- `-c`: execute a command

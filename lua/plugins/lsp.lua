@@ -85,6 +85,10 @@ return {
             'parameter',
           }
         end
+        if client.name == 'ts_ls' then
+          -- this keeps creating tscancellation files in temp folder
+          client.server_capabilities.documentHighlightProvider = false
+        end
       end
 
       if client.name == 'ts_ls' or client.name == 'html' then
