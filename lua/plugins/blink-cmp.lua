@@ -22,7 +22,7 @@ return {
       ['<C-b>'] = { 'show_signature', 'hide_signature', 'fallback' },
     },
     cmdline = {
-      enabled = true,
+      enabled = false,
       keymap = {
         preset = 'cmdline',
         ['<M-C-S-F5>'] = { 'show' },
@@ -38,9 +38,16 @@ return {
         },
       },
     },
+    sources = {
+      -- Remove 'buffer' if you don't want text completions, by default it's only enabled when LSP returns no items
+      default = { 'lsp', 'path', 'snippets', 'buffer' },
+    },
     snippets = { preset = 'luasnip' },
+    fuzzy = {
+      sorts = { 'exact', 'score', 'sort_text' },
+    },
     signature = {
-      enabled = true,
+      enabled = false,
       window = { border = 'rounded' },
     },
     completion = {
