@@ -483,7 +483,14 @@ return {
         client.capabilities.textDocument.formatting.dynamicRegistration = false
         client.capabilities.textDocument.rangeFormatting.dynamicRegistration = false
       end,
-      root_dir = lspconfig.util.root_pattern('biome.json', 'biome.jsonc'),
+      -- check for the biome package within package.json using insert_package_json method
+      -- https://github.com/neovim/nvim-lspconfig/pull/3648
+      root_dir = function(fname)
+        local root_files = { 'biome.json', 'biome.jsonc' }
+        root_files = lspconfig.util.insert_package_json(root_files, 'biome', fname)
+        -- return vim.fs.dirname(vim.fs.find(root_files, { path = fname, upward = true })[1])
+        return lspconfig.util.root_pattern(unpack(root_files))(fname)
+      end,
       single_file_support = false,
     })
 
