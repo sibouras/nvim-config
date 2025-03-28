@@ -470,6 +470,11 @@ return {
       cmd = { 'rustup', 'run', 'stable', 'rust-analyzer' },
     })
 
+    lspconfig.nushell.setup({
+      on_attach = on_attach,
+      capabilities = capabilities,
+    })
+
     lspconfig.denols.setup({
       on_attach = on_attach,
       capabilities = capabilities,
