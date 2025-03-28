@@ -268,6 +268,37 @@ return {
         map({ 'n', 'x', 'o' }, ']t', next_treesitter, { desc = 'Treesitter forward' })
         map({ 'n', 'x', 'o' }, '[t', prev_treesitter, { desc = 'Treesitter forward' })
       end
+
+      vim.api.nvim_create_autocmd({ 'FileType' }, {
+        desc = 'repeatable jump to next heading/section',
+        pattern = { 'markdown', 'help', 'checkhealth' },
+        group = vim.api.nvim_create_augroup('MyGroup_nvim-treesitter', { clear = true }),
+        callback = function(event)
+          -- return in lsp hover windows
+          -- local ok, preview_bufnr = pcall(vim.api.nvim_win_get_var, vim.fn.win_getid(vim.fn.winnr()), 'lsp_floating_bufnr')
+          -- if ok then
+          --   return
+          -- end
+          if event.file == 'markdown' then
+            return
+          end
+          local next_heading_repeat, prev_heading_repeat = ts_repeat_move.make_repeatable_move_pair(function()
+            if event.match == 'checkhealth' then
+              require('vim.treesitter._headings').jump({ count = 1, level = 1 })
+            else
+              require('vim.treesitter._headings').jump({ count = 1 })
+            end
+          end, function()
+            if event.match == 'checkhealth' then
+              require('vim.treesitter._headings').jump({ count = -1, level = 1 })
+            else
+              require('vim.treesitter._headings').jump({ count = -1 })
+            end
+          end)
+          map('n', ']]', next_heading_repeat, { buffer = 0, silent = false, desc = 'Jump to next section' })
+          map('n', '[[', prev_heading_repeat, { buffer = 0, silent = false, desc = 'Jump to previous section' })
+        end,
+      })
     end,
   },
   {
