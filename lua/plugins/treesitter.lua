@@ -115,7 +115,7 @@ return {
 
             -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
             -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
-            [']s'] = { query = '@scope', query_group = 'locals', desc = 'Next scope' },
+            -- [']s'] = { query = '@scope', query_group = 'locals', desc = 'Next scope' },
             [']z'] = { query = '@fold', query_group = 'folds', desc = 'Next fold' },
           },
           goto_next_end = {
@@ -133,7 +133,7 @@ return {
             ['[j'] = '@block.outer',
             ['[n'] = '@number.inner',
 
-            ['[s'] = { query = '@scope', query_group = 'locals', desc = 'Previous scope' },
+            -- ['[s'] = { query = '@scope', query_group = 'locals', desc = 'Previous scope' },
             ['[z'] = { query = '@fold', query_group = 'folds', desc = 'Previous fold' },
           },
           goto_previous_end = {
@@ -265,8 +265,8 @@ return {
         end, function()
           bracketed.treesitter('backward')
         end)
-        map({ 'n', 'x', 'o' }, ']t', next_treesitter, { desc = 'Treesitter forward' })
-        map({ 'n', 'x', 'o' }, '[t', prev_treesitter, { desc = 'Treesitter forward' })
+        map({ 'n', 'x', 'o' }, ']s', next_treesitter, { desc = 'Treesitter forward' })
+        map({ 'n', 'x', 'o' }, '[s', prev_treesitter, { desc = 'Treesitter forward' })
       end
 
       vim.api.nvim_create_autocmd({ 'FileType' }, {
