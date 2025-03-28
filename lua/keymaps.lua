@@ -680,13 +680,13 @@ map('n', '<leader>ur', function() toggle('relativenumber') end, { desc = 'Toggle
 map('n', '<leader>un', function() toggle.number() end, { desc = 'Toggle Line Numbers' })
 map('n', '<leader>uD', function() toggle.diagnostics() end, { desc = 'Toggle Diagnostics' })
 map('n', '<leader>uT', function() toggle.buffer_semantic_tokens() end, { desc = 'Toggle Semantic Tokens' })
-map('n', '<leader>uH', ':let v:hlsearch = 1 - v:hlsearch<CR>', { desc = 'Toggle hlsearch', silent = true })
+map('n', '<leader>uh', ':let v:hlsearch = 1 - v:hlsearch<CR>', { desc = 'Toggle hlsearch', silent = true })
 
 local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 2
 map('n', '<leader>uc', function() toggle('conceallevel', false, { 0, conceallevel }) end, { desc = 'Toggle Conceal' })
 
 if vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint  then
-  map('n', '<leader>uh', function() toggle.inlay_hints()  end, { desc = 'Toggle Inlay Hints' })
+  map('n', '<leader>uH', function() toggle.inlay_hints()  end, { desc = 'Toggle Inlay Hints' })
 end
 
 map('n', '<leader>ut', function()
