@@ -346,14 +346,32 @@ map('n', '<leader>tn', '<C-w>T')
 -- edit keymaps in new tab
 map('n', '<leader>tk', ':tab drop $LOCALAPPDATA/nvim/lua/keymaps.lua<CR>')
 
--- Quickly change font size in GUI
-vim.cmd([[
-command! Bigger  :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)+1', '')
-command! Smaller :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1', '')
-]])
-map('n', '<M-=>', ':Bigger<CR>')
-map('n', '<M-->', ':Smaller<CR>')
-map('n', '<M-S-_>', ':set guifont=:h16<CR>')
+-- change font size in GUI
+if vim.g.nvy then
+  vim.opt.guifont = 'JetBrainsMono Nerd Font:h12'
+  vim.cmd([[
+  command! Bigger  :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)+1', '')
+  command! Smaller :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1', '')
+  ]])
+  map('n', '<C-=>', ':Bigger<CR>')
+  map('n', '<C-->', ':Smaller<CR>')
+  map('n', '<C-0>', ':set guifont=:h12<CR>')
+end
+
+if vim.g.neovide then
+  local change_scale_factor = function(delta)
+    vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
+  end
+  map('n', '<C-=>', function()
+    change_scale_factor(1.05)
+  end)
+  map('n', '<C-->', function()
+    change_scale_factor(1 / 1.05)
+  end)
+  map('n', '<C-0>', function()
+    vim.g.neovide_scale_factor = 1.0
+  end)
+end
 
 -- Zoom / Restore window.
 -- https://stackoverflow.com/questions/13194428/is-better-way-to-zoom-windows-in-vim-than-zoomwin
