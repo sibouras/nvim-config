@@ -43,6 +43,17 @@ return {
       termlisted = true, -- set this option to false if you treat this terminal as single independent terminal
     })
 
+    local function get_term_win_info()
+      -- Get a list of all visible windows with their information
+      local windows = vim.fn.getwininfo()
+      -- Iterate through each window and check if the window is a terminal
+      for _, win_info in ipairs(windows) do
+        if win_info.terminal == 1 then
+          return win_info
+        end
+      end
+    end
+
     -- switch to most recent terminal
     local recent_bufnr
     map({ 'n', 'i', 't' }, '<M-C-S-F7>', function() -- mapped <C-;> to <M-C-S-F7> with ahk
@@ -51,15 +62,16 @@ return {
         vim.cmd('stopinsert')
       end
 
-      local cur_bufnr = vim.api.nvim_get_current_buf()
-      if vim.bo.buftype == 'terminal' then
-        recent_bufnr = cur_bufnr
-        vim.cmd('close')
+      local term_win_info = get_term_win_info()
+      -- if a terminal window is visible close it
+      if term_win_info then
+        recent_bufnr = term_win_info.bufnr
+        vim.api.nvim_win_close(term_win_info.winid, false)
       elseif recent_bufnr == nil then
         shell:spawn()
         require('bufterm.ui').toggle_float(shell.bufnr)
       elseif require('bufterm.ui').toggle_float(recent_bufnr) then
-        vim.cmd('BufTermEnter')
+        -- vim.cmd('BufTermEnter')
       end
     end, { desc = 'Toggle floating terminal' })
 
@@ -77,59 +89,73 @@ return {
     end
 
     map({ 'n', 't' }, '<F1>', function()
+      local term_win_info = get_term_win_info()
+      -- if a terminal window is visible close it
+      if term_win_info then
+        if term_win_info.winid ~= vim.fn.win_getid() then
+          vim.api.nvim_win_close(term_win_info.winid, false)
+        end
+      end
+
       local cur_bufnr = vim.api.nvim_get_current_buf()
-      if vim.bo.buftype == 'terminal' then
+      if vim.bo.buftype == 'terminal' and get_most_recent_buffer() then
         recent_bufnr = cur_bufnr
         vim.cmd('b' .. get_most_recent_buffer())
         vim.schedule(function()
           -- Terminal-mode forces these local options so i reset them here, :h terminal-input
           vim.opt_local.cursorline = true
-          vim.opt_local.scrolloff = 4
+          vim.opt_local.scrolloff = 5
           vim.opt_local.sidescrolloff = 10
         end)
-      elseif recent_bufnr == nil then
-        shell:spawn()
-        vim.cmd('b' .. shell.bufnr)
       else
-        vim.cmd('b' .. recent_bufnr)
+        if recent_bufnr == nil then
+          shell:spawn()
+        end
+        vim.cmd('b' .. (recent_bufnr or shell.bufnr))
       end
     end, { desc = 'Enter terminal' })
 
+    local height = 18
     map({ 'n', 't' }, '<F2>', function()
-      local cur_bufnr = vim.api.nvim_get_current_buf()
-      if vim.bo.buftype == 'terminal' then
-        recent_bufnr = cur_bufnr
-        vim.cmd('close')
-      elseif recent_bufnr == nil then
-        shell:spawn()
-        vim.cmd('sb' .. shell.bufnr)
-        if type(vim.g.termheight) == 'number' and vim.g.termheight > 0 then
-          vim.cmd('resize' .. vim.g.termheight)
+      local term_win_info = get_term_win_info()
+      -- if terminal window is visible close it
+      if term_win_info then
+        recent_bufnr = term_win_info.bufnr
+        -- save the height when closing a horizontal(winrow > 1) terminal
+        -- winrow > 1 for a horizontal terminal
+        if term_win_info.winrow > 1 then
+          height = vim.api.nvim_win_get_height(term_win_info.winid)
         end
+        vim.cmd.wincmd('p')
+        vim.api.nvim_win_close(term_win_info.winid, false)
       else
-        vim.cmd('sb' .. recent_bufnr)
-        if type(vim.g.termheight) == 'number' and vim.g.termheight > 0 then
-          vim.cmd('resize' .. vim.g.termheight)
+        if recent_bufnr == nil then
+          shell:spawn()
         end
+        vim.cmd('botright sb' .. (recent_bufnr or shell.bufnr))
+        vim.api.nvim_win_set_height(0, height)
       end
     end, { desc = 'Toggle horizontal terminal' })
 
+    local width = 52
     map({ 'n', 't' }, '<F3>', function()
-      local cur_bufnr = vim.api.nvim_get_current_buf()
-      if vim.bo.buftype == 'terminal' then
-        recent_bufnr = cur_bufnr
-        vim.cmd('close')
-      elseif recent_bufnr == nil then
-        shell:spawn()
-        vim.cmd('vertical sb' .. shell.bufnr)
-        if type(vim.g.termwidth) == 'number' and vim.g.termwidth > 0 then
-          vim.cmd('vertical resize' .. vim.g.termwidth)
+      local term_win_info = get_term_win_info()
+      -- if terminal window is visible close it
+      if term_win_info then
+        recent_bufnr = term_win_info.bufnr
+        -- save the width when closing a vertical(winrow = 1) terminal
+        if term_win_info.winrow == 1 then
+          width = vim.api.nvim_win_get_width(term_win_info.winid)
         end
+        vim.cmd.wincmd('p')
+        vim.api.nvim_win_close(term_win_info.winid, false)
       else
-        vim.cmd('vertical sb' .. recent_bufnr)
-        if type(vim.g.termwidth) == 'number' and vim.g.termwidth > 0 then
-          vim.cmd('vertical resize' .. vim.g.termwidth)
+        if recent_bufnr == nil then
+          shell:spawn()
         end
+        -- vim.cmd('vertical topleft sb' .. (recent_bufnr or shell.bufnr))
+        vim.cmd('vertical botright sb' .. (recent_bufnr or shell.bufnr))
+        vim.api.nvim_win_set_width(0, width)
       end
     end, { desc = 'Toggle vertical terminal' })
 
