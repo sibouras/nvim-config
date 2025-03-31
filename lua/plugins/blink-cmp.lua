@@ -22,7 +22,7 @@ return {
       ['<C-b>'] = { 'show_signature', 'hide_signature', 'fallback' },
     },
     cmdline = {
-      enabled = true,
+      enabled = false,
       keymap = {
         preset = 'cmdline',
         ['<M-C-S-F5>'] = { 'show' },

@@ -392,7 +392,7 @@ return {
         -- local key = require('grapple').name_or_index()
         -- return '  [' .. key .. ']'
         local statusline = require('grapple').statusline()
-        return statusline
+        return statusline .. ' '
       end,
       hl = { fg = 'gray' },
     }
@@ -672,7 +672,6 @@ return {
       ViMode,
       Space,
       Grapple,
-      Space,
       -- FileNameBlock,
       utils.surround({ '', '' }, 'dark_bg', { FileNameBlock }),
       Spell,

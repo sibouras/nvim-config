@@ -145,8 +145,8 @@ map('n', '}', ":execute 'keepjumps norm! ' . v:count1 . '}'<CR>")
 -- map('n', ')', ":execute 'keepjumps norm! ' . v:count1 . ')'<CR>")
 
 -- search for regex pattern
-map({ 'n', 'x', 'o' }, '(', "<Cmd>call search('[({]')<CR>")
-map({ 'n', 'x', 'o' }, ')', "<Cmd>call search('[)}]')<CR>")
+-- map({ 'n', 'x', 'o' }, '(', "<Cmd>call search('[({]')<CR>")
+-- map({ 'n', 'x', 'o' }, ')', "<Cmd>call search('[)}]')<CR>")
 
 -- scroll with <C-j> <C-k>
 -- from: https://vi.stackexchange.com/questions/10031/scroll-a-quarter-25-of-the-screen-up-or-down
@@ -261,10 +261,6 @@ map({ 'n', 'i' }, '<F8>', function()
   local time = string.format('%02d:%02d:%02d', t.hour, t.min, t.sec)
   print(time)
 end)
-
--- Navigate quickfix list
-map('n', '[q', ':cprevious<CR>')
-map('n', ']q', ':cnext<CR>')
 
 -- yank to system clipboard
 map({ 'n', 'v' }, '<leader>y', '"+y')
