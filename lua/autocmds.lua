@@ -93,11 +93,11 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
 
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   desc = 'close some filetypes with <q>',
-  pattern = { 'qf', 'help', 'man', 'spectre_panel', 'startuptime', 'Redir' },
+  pattern = { 'qf', 'help', 'man', 'startuptime', 'Redir' },
   group = augroup('close_with_q'),
   callback = function(event)
-    vim.bo[event.buf].buflisted = false
-    vim.keymap.set('n', 'q', '<Cmd>close<CR>', { buffer = event.buf, silent = true })
+    -- vim.bo[event.buf].buflisted = false
+    vim.keymap.set('n', 'q', '<Cmd>bdelete<CR>', { buffer = event.buf, silent = true })
   end,
 })
 

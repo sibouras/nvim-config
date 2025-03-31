@@ -58,22 +58,24 @@ map('x', 'gW', [[y/\V<C-R>"<CR>N]])
 -- given, then switch to next file. We use `bufloaded` to check for alternate
 -- buffer presence. This will ignore deleted buffers, as intended. To get
 -- default behaviour, use `bufexists` in it's place.
--- map("n", "<M-w>", ":<C-u>exe v:count ? v:count . 'b' : 'keepjumps b' . (bufloaded(0) ? '#' : 'n')<CR>")
--- map("i", "<M-w>", "<C-o>:keepjumps b#<CR>")
+-- map('n', '<M-w>', ":<C-u>exe v:count ? v:count . 'b' : 'keepjumps b' . (bufloaded(0) ? '#' : 'n')<CR>")
+-- map('i', '<M-w>', "<C-o>:exe v:count ? v:count . 'b' : 'keepjumps b' . (bufloaded(0) ? '#' : 'n')<CR>")
 -- this switches to the last used buffer even if its deleted
--- map({ "n", "i" }, "<M-w>", "<Cmd>keepjumps normal <CR>")
+-- map({ 'n', 'i' }, '<M-w>', '<Cmd>keepjumps normal <CR>')
 
 -- switch to the most recent buffer that's not deleted
 map({ 'n', 'i' }, '<M-w>', function()
   local curbufnr = vim.api.nvim_get_current_buf()
   local buflist = vim.tbl_filter(function(buf)
-    return vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].buflisted and buf ~= curbufnr
+    return vim.api.nvim_buf_is_loaded(buf)
+      and (vim.bo[buf].buflisted or vim.bo[buf].buftype == 'help')
+      and buf ~= curbufnr
   end, vim.api.nvim_list_bufs())
 
   -- table is empty if buffers are not loaded
   if #buflist == 0 then
     if #vim.fn.expand('#') > 0 then
-      vim.cmd('keepjumps b#')
+      vim.cmd('keepjumps e#') -- with b# the file doesn't show in :buffers
     end
   else
     local switch_bufnr
