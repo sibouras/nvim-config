@@ -6,6 +6,7 @@ return {
   opts = {
     keymap = {
       preset = 'none',
+      ['<C-Space>'] = { 'show', 'show_documentation', 'hide_documentation' },
       ['<M-C-S-F5>'] = { 'show', 'show_documentation', 'hide_documentation' }, -- mapped to control+space in terminal
       ['<C-c>'] = { 'cancel', 'fallback' },
       ['<C-e>'] = { 'cancel', 'fallback' },
@@ -41,14 +42,6 @@ return {
     sources = {
       -- Remove 'buffer' if you don't want text completions, by default it's only enabled when LSP returns no items
       default = { 'lsp', 'path', 'snippets', 'buffer' },
-      providers = {
-        cmdline = {
-          -- ignores cmdline completions when executing shell commands
-          enabled = function()
-            return vim.fn.getcmdtype() ~= ':' or not vim.fn.getcmdline():match("^[%%0-9,'<>%-]*!")
-          end,
-        },
-      },
     },
     snippets = { preset = 'luasnip' },
     fuzzy = {
