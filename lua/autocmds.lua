@@ -2,14 +2,22 @@ local function augroup(name)
   return vim.api.nvim_create_augroup('MyGroup_' .. name, { clear = true })
 end
 
-vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
-  desc = 'disable auto-comment on o and O and enter',
-  group = augroup('formatoptions'),
-  callback = function()
-    vim.cmd('set formatoptions-=cro')
-    vim.cmd([[set formatexpr=\"]]) -- empty formatexpr so gq uses formatoptions
+vim.api.nvim_create_autocmd('LspAttach', {
+  desc = 'disable options set by lsp',
+  group = augroup('lsp-defaults-disable'),
+  callback = function(args)
+    -- Unset 'formatexpr'
+    vim.bo[args.buf].formatexpr = nil
   end,
 })
+
+-- vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
+--   desc = 'disable auto-comment on o and O and enter',
+--   group = augroup('formatoptions'),
+--   callback = function()
+--     vim.cmd('set formatoptions-=cro')
+--   end,
+-- })
 
 -- Automatically equalize splits when Vim is resized
 vim.cmd([[autocmd VimResized * wincmd =]])

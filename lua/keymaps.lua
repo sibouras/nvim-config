@@ -270,6 +270,10 @@ map('n', '<leader>P', '"+P')
 -- use the ctrl+shift+v instead
 -- map('i', '<M-p>', '<C-r><C-o>+', { desc = "Insert the contents of a register literally and don't auto-indent" })
 -- map('c', '<M-p>', '<C-r>+', { silent = false })
+if vim.fn.has('gui_running') == 1 then
+  map('i', '<C-S-v>', '<C-r><C-o>+', { desc = "Insert the contents of a register literally and don't auto-indent" })
+  map('c', '<C-S-v>', '<C-r><C-o>+', { desc = 'Insert the contents of a register literally', silent = false })
+end
 
 -- paste from ditto
 map('n', '<S-Insert>', '"+p')

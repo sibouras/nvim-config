@@ -38,6 +38,7 @@ return {
         hl.IlluminatedWordText = { bg = '#272c41' }
         hl.IlluminatedWordRead = { bg = '#272c41' }
         hl.IlluminatedWordWrite = { bg = '#272c41' }
+        hl.DiagnosticUnnecessary = { fg = '#565f89' }
       end,
     })
 
