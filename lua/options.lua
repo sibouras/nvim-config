@@ -153,14 +153,34 @@ vim.o.foldtext = '' -- transparent foldtext
 
 vim.opt.statuscolumn = [[%!v:lua.require'utils.ui'.statuscolumn()]]
 
-if vim.g.nvy then
+if vim.fn.has('gui_running') == 1 then
   vim.cmd('cd $home')
 end
 
 if vim.g.neovide then
-  -- vim.g.neovide_cursor_animation_length = 0
   vim.g.neovide_position_animation_length = 0
   vim.g.neovide_scroll_animation_far_lines = 0
+  vim.g.neovide_scroll_animation_length = 0.2 -- default = 0.3
+  vim.g.neovide_cursor_animation_length = 0.1 -- default = 0.15
+
+  -- don't smooth scroll when switching buffers, https://github.com/neovide/neovide/issues/1771
+  vim.api.nvim_create_autocmd('BufLeave', {
+    group = vim.api.nvim_create_augroup('MyGroup_neovide_leave', { clear = true }),
+    callback = function()
+      vim.g.neovide_scroll_animation_length = 0
+    end,
+  })
+  vim.api.nvim_create_autocmd('BufEnter', {
+    group = vim.api.nvim_create_augroup('MyGroup_neovide_enter', { clear = true }),
+    callback = function()
+      vim.fn.timer_start(70, function()
+        -- don't smooth scroll in telescope preview
+        if vim.bo.filetype ~= 'TelescopePrompt' then
+          vim.g.neovide_scroll_animation_length = 0.2
+        end
+      end)
+    end,
+  })
 end
 
 vim.g.python3_host_prog = 'python3'
