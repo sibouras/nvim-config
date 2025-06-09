@@ -1,11 +1,16 @@
+-- config before mason v2.0.0
 ---@diagnostic disable: undefined-field
-return {
+return  {
   -- LSP Configuration & Plugins
   'neovim/nvim-lspconfig',
   -- commit = '1393aaca8a59a9ce586ed55770b3a02155a56ac2',
   event = 'LazyFile',
   dependencies = {
     -- Automatically install LSPs to stdpath for neovim
+    'williamboman/mason.nvim',
+    'williamboman/mason-lspconfig.nvim',
+    -- 'mason-org/mason.nvim',
+    -- 'mason-org/mason-lspconfig.nvim',
     'b0o/SchemaStore.nvim',
 
     -- Useful status updates for LSP
@@ -19,6 +24,7 @@ return {
     map('n', '<leader>dg', vim.diagnostic.open_float, opts)
     map('n', '<leader>dq', vim.diagnostic.setloclist, opts)
     map('n', '<leader>li', '<Cmd>LspInfo<CR>', { desc = 'LspInfo' })
+    map('n', '<leader>lm', '<Cmd>Mason<CR>', { desc = 'Mason' })
     map('n', '<leader>ln', '<Cmd>NullLsInfo<CR>', { desc = 'NullLsInfo' })
 
     -- restore terminal tab title after formatting
@@ -132,18 +138,6 @@ return {
       end, { desc = 'Format current buffer with LSP' })
     end
 
-    vim.api.nvim_create_autocmd('LspAttach', {
-      desc = 'Configure LSP keymaps',
-      callback = function(args)
-        local client = vim.lsp.get_client_by_id(args.data.client_id)
-        -- I don't think this can happen but it's a wild world out there.
-        if not client then
-          return
-        end
-        on_attach(client, args.buf)
-      end,
-    })
-
     local config = {
       -- virtual_text = { prefix = "" },
       virtual_text = false,
@@ -224,77 +218,253 @@ return {
     -- capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
     capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
 
-    vim.lsp.enable({ 'lua_ls', 'ts_ls', 'html' })
+    -- Setup mason so it can manage external tooling
+    require('mason').setup({
+      ui = {
+        border = 'rounded',
+        icons = {
+          package_installed = '✓',
+          package_pending = '➜',
+          -- package_uninstalled = "✗",
+        },
+      },
+    })
 
     local lspconfig = require('lspconfig')
 
-    lspconfig.cssls.setup({
-      on_attach = on_attach,
-      capabilities = capabilities,
-      -- https://github.com/neovim/neovim/issues/33577
-      init_options = {
-        provideFormatter = false,
-      },
-      settings = {
-        css = {
-          validate = true,
-          lint = {
-            -- Do not warn for Tailwind's @apply rule
-            unknownAtRules = 'ignore',
+    -- Ensure the servers above are installed
+    local mason_lspconfig = require('mason-lspconfig')
+
+    -- https://github.com/williamboman/mason.nvim/discussions/92#discussioncomment-3173425
+
+    -- Extension to bridge mason.nvim with the lspconfig plugin
+    -- this slows down startuptime
+    -- mason_lspconfig.setup({
+    --   -- A list of servers to automatically install if they're not already installed.
+    --   ensure_installed = { 'lua_ls', 'html', 'cssls', 'ts_ls', 'jsonls', 'taplo' },
+    -- })
+
+    local function organize_imports()
+      local params = {
+        command = '_typescript.organizeImports',
+        arguments = { vim.api.nvim_buf_get_name(0) },
+        title = '',
+      }
+      vim.lsp.buf.execute_command(params)
+    end
+
+    mason_lspconfig.setup_handlers({
+      function(server_name)
+        require('lspconfig')[server_name].setup({
+          capabilities = capabilities,
+          on_attach = on_attach,
+          -- settings = servers[server_name],
+        })
+      end,
+
+      -- Next, you can provide targeted overrides for specific servers.
+      -- For example, a handler override for the `rust_analyzer`:
+      -- ["rust_analyzer"] = function()
+      --   require("rust-tools").setup({})
+      -- end,
+
+      ['lua_ls'] = function()
+        require('lspconfig').lua_ls.setup({
+          on_attach = on_attach,
+          capabilities = capabilities,
+          single_file_support = false,
+          on_init = function(client)
+            local path = client.workspace_folders[1].name
+            if not vim.uv.fs_stat(path .. '/.luarc.json') and not vim.uv.fs_stat(path .. '/.luarc.jsonc') then
+              client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+                -- Tell the language server which version of Lua you're using
+                -- (most likely LuaJIT in the case of Neovim)
+                runtime = { version = 'LuaJIT' },
+                -- Make the server aware of Neovim runtime files
+                workspace = {
+                  checkThirdParty = false,
+                  library = {
+                    -- vim.env.VIMRUNTIME,
+                    -- '${3rd}/luv/library',
+                  },
+                  -- maxPreload = 0, -- lua_ls is preloading files with diagnotic errors and adding them to oldfiles
+                },
+              })
+              client.notify(
+                vim.lsp.protocol.Methods.workspace_didChangeConfiguration,
+                { settings = client.config.settings }
+              )
+            end
+            return true
+          end,
+          settings = {
+            Lua = {
+              format = { enable = false },
+              diagnostics = { globals = { 'vim' } },
+              telemetry = { enable = false },
+              hint = { enable = true, arrayIndex = 'Disable' },
+            },
           },
-        },
-      },
-    })
-
-    lspconfig.jsonls.setup({
-      on_attach = on_attach,
-      capabilities = capabilities,
-      init_options = {
-        provideFormatter = false,
-      },
-      settings = {
-        json = {
-          schemas = require('schemastore').json.schemas(),
-          validate = { enable = false },
-        },
-      },
-    })
-
-    lspconfig.emmet_language_server.setup({
-      on_attach = function(client)
-        client.server_capabilities.completionProvider.triggerCharacters = {}
+        })
       end,
-      capabilities = capabilities,
-      filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less' },
-    })
 
-    lspconfig.tailwindcss.setup({
-      on_attach = function(client, bufnr)
-        -- if client.server_capabilities.colorProvider then
-        --   -- require("user.lsp.utils.documentcolors").buf_attach(bufnr)
-        --   -- slows opening files
-        --   require('document-color').buf_attach(bufnr)
-        -- end
-        -- client.server_capabilities.hoverProvider = false
-        -- client.server_capabilities.completionProvider = false
-        client.server_capabilities.completionProvider.triggerCharacters = {
-          '"',
-          "'",
-          '`',
-          '.',
-          '(',
-          '[',
-          '!',
-          '/',
-          ':',
-        }
+      ['ts_ls'] = function()
+        lspconfig.ts_ls.setup({
+          -- autostart = false,
+          on_attach = on_attach,
+          capabilities = capabilities,
+          single_file_support = false,
+          commands = {
+            OrganizeImports = {
+              organize_imports,
+              description = 'Organize Imports',
+            },
+          },
+          -- DOCS: https://github.com/typescript-language-server/typescript-language-server/blob/master/docs/configuration.md
+          -- Diagnostics code to be omitted when reporting diagnostics.
+          -- See https://github.com/microsoft/TypeScript/blob/main/src/compiler/diagnosticMessages.json for a full list of valid codes.
+          settings = {
+            diagnostics = {
+              ignoredCodes = { 80001 }, -- File is a CommonJS module; it may be converted to an ES module
+            },
+          },
+          init_options = {
+            preferences = {
+              -- disableSuggestions = true,
+              -- includeInlayParameterNameHints = 'literals',
+              includeInlayVariableTypeHints = true,
+              includeInlayFunctionLikeReturnTypeHints = true,
+            },
+          },
+          -- disable lsp in node_modules
+          -- not needed anymore: https://github.com/neovim/nvim-lspconfig/pull/2287
+          -- root_dir = function(fname)
+          --   if string.find(fname, "node_modules/") then
+          --     return
+          --   end
+          --   local root_files = { "package.json", "tsconfig.json", "jsconfig.json", ".git" }
+          --   return lspconfig.util.root_pattern(unpack(root_files))(fname)
+          -- end,
+        })
       end,
-      capabilities = capabilities,
-      -- flags = {
-      --   debounce_text_changes = 500,
-      -- },
-      filetypes = { 'html', 'css', 'javascriptreact', 'typescriptreact', 'vue', 'svelte' },
-      root_dir = lspconfig.util.root_pattern('tailwind.config.js', 'tailwind.config.ts'),
+
+      ['unocss'] = function()
+        lspconfig.unocss.setup({
+          on_attach = function(client)
+            client.server_capabilities.completionProvider.triggerCharacters = { '-' }
+          end,
+          capabilities = capabilities,
+        })
+      end,
+
+      ['tailwindcss'] = function()
+        lspconfig.tailwindcss.setup({
+          on_attach = function(client, bufnr)
+            -- if client.server_capabilities.colorProvider then
+            --   -- require("user.lsp.utils.documentcolors").buf_attach(bufnr)
+            --   -- slows opening files
+            --   require('document-color').buf_attach(bufnr)
+            -- end
+            -- client.server_capabilities.hoverProvider = false
+            -- client.server_capabilities.completionProvider = false
+            client.server_capabilities.completionProvider.triggerCharacters = {
+              '"',
+              "'",
+              '`',
+              '.',
+              '(',
+              '[',
+              '!',
+              '/',
+              ':',
+            }
+          end,
+          capabilities = capabilities,
+          -- flags = {
+          --   debounce_text_changes = 500,
+          -- },
+          filetypes = { 'html', 'css', 'javascriptreact', 'typescriptreact', 'vue', 'svelte' },
+          root_dir = lspconfig.util.root_pattern('tailwind.config.js', 'tailwind.config.ts'),
+        })
+      end,
+
+      ['cssls'] = function()
+        lspconfig.cssls.setup({
+          on_attach = on_attach,
+          capabilities = capabilities,
+          init_options = {
+            provideFormatter = false,
+          },
+          settings = {
+            css = {
+              validate = true,
+              lint = {
+                -- Do not warn for Tailwind's @apply rule
+                unknownAtRules = 'ignore',
+              },
+            },
+          },
+        })
+      end,
+
+      ['emmet_ls'] = function()
+        lspconfig.emmet_ls.setup({
+          on_attach = function(client)
+            client.server_capabilities.completionProvider.triggerCharacters = { '.', '>', '*', '+' }
+          end,
+          capabilities = capabilities,
+          filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less' },
+          -- filetypes = { "html", "css", "sass", "scss", "less" },
+        })
+      end,
+
+      ['emmet_language_server'] = function()
+        lspconfig.emmet_language_server.setup({
+          on_attach = function(client)
+            client.server_capabilities.completionProvider.triggerCharacters = {}
+          end,
+          capabilities = capabilities,
+          filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less' },
+        })
+      end,
+
+      ['jsonls'] = function()
+        lspconfig.jsonls.setup({
+          on_attach = on_attach,
+          capabilities = capabilities,
+          init_options = {
+            provideFormatter = false,
+          },
+          settings = {
+            json = {
+              schemas = require('schemastore').json.schemas(),
+              validate = { enable = false },
+            },
+          },
+        })
+      end,
+
+      ['eslint'] = function()
+        lspconfig.eslint.setup({
+          on_attach = on_attach,
+          capabilities = capabilities,
+          root_dir = lspconfig.util.root_pattern(
+            '.eslintrc',
+            '.eslintrc.js',
+            '.eslintrc.cjs',
+            '.eslintrc.json',
+            'eslint.config.js'
+          ),
+        })
+      end,
+
+      ['gopls'] = function()
+        lspconfig.gopls.setup({
+          on_attach = on_attach,
+          capabilities = capabilities,
+          cmd = { 'gopls.cmd' },
+        })
+      end,
     })
 
     lspconfig.rust_analyzer.setup({

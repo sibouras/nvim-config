@@ -1,7 +1,6 @@
 return {
   'nvimtools/none-ls.nvim',
   event = 'LazyFile',
-  dependencies = { 'mason.nvim' },
   opts = function()
     local null_ls = require('null-ls')
     -- https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTINS.md
