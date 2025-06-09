@@ -690,10 +690,10 @@ local function indent_traverse(direction, equal) -- {{{
   end
 end
 
-map({ 'n', 'x' }, 'gj', indent_traverse(1, true)) -- next equal indent
-map({ 'n', 'x' }, 'gk', indent_traverse(-1, true)) -- previous equal indent
-map({ 'n', 'x' }, 'gJ', indent_traverse(1, false)) -- next bigger indent
-map({ 'n', 'x' }, 'gK', indent_traverse(-1, false)) -- previous bigger indent
+map({ 'n', 'x' }, 'gj', indent_traverse(1, true), { desc = 'next equal indent' })
+map({ 'n', 'x' }, 'gk', indent_traverse(-1, true), { desc = 'previous equal indent' })
+-- map({ 'n', 'x' }, 'gJ', indent_traverse(1, false), { desc = 'next bigger indent' })
+-- map({ 'n', 'x' }, 'gK', indent_traverse(-1, false), { desc = 'previous bigger indent' })
 
 -- toggle options
 local toggle = require('utils.toggle')
