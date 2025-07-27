@@ -21,6 +21,10 @@ return {
       ['<C-u>'] = { 'scroll_documentation_up', 'fallback' },
       ['<C-d>'] = { 'scroll_documentation_down', 'fallback' },
       ['<C-b>'] = { 'show_signature', 'hide_signature', 'fallback' },
+      -- stylua: ignore start
+      ["<PageUp>"] = { function(cmp) cmp.select_prev({ count = 5 }) end },
+      ["<PageDown>"] = { function(cmp) cmp.select_next({ count = 5 }) end },
+      -- stylua: ignore end
     },
     cmdline = {
       enabled = false,
