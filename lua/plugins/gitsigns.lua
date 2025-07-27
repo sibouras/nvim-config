@@ -13,6 +13,9 @@ return {
     preview_config = {
       border = 'rounded',
     },
+    diffthis = {
+      split = 'belowright',
+    },
     -- base = 'FILE',
     on_attach = function(buffer)
       if vim.fn.bufname('#'):match('LOCAL') then
