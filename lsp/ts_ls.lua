@@ -13,7 +13,9 @@ return {
   -- See https://github.com/microsoft/TypeScript/blob/main/src/compiler/diagnosticMessages.json for a full list of valid codes.
   settings = {
     diagnostics = {
-      ignoredCodes = { 80001 }, -- File is a CommonJS module; it may be converted to an ES module
+      -- 80001: File is a CommonJS module; it may be converted to an ES module
+      -- 6133: '{0}' is declared but its value is never read.
+      ignoredCodes = { 80001, 6133 },
     },
   },
   init_options = {
