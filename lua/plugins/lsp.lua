@@ -224,7 +224,13 @@ return {
     -- capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
     capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
 
-    vim.lsp.enable({ 'lua_ls', 'ts_ls', 'html' })
+    vim.schedule(function()
+      -- before 0.11.2 this used to work without vim.schedule
+      -- https://old.reddit.com/r/neovim/comments/1l7pz1l/starting_from_0112_i_have_a_weird_issue/
+      -- https://github.com/neovim/neovim/issues/33116
+      -- https://github.com/neovim/neovim/pull/33762
+      vim.lsp.enable({ 'lua_ls', 'ts_ls', 'html', 'taplo' })
+    end)
 
     local lspconfig = require('lspconfig')
 
