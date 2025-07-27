@@ -28,12 +28,25 @@ return {
             'vue',
             'svelte',
             'graphql',
+            'html',
           },
           env = {
             PRETTIERD_DEFAULT_CONFIG = vim.fn.stdpath('config') .. '/linter-config/.prettierrc.json',
           },
         }),
-        builtins.formatting.biome,
+        builtins.formatting.biome.with({
+          filetypes = {
+            'javascript',
+            'typescript',
+            'javascriptreact',
+            'typescriptreact',
+            'json',
+            'jsonc',
+            'html',
+            'css',
+            'graphql',
+          },
+        }),
         builtins.formatting.stylua.with({
           extra_args = { '--indent-type=Spaces', '--indent-width=2', '--quote-style=AutoPreferSingle' },
         }),
