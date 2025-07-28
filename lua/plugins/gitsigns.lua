@@ -10,9 +10,6 @@ return {
       changedelete = { text = '▎' },
       untracked = { text = '▎' },
     },
-    preview_config = {
-      border = 'rounded',
-    },
     diffthis = {
       split = 'belowright',
     },

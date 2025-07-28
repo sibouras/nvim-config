@@ -27,7 +27,7 @@ return {
       -- stylua: ignore end
     },
     cmdline = {
-      enabled = false,
+      enabled = true,
       keymap = {
         preset = 'cmdline',
         ['<M-C-S-F5>'] = { 'show' },
@@ -52,17 +52,16 @@ return {
       sorts = { 'exact', 'score', 'sort_text' },
     },
     signature = {
-      enabled = false,
-      window = { border = 'rounded' },
+      enabled = true,
     },
     completion = {
+      menu = { border = 'none' },
       accept = {
         dot_repeat = false, -- fix neovide cursor jump
       },
       documentation = {
         auto_show = true,
         auto_show_delay_ms = 100,
-        window = { border = 'rounded' },
       },
       list = {
         selection = {

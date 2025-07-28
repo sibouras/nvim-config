@@ -113,10 +113,22 @@ return {
 
       -- See `:help K` for why this keymap
       nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-      nmap('<leader>k', vim.lsp.buf.hover, 'Hover Documentation')
+      nmap('<leader>k', function()
+        ---@diagnostic disable-next-line: redundant-parameter
+        vim.lsp.buf.hover({
+          max_width = 100,
+          -- max_height = math.floor(vim.o.lines * 0.5),
+          -- max_width = math.floor(vim.o.columns * 0.4),
+        })
+      end, 'Hover Documentation')
 
       local bufopts = { noremap = true, silent = true, buffer = bufnr, desc = 'Signature Documentation' }
-      vim.keymap.set({ 'n', 'i' }, '<M-/>', vim.lsp.buf.signature_help, bufopts)
+      vim.keymap.set({ 'n', 'i' }, '<M-/>', function()
+        ---@diagnostic disable-next-line: redundant-parameter
+        vim.lsp.buf.signature_help({
+          max_width = 100,
+        })
+      end, bufopts)
 
       -- Lesser used LSP functionality
       nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -159,7 +171,6 @@ return {
       float = {
         focusable = true,
         style = 'minimal',
-        border = 'rounded',
         source = 'always',
         header = '',
         prefix = '',
@@ -167,57 +178,6 @@ return {
     }
 
     vim.diagnostic.config(config)
-
-    if vim.fn.has('nvim-0.11') == 1 then
-      local signature_help = vim.lsp.buf.signature_help
-      vim.lsp.buf.signature_help = function()
-        ---@diagnostic disable-next-line: redundant-parameter
-        return signature_help({
-          border = 'rounded',
-          max_width = 100,
-          -- max_height = math.floor(vim.o.lines * 0.5),
-          -- max_width = math.floor(vim.o.columns * 0.4),
-        })
-      end
-    else
-      vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-        border = 'rounded',
-      })
-    end
-
-    -- NOTE: 0.11 supports multiple clients for vim.lsp.buf.hover()
-    -- https://github.com/neovim/neovim/pull/30935
-    if vim.fn.has('nvim-0.11') == 1 then
-      -- or just call vim.lsp.buf.hover({border = 'rounded'}) directly.
-      local hover = vim.lsp.buf.hover
-      vim.lsp.buf.hover = function()
-        ---@diagnostic disable-next-line: redundant-parameter
-        return hover({
-          border = 'rounded',
-          max_width = 100,
-          -- max_height = math.floor(vim.o.lines * 0.5),
-          -- max_width = math.floor(vim.o.columns * 0.4),
-        })
-      end
-    else
-      -- disable notifications in vim.lsp.buf.hover
-      -- from: https://github.com/neovim/neovim/issues/20457
-      ---@diagnostic disable-next-line: redefined-local
-      vim.lsp.handlers['textDocument/hover'] = function(_, result, ctx, config)
-        config = config or { border = 'rounded' }
-        config.focus_id = ctx.method
-        if not (result and result.contents) then
-          return
-        end
-        local markdown_lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
-        ---@diagnostic disable-next-line: deprecated
-        markdown_lines = vim.lsp.util.trim_empty_lines(markdown_lines)
-        if vim.tbl_isempty(markdown_lines) then
-          return
-        end
-        return vim.lsp.util.open_floating_preview(markdown_lines, 'markdown', config)
-      end
-    end
 
     -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
     local capabilities = vim.lsp.protocol.make_client_capabilities()

@@ -35,6 +35,7 @@ local options = {
   numberwidth = 4, -- Minimal number of columns to use for the line number.
   signcolumn = 'yes', -- always show the sign column, otherwise it would shift the text each time
   wrap = false, -- display lines as one long line
+  winborder = 'rounded', -- Defines the default border style of floating windows.
   breakindent = true, -- Indent wrapped lines to match line start
   linebreak = true, -- Wrap long lines at 'breakat' (if 'wrap' is set)
   scrolloff = 5,
