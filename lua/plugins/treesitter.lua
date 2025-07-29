@@ -165,23 +165,6 @@ return {
     config = function(_, opts)
       require('nvim-treesitter.configs').setup(opts)
 
-      local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
-
-      -- tree-sitter-nu with neovim v0.10.3 (stable): https://discord.com/channels/601130461678272522/1066353495638278194/1312066978919219231
-      -- according to this: https://github.com/neovim/neovim/blob/v0.10.3/cmake.deps/deps.txt#L56, the latest stable release (v0.10.3) still uses treesitter v0.22.6.
-      local TREE_SITTER_NU_DIR = vim.fs.normalize('~/src/treesitter/tree-sitter-nu')
-      parser_config.nu = {
-        install_info = {
-          url = TREE_SITTER_NU_DIR, -- local path or git repo
-          files = { 'src/parser.c', 'src/scanner.c' }, -- note that some parsers also require src/scanner.c or src/scanner.cc
-          -- optional entries:
-          branch = 'main', -- default branch in case of git repo if different from master
-          generate_requires_npm = false, -- if stand-alone parser without npm dependencies
-          requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
-        },
-        filetype = 'nu',
-      }
-
       local ts_repeat_move = require('nvim-treesitter.textobjects.repeatable_move')
       local map = vim.keymap.set
       -- Repeat movement with ; and ,
