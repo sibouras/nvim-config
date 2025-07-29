@@ -347,9 +347,6 @@ map('v', '<Bslash>c', [[:w !curl -F "f:1=<-" ix.io<CR>]])
 -- open window in new tab
 map('n', '<leader>tn', '<C-w>T')
 
--- edit keymaps in new tab
-map('n', '<leader>tk', ':tab drop $LOCALAPPDATA/nvim/lua/keymaps.lua<CR>')
-
 -- change font size in GUI
 if vim.g.nvy then
   vim.opt.guifont = 'JetBrainsMono Nerd Font:h12'
@@ -475,9 +472,7 @@ vim.api.nvim_create_user_command('Mdn', function(cmd_opts)
   vim.cmd('silent !start "" "' .. url .. unpack(cmd_opts.fargs) .. '"')
 end, { nargs = 1, desc = 'search in mdn' })
 
-vim.api.nvim_create_user_command('Bonly', function()
-  vim.cmd("silent! execute '%bd|e#|bd#'")
-end, { desc = 'delete all but current buffer' })
+vim.api.nvim_create_user_command('Bonly', "silent! execute '%bd|e#|bd#'", { desc = 'delete all but current buffer' })
 
 ----------------------------------
 ---------- abbreviations ---------

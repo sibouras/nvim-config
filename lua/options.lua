@@ -158,7 +158,7 @@ if vim.g.neovide then
   vim.g.neovide_position_animation_length = 0
   vim.g.neovide_scroll_animation_far_lines = 0
   vim.g.neovide_scroll_animation_length = 0.2 -- default = 0.3
-  vim.g.neovide_cursor_animation_length = 0.1 -- default = 0.15
+  vim.g.neovide_cursor_animation_length = 0.04 -- default = 0.15
 
   -- don't smooth scroll when switching buffers, https://github.com/neovide/neovide/issues/1771
   vim.api.nvim_create_autocmd('BufLeave', {
