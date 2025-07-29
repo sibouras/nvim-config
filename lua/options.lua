@@ -65,10 +65,6 @@ vim.opt.cpoptions:append('>') -- When appending to a register, put a line break 
 -- restored instead of resetting/recentering vertically.
 -- vim.opt.jumpoptions:append('stack') -- stack:browser-like jumplist behavior
 vim.opt.jumpoptions = 'stack,view'
--- NOTE: available by default in 0.11
-if vim.fn.has('nvim-0.11') == 0 then
-  vim.opt.diffopt:append('linematch:60')
-end
 vim.opt.path = ',,.' -- the default '.,,' doesn't work
 -- the lazy way(slow): https://gist.github.com/romainl/7e2b425a1706cd85f04a0bd8b3898805#the-lazy-way
 -- vim.opt.path:append('**') -- find files recursively

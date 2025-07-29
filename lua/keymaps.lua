@@ -439,13 +439,6 @@ end
 
 map('n', 'dd', smart_dd, { expr = true })
 
--- Quickly add empty lines
--- NOTE: available by default in 0.11 with dot repeat
-if vim.fn.has('nvim-0.11') == 0 then
-  map('n', '[<space>', "<Cmd>call append(line('.') - 1, repeat([''], v:count1))<CR>", { desc = 'Put empty line above' })
-  map('n', ']<space>', "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR>", { desc = 'Put empty line below' })
-end
-
 -- autoload/functions.vim
 map('v', '<leader>cy', ':call functions#CompleteYank()<CR>')
 map('x', '@', ':<C-u>call functions#ExecuteMacroOverVisualRange()|stopinsert<CR>')
