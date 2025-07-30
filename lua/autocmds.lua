@@ -170,13 +170,19 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
   pattern = { 'qf' },
   callback = function()
     vim.keymap.set('n', 'dd', function()
-      local current_quick_fix_index = vim.fn.line('.')
+      local cursor = vim.api.nvim_win_get_cursor(0)
       local quickfix_list = vim.fn.getqflist()
-      table.remove(quickfix_list, current_quick_fix_index)
+      table.remove(quickfix_list, cursor[1])
       vim.fn.setqflist(quickfix_list, 'r')
-      vim.fn.execute(current_quick_fix_index .. 'cfirst')
-      vim.cmd('copen')
+      -- restore cursor position
+      vim.api.nvim_win_set_cursor(0, cursor)
+      -- close quickfix on last item remove
+      if #quickfix_list == 0 then
+        vim.cmd.cclose()
+      end
     end, { buffer = true })
+
+    vim.keymap.set('n', '<cr>', '<cr>:cclose<cr>', { buffer = 0, silent = true })
   end,
 })
 
