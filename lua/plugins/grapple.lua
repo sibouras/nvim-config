@@ -16,6 +16,7 @@ return {
       '<leader>va',
       function()
         require('grapple').toggle()
+        vim.cmd.redrawstatus()
       end,
       desc = 'Grapple toggle',
     },
