@@ -26,12 +26,17 @@ vim.cmd([[autocmd VimResized * wincmd =]])
 vim.cmd([[command! -nargs=+ Grep execute 'silent grep! <args>' | copen]])
 
 -- create new file with :e even if directory doesn't exist
-vim.cmd([[
-augroup Mkdir
-  autocmd!
-  autocmd BufWritePre * call mkdir(expand("<afile>:p:h"), "p")
-augroup END
-]])
+vim.api.nvim_create_autocmd('BufWritePre', {
+  desc = 'Create missing directories when writing a buffer',
+  group = augroup('Mkdir'),
+  callback = function()
+    local dirname = vim.fs.dirname(vim.api.nvim_buf_get_name(0))
+    local stat = vim.uv.fs_stat(dirname)
+    if not stat or stat.type ~= 'directory' then
+      vim.fn.mkdir(dirname, 'p')
+    end
+  end,
+})
 
 -- go to last loc when opening a buffer
 vim.api.nvim_create_autocmd('BufReadPost', {
