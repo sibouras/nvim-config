@@ -618,12 +618,13 @@ require('small.highlight_selected').setup()
 map('n', '<leader>i', function() require('small.bufend').run() end, { desc = 'Bufend' })
 
 local treeselect = require('small.treeselect')
+map('n', '<M-Up>', function() treeselect.current() end, { desc = 'TreeSelect current node' })
 map('x', '<M-Right>', function() treeselect.next() end, { desc = 'TreeSelect next node' })
 map('x', '<M-Left>', function() treeselect.prev() end, { desc = 'TreeSelect prev node' })
-map({'n', 'x'}, '<M-End>', function() treeselect.line() end, { desc = 'TreeSelect current node linewise' })
-map('n', '<M-Up>', function() treeselect.current() end, { desc = 'TreeSelect current node' })
 map('x', '<M-Up>', function() treeselect.up() end, { desc = 'TreeSelect parent node' })
 map('x', '<M-Down>', function() treeselect.down() end, { desc = 'TreeSelect child node' })
+map({'n', 'x'}, '<M-Home>', function() treeselect.base() end, { desc = 'TreeSelect one below root node' })
+map({'n', 'x'}, '<M-End>', function() treeselect.line() end, { desc = 'TreeSelect current node linewise' })
 -- stylua: ignore end
 
 -- NOTE: using these mappings for small.nvim treeselect
