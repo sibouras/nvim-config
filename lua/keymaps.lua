@@ -344,9 +344,6 @@ map('v', '<Bslash>c', [[:w !curl -F "f:1=<-" ix.io<CR>]])
 -- Append ; at end of line
 -- map('n', '<leader>;', [[:execute "normal! mqA;\<lt>esc>`q"<enter>]])
 
--- open window in new tab
-map('n', '<leader>tn', '<C-w>T')
-
 -- change font size in GUI
 if vim.g.nvy then
   vim.opt.guifont = 'JetBrainsMono Nerd Font:h12'
@@ -490,11 +487,6 @@ cab f find
 -----------------------------------
 ------------- Plugins -------------
 -----------------------------------
-
----------------------------------------------------------------
--- => mason.nvim
----------------------------------------------------------------
-map('n', '<leader>lm', '<Cmd>Mason<CR>', { desc = 'Mason' })
 
 ---------------------------------------------------------------
 -- => telescope.nvim

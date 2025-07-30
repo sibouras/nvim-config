@@ -9,7 +9,12 @@ return {
   { 'airblade/vim-matchquote', event = 'VeryLazy' }, -- should be loaded after matchit plugin
   { 'utilyre/sentiment.nvim', event = 'VeryLazy', opts = {} },
   { 'svban/YankAssassin.vim', event = 'VeryLazy' },
-  { 'mason-org/mason.nvim', cmd = 'Mason', opts = {} },
+  {
+    'mason-org/mason.nvim',
+    cmd = 'Mason',
+    keys = { { '<leader>lm', '<Cmd>Mason<CR>', desc = 'Mason' } },
+    opts = {},
+  },
   'nvim-lua/plenary.nvim',
   'stevearc/profile.nvim',
 }
