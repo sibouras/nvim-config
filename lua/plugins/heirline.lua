@@ -164,11 +164,12 @@ return {
         if filename == '' then
           return '[No Name]'
         end
-        -- now, if the filename would occupy more than 1/4th of the available
+        -- now, if the filename would occupy more than 40% of the available
         -- space, we trim the file path to its initials
         -- See Flexible Components section below for dynamic truncation
-        -- if not conditions.width_percent_below(#filename, 0.25) then
-        filename = vim.fn.pathshorten(filename)
+        if not conditions.width_percent_below(#filename, 0.4) then
+          filename = vim.fn.pathshorten(filename, 2)
+        end
         -- end
         return filename
       end,
@@ -686,10 +687,9 @@ return {
       -- Diagnostics,
       Align,
       -- { flexible = 3, LSPSimple, { provider = "" } },
-      LSPSimple,
-      Space,
-      -- TreesitterActive,
-      TSHl,
+      -- LSPSimple,
+      -- Space,
+      -- TSHl,
       FileFormat,
       Space,
       Ruler,
