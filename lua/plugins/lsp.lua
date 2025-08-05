@@ -179,11 +179,6 @@ return {
 
     vim.diagnostic.config(config)
 
-    -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    -- capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-    capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
-
     vim.schedule(function()
       -- before 0.11.2 this used to work without vim.schedule
       -- https://old.reddit.com/r/neovim/comments/1l7pz1l/starting_from_0112_i_have_a_weird_issue/
@@ -196,7 +191,6 @@ return {
 
     lspconfig.cssls.setup({
       on_attach = on_attach,
-      capabilities = capabilities,
       -- https://github.com/neovim/neovim/issues/33577
       init_options = {
         provideFormatter = false,
@@ -214,7 +208,6 @@ return {
 
     lspconfig.jsonls.setup({
       on_attach = on_attach,
-      capabilities = capabilities,
       init_options = {
         provideFormatter = false,
       },
@@ -230,7 +223,6 @@ return {
       on_attach = function(client)
         client.server_capabilities.completionProvider.triggerCharacters = {}
       end,
-      capabilities = capabilities,
       filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less' },
     })
 
@@ -255,7 +247,6 @@ return {
           ':',
         }
       end,
-      capabilities = capabilities,
       -- flags = {
       --   debounce_text_changes = 500,
       -- },
@@ -265,18 +256,15 @@ return {
 
     lspconfig.rust_analyzer.setup({
       on_attach = on_attach,
-      capabilities = capabilities,
       cmd = { 'rustup', 'run', 'stable', 'rust-analyzer' },
     })
 
     lspconfig.nushell.setup({
       on_attach = on_attach,
-      capabilities = capabilities,
     })
 
     lspconfig.denols.setup({
       on_attach = on_attach,
-      capabilities = capabilities,
       cmd = { 'deno', 'lsp' },
       root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc'),
     })
@@ -303,7 +291,6 @@ return {
       autostart = true,
       single_file_support = true,
       on_attach = on_attach,
-      capabilities = capabilities,
       filetypes = { 'ahk', 'autohotkey', 'ahk2' },
       cmd = { 'node', vim.fn.expand('$HOME/src/vscode-autohotkey2-lsp/server/dist/server.js'), '--stdio' },
       init_options = {
