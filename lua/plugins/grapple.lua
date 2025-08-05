@@ -2,7 +2,7 @@ return {
   'cbochs/grapple.nvim',
   keys = {
     {
-      '<leader>w',
+      '<leader>o',
       function()
         if vim.g.is_win then
           vim.g.grapple_current_file = string.gsub(vim.fn.expand('%'), '[/\\]', '\\\\')

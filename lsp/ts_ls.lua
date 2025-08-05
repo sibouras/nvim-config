@@ -1,3 +1,4 @@
+---@diagnostic disable-next-line: undefined-doc-name
 ---@type vim.lsp.Config
 return {
   -- autostart = false,

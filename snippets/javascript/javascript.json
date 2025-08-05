@@ -244,7 +244,7 @@
     "body": "const ${1:name}"
   },
   "const statement from destructuring": {
-    "prefix": "cd",
+    "prefix": "csd",
     "body": "const { ${2:prop} } = ${1:value}"
   },
   "const statement from array destructuring": {
@@ -444,7 +444,7 @@
     "body": "console.warn(${0})"
   },
   "console.dir": {
-    "prefix": "cod",
+    "prefix": "cd",
     "body": "console.dir('${0}:', ${0})"
   },
   "constructor": {
