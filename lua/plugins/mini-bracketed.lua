@@ -5,7 +5,6 @@ return {
     file = { suffix = 'r', options = { wrap = false } },
     buffer = { suffix = 'e', options = { wrap = false } },
     oldfile = { suffix = 'o', options = { wrap = false } },
-    conflict = { suffix = 'x', options = {} },
     location = { suffix = 'l', options = {} },
     yank = { suffix = 'y', options = { wrap = false } },
     window = { suffix = 'w', options = {} },
@@ -14,6 +13,7 @@ return {
     indent = { suffix = 'i', options = { add_to_jumplist = true } },
     treesitter = { suffix = 's', options = { add_to_jumplist = true } },
     -- disable these
+    conflict = { suffix = '', options = {} },
     diagnostic = { suffix = '', options = {} },
     jump = { suffix = '', options = {} },
     quickfix = { suffix = '', options = {} },

@@ -22,6 +22,7 @@ return {
   },
   opts = {
     mappings = {
+      close = '<Esc>',
       show_help = '?',
       go_in = ';',
       go_in_plus = 'l',

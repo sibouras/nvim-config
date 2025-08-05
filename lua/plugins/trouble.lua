@@ -32,7 +32,7 @@ return {
       desc = 'Previous trouble/quickfix item',
     },
     {
-      ']q',
+      ']x',
       function()
         if require('trouble').is_open() then
           require('trouble').next({ skip_groups = true, jump = true })
@@ -46,7 +46,7 @@ return {
       desc = 'Next trouble/quickfix item and jump',
     },
     {
-      '[q',
+      '[x',
       function()
         if require('trouble').is_open() then
           require('trouble').previous({ skip_groups = true, jump = true })

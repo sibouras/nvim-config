@@ -25,6 +25,8 @@ map('n', 'U', ':redo<CR>')
 -- Quit vim
 map('n', '<M-F4>', ':qa!<CR>')
 map('n', '<C-q>', ':qa!<CR>')
+map('n', '<C-c>', ':q<CR>')
+vim.cmd('command! -bang Q quit<bang>')
 
 -- new line
 map('i', '<C-CR>', '<C-o>o')

@@ -12,6 +12,11 @@ map('n', '<S-Tab>', "<Cmd>call search('\\[[^]]*\\]([^)]\\+)', 'b')<CR>", opts)
 -- open url if markdown link is a url else `gf`
 map('n', '<CR>', ":lua require('essentials').go_to_url('start')<CR>", opts)
 
+-- close floating lsp hover window with Esc
+if vim.api.nvim_win_get_config(0).relative == 'win' then
+  vim.keymap.set('n', '<Esc>', '<Cmd>bdelete<CR>', { buffer = 0, silent = true })
+end
+
 -- from: https://github.com/antonk52/dot-files/blob/master/nvim/ftplugin/markdown.lua
 vim.keymap.set('n', '<leader>t', function()
   -- save cursor position
