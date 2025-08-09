@@ -192,10 +192,13 @@ return {
       end)
 
       -- LSP diagnostics
-      local diagnostic_goto_next_repeat, diagnostic_goto_prev_repeat =
-        ts_repeat_move.make_repeatable_move_pair(vim.diagnostic.goto_next, vim.diagnostic.goto_prev)
-      map({ 'n', 'x', 'o' }, '[d', diagnostic_goto_prev_repeat, { desc = 'Diagnostic forward' })
-      map({ 'n', 'x', 'o' }, ']d', diagnostic_goto_next_repeat, { desc = 'Diagnostic forward' })
+      local next_diagnostic_repeat, prev_diagnostic_repeat = ts_repeat_move.make_repeatable_move_pair(function()
+        vim.diagnostic.jump({ count = 1, float = true })
+      end, function()
+        vim.diagnostic.jump({ count = -1, float = true })
+      end)
+      map({ 'n', 'x' }, ']d', next_diagnostic_repeat, { desc = 'Diagnostic forward' })
+      map({ 'n', 'x' }, '[d', prev_diagnostic_repeat, { desc = 'Diagnostic backward' })
 
       local gitsigns_ok, gitsigns = pcall(require, 'gitsigns')
       if gitsigns_ok then
