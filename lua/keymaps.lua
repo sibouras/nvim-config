@@ -13,9 +13,6 @@ map({ 'n', 'i', 'v' }, '<S-ScrollWheelDown>', '<ScrollWheelRight>')
 -- distinguish between <Tab> and <C-i> (ctrl+i is mapped to <M-C-S-F6> in ahk,terminal)
 map('n', '<M-C-S-F6>', '<C-i>')
 
--- de-tab
-map('i', '<S-Tab>', '<C-d>')
-
 -- change mapping for digraphs
 map('i', '<C-f>', '<C-k>')
 

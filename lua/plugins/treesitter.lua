@@ -216,8 +216,8 @@ return {
         end)
         -- Or, use `make_repeatable_move` or `set_last_move` functions for more control. See the code for instructions.
 
-        map({ 'n', 'x', 'o' }, ']g', next_hunk_repeat, { desc = 'Git hunk forward' })
-        map({ 'n', 'x', 'o' }, '[g', prev_hunk_repeat, { desc = 'Git hunk forward' })
+        map({ 'n', 'x' }, ']g', next_hunk_repeat, { desc = 'Git hunk forward' })
+        map({ 'n', 'x' }, '[g', prev_hunk_repeat, { desc = 'Git hunk backward' })
       end
 
       -- override some mini.bracketed keys
@@ -239,7 +239,7 @@ return {
           bracketed.indent('backward')
         end)
         map({ 'n', 'x', 'o' }, ']i', next_indent, { desc = 'Indent forward' })
-        map({ 'n', 'x', 'o' }, '[i', prev_indent, { desc = 'Indent forward' })
+        map({ 'n', 'x', 'o' }, '[i', prev_indent, { desc = 'Indent backward' })
 
         -- Tree-sitter node and parents
         local next_treesitter, prev_treesitter = ts_repeat_move.make_repeatable_move_pair(function()
@@ -248,7 +248,7 @@ return {
           bracketed.treesitter('backward')
         end)
         map({ 'n', 'x', 'o' }, ']s', next_treesitter, { desc = 'Treesitter forward' })
-        map({ 'n', 'x', 'o' }, '[s', prev_treesitter, { desc = 'Treesitter forward' })
+        map({ 'n', 'x', 'o' }, '[s', prev_treesitter, { desc = 'Treesitter backward' })
       end
 
       vim.api.nvim_create_autocmd({ 'FileType' }, {

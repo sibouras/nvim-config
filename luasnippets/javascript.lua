@@ -1,6 +1,6 @@
 ---@diagnostic disable: undefined-global
 
--- from https://github.com/garcia5/dotfiles/blob/master/files/nvim/lua/ag/plugin-conf/luasnip.lua
+-- from https://github.com/garcia5/dotfiles/blob/master/files/nvim/lua/ag/snippets/typescript.lua
 local function js_loop_snippet(type)
   return fmt(
     [[
@@ -22,6 +22,7 @@ return {
   s('filter', js_loop_snippet('filter')),
   s('forEach', js_loop_snippet('forEach')),
   s('cl', fmt('console.log({})', { i(1) })),
+  s('ct', fmt('console.table({})', { i(1) })),
   s('cd', fmt('console.dir({})', { i(1) })),
   s('ce', fmt('console.error({})', { i(1) })),
   s('cw', fmt('console.warn({})', { i(1) })),
@@ -44,7 +45,7 @@ return {
   }),
   s({ trig = 'im', dscr = 'import' }, fmt("import {} from '{}'", { i(2, 'foo'), i(1) })),
   s({ trig = 'af', dscr = 'arrow function' }, fmt('({}) => {{\n\t{}\n}}', { i(1), i(2) })),
-  s({ trig = 'sf', dscr = 'short arrow function' }, fmt('({}) => ', { i(1) })),
+  s({ trig = 'saf', dscr = 'short arrow function' }, fmt('({}) => ', { i(1) })),
   s(
     { trig = 'np', dscr = 'new Promise' },
     fmt(
