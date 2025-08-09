@@ -62,33 +62,32 @@ map('x', 'gW', [[y/\V<C-R>"<CR>N]])
 -- this switches to the last used buffer even if its deleted
 -- map({ 'n', 'i' }, '<M-w>', '<Cmd>keepjumps normal <CR>')
 
--- switch to the most recent buffer that's not deleted
-map({ 'n', 'i' }, '<M-w>', function()
-  local curbufnr = vim.api.nvim_get_current_buf()
-  local buflist = vim.tbl_filter(function(buf)
-    return vim.api.nvim_buf_is_loaded(buf)
-      and (vim.bo[buf].buflisted or vim.bo[buf].buftype == 'help')
-      and buf ~= curbufnr
-  end, vim.api.nvim_list_bufs())
+-- switch to the most recently used buffer that's not deleted
+local function switch_mru_buffer(n)
+  return function()
+    local curbufnr = vim.api.nvim_get_current_buf()
+    local buflist = vim.tbl_filter(function(buf)
+      return vim.api.nvim_buf_is_loaded(buf)
+        and (vim.bo[buf].buflisted or vim.bo[buf].buftype == 'help')
+        and buf ~= curbufnr
+    end, vim.api.nvim_list_bufs())
 
-  -- table is empty if buffers are not loaded
-  if #buflist == 0 then
-    if #vim.fn.expand('#') > 0 then
+    -- table is empty if buffers are not loaded
+    if #buflist == 0 and #vim.fn.expand('#') > 0 then
       vim.cmd('keepjumps e#') -- with b# the file doesn't show in :buffers
+    elseif buflist[n] == nil then
+      vim.notify('No previous buffer found', vim.log.levels.ERROR)
+    else
+      table.sort(buflist, function(a, b)
+        return vim.fn.getbufinfo(a)[1].lastused > vim.fn.getbufinfo(b)[1].lastused
+      end)
+      vim.cmd('keepjumps b' .. buflist[n])
     end
-  else
-    local switch_bufnr
-    local switch_bufnr_lastused = -1
-    for _, bufnr in pairs(buflist) do
-      local bufinfo = vim.fn.getbufinfo(bufnr)[1]
-      if bufinfo.lastused > switch_bufnr_lastused then
-        switch_bufnr = bufnr
-        switch_bufnr_lastused = bufinfo.lastused
-      end
-    end
-    vim.cmd('keepjumps b' .. switch_bufnr)
   end
-end)
+end
+
+map({ 'n', 'i' }, '<M-w>', switch_mru_buffer(1), { desc = 'Switch to most recently used buffer' })
+map('n', '<leader>w', switch_mru_buffer(2), { desc = 'Switch to second most recently used buffer' })
 
 -- Navigate tabs
 -- Number + , to select a tab, i.e. type 1, to select the first tab.
