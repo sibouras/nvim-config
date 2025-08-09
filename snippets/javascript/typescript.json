@@ -1,58 +1,11 @@
 {
-  "Constructor": {
-    "prefix": "ctor",
-    "body": ["/**", " *", " */", "constructor() {", "\tsuper();", "\t$0", "}"],
-    "description": "Constructor"
-  },
-  "Class Definition": {
-    "prefix": "class",
-    "body": [
-      "class ${1:name} {",
-      "\tconstructor(${2:parameters}) {",
-      "\t\t$0",
-      "\t}",
-      "}"
-    ],
-    "description": "Class Definition"
-  },
-  "Interface Definition": {
-    "prefix": "iface",
-    "body": ["interface ${1:name} {", "\t$0", "}"],
-    "description": "Interface Definition"
-  },
-  "Public Method Definition": {
-    "prefix": "public method",
-    "body": ["/**", " * ${1:name}", " */", "public ${1:name}() {", "\t$0", "}"],
-    "description": "Public Method Definition"
-  },
-  "Private Method Definition": {
-    "prefix": "private method",
-    "body": ["private ${1:name}() {", "\t$0", "}"],
-    "description": "Private Method Definition"
-  },
-  "Import external module.": {
-    "prefix": "import statement",
-    "body": ["import { $0 } from \"${1:module}\";"],
-    "description": "Import external module."
-  },
-  "Property getter": {
-    "prefix": "get",
-    "body": [
-      "",
-      "public get ${1:value}() : ${2:string} {",
-      "\t${3:return $0}",
-      "}",
-      ""
-    ],
-    "description": "Property getter"
-  },
   "console.log": {
     "prefix": "cl",
     "body": "console.log(${0})"
   },
-  "console.log a variable": {
-    "prefix": "cv",
-    "body": "console.log('${1}:', ${1})"
+  "console.table": {
+    "prefix": "ct",
+    "body": "console.table(${0})"
   },
   "console.error": {
     "prefix": "ce",
@@ -62,45 +15,61 @@
     "prefix": "cw",
     "body": "console.warn(${0})"
   },
+  "console.log a variable": {
+    "prefix": "cv",
+    "body": "console.log('${1}:', ${1})"
+  },
   "console.dir": {
     "prefix": "cd",
-    "body": "console.dir('${0}:', ${0})"
+    "body": "console.dir('${1}:', ${1})"
   },
-  "Define a full property": {
-    "prefix": "prop",
-    "body": [
-      "",
-      "private _${1:value} : ${2:string};",
-      "public get ${1:value}() : ${2:string} {",
-      "\treturn this._${1:value};",
-      "}",
-      "public set ${1:value}(v : ${2:string}) {",
-      "\tthis._${1:value} = v;",
-      "}",
-      ""
-    ],
-    "description": "Define a full property"
+  "JSON.stringify()": {
+    "prefix": "jsons",
+    "body": "JSON.stringify($0)"
   },
-  "Triple-slash reference": {
-    "prefix": "ref",
-    "body": ["/// <reference path=\"$1\" />", "$0"],
-    "description": "Triple-slash reference"
+  "JSON.parse()": {
+    "prefix": "jsonp",
+    "body": "JSON.parse($0)"
   },
-  "Property setter": {
-    "prefix": "set",
-    "body": [
-      "",
-      "public set ${1:value}(v : ${2:string}) {",
-      "\tthis.$3 = v;",
-      "}",
-      ""
-    ],
-    "description": "Property setter"
+  "forEach loop": {
+    "prefix": "fe",
+    "body": "${1:iterable}.forEach((${2:item}) => {\n\t${0}\n})"
   },
-  "Throw Exception": {
-    "prefix": "throw",
-    "body": ["throw \"$1\";", "$0"],
-    "description": "Throw Exception"
+  "map": {
+    "prefix": "map",
+    "body": "${1:iterable}.map((${2:item}) => {\n\t${0}\n})"
+  },
+  "reduce": {
+    "prefix": "reduce",
+    "body": "${1:iterable}.reduce((${2:previous}, ${3:current}) => {\n\t${0}\n}${4:, initial})"
+  },
+  "filter": {
+    "prefix": "filter",
+    "body": "${1:iterable}.filter((${2:item}) => {\n\t${0}\n})"
+  },
+  "find": {
+    "prefix": "find",
+    "body": "${1:iterable}.find((${2:item}) => {\n\t${0}\n})"
+  },
+  "every": {
+    "prefix": "every",
+    "body": "${1:iterable}.every((${2:item}) => {\n\t${0}\n})"
+  },
+  "some": {
+    "prefix": "some",
+    "body": "${1:iterable}.some((${2:item}) => {\n\t${0}\n})"
+  },
+  "import module": {
+    "prefix": "im",
+    "body": "import ${2:*} from '${1:module}'"
+  },
+  "short arrow function": {
+    "prefix": "saf",
+    "body": "(${1:arguments}) => ${2:statement}"
+  },
+  "arrow function with body": {
+    "prefix": "af",
+    "body": "(${1}) => {\n\t${0}\n}"
   },
   "For Loop": {
     "prefix": "for",
@@ -110,11 +79,6 @@
       "}"
     ],
     "description": "For Loop"
-  },
-  "For-Each Loop using =>": {
-    "prefix": "foreach =>",
-    "body": ["${1:array}.forEach(${2:element} => {", "\t$0", "});"],
-    "description": "For-Each Loop using =>"
   },
   "For-In Loop": {
     "prefix": "forin",
@@ -130,12 +94,16 @@
   },
   "For-Of Loop": {
     "prefix": "forof",
-    "body": ["for (const ${1:iterator} of ${2:object}) {", "\t$0", "}"],
+    "body": [
+      "for (const ${1:element} of ${2:object}) {",
+      "\t$TM_SELECTED_TEXT$0",
+      "}"
+    ],
     "description": "For-Of Loop"
   },
   "Function Statement": {
-    "prefix": "function",
-    "body": ["function ${1:name}(${2:params}:${3:type}) {", "\t$0", "}"],
+    "prefix": "func",
+    "body": ["function ${1:name}(${2}) {", "\t$0", "}"],
     "description": "Function Statement"
   },
   "If Statement": {
@@ -145,13 +113,8 @@
   },
   "If-Else Statement": {
     "prefix": "ifelse",
-    "body": ["if (${1:condition}) {", "\t$0", "} else {", "\t", "}"],
+    "body": ["if (${1:condition}) {", "\t$2", "} else {", "\t$0", "}"],
     "description": "If-Else Statement"
-  },
-  "New Statement": {
-    "prefix": "new",
-    "body": ["const ${1:name} = new ${2:type}(${3:arguments});$0"],
-    "description": "New Statement"
   },
   "Switch Statement": {
     "prefix": "switch",
@@ -187,14 +150,9 @@
     "body": ["setTimeout(() => {", "\t$0", "}, ${1:timeout});"],
     "description": "Set Timeout Function"
   },
-  "Region Start": {
-    "prefix": "#region",
-    "body": ["//#region $0"],
-    "description": "Folding Region Start"
-  },
-  "Region End": {
-    "prefix": "#endregion",
-    "body": ["//#endregion"],
-    "description": "Folding Region End"
+  "Set Interval Function": {
+    "prefix": "setinterval",
+    "body": ["setInterval(() => {", "\t$0", "}, ${1:interval});"],
+    "description": "Set Interval Function"
   }
 }

@@ -4,9 +4,13 @@ return {
   keys = {
     -- stylua: ignore start
     { '<C-j>', function()
-        if require('luasnip').expand_or_locally_jumpable() then
-          require('luasnip').expand_or_jump()
+      local blink = require "blink.cmp"
+      if require('luasnip').expand_or_locally_jumpable() then
+        if blink.is_menu_visible() then
+          blink.hide()
         end
+        require('luasnip').expand_or_jump()
+      end
     end, silent = true, mode = { "i", "s" } },
 
     { "<C-k>", function()
@@ -32,43 +36,47 @@ return {
     local ls = require('luasnip')
     local types = require('luasnip.util.types')
 
-    -- require("luasnip.loaders.from_vscode").lazy_load({
-    --   paths = vim.fn.stdpath("config") .. "/snippets",
-    -- })
-    -- require("luasnip.loaders.from_vscode").load({ paths = ".\\snippets" })
-
-    require('luasnip.loaders.from_lua').lazy_load({ paths = '.\\luasnippets' })
-
-    local s = ls.snippet
-    local f = ls.function_node
-
-    ls.filetype_extend('typescript', { 'javascript' })
-    ls.filetype_extend('javascriptreact', { 'javascript' })
-    ls.filetype_extend('typescriptreact', { 'javascript' })
-
     ls.config.set_config({
       keep_roots = true,
       link_roots = true,
       exit_roots = false,
       link_children = false,
-      update_events = 'TextChanged,TextChangedI',
-      -- region_check_events = "CursorMoved,CursorHold,InsertEnter",
-      -- delete_check_events = "InsertLeave",
-      -- This can be especially useful when `history` is enabled.
-      delete_check_events = 'TextChanged',
-      enable_autosnippets = true,
+      update_events = 'TextChanged,TextChangedI', -- slow in macros
+      -- enable_autosnippets = true, -- very slow in macros
       -- mapping for cutting selected text so it's usable as SELECT_DEDENT,
       -- SELECT_RAW or TM_SELECTED_TEXT (mapped via xmap).
-      store_selection_keys = '<Tab>',
+      cut_selection_keys = '<Tab>',
       ext_opts = {
+        [types.insertNode] = {
+          unvisited = {
+            virt_text = { { '|', 'Conceal' } },
+            virt_text_pos = 'inline',
+          },
+        },
+        [types.exitNode] = {
+          unvisited = {
+            virt_text = { { '|', 'Conceal' } },
+            virt_text_pos = 'inline',
+          },
+        },
         [types.choiceNode] = {
           active = {
             virt_text = { { '«', 'DiagnosticInfo' } },
+            -- virt_text = { { '(snippet) choice node', 'LspInlayHint' } },
           },
         },
       },
     })
 
+    require('luasnip.loaders.from_vscode').lazy_load({ paths = './snippets' })
+
+    -- require('luasnip.loaders.from_lua').lazy_load({ paths = './luasnippets' })
+    -- ls.filetype_extend('typescript', { 'javascript' })
+    -- ls.filetype_extend('javascriptreact', { 'javascript' })
+    -- ls.filetype_extend('typescriptreact', { 'javascript' })
+
+    local s = ls.snippet
+    local f = ls.function_node
     -- new way: https://github.com/L3MON4D3/LuaSnip/issues/81
     ls.add_snippets(nil, {
       all = {
