@@ -56,6 +56,7 @@ return {
         }),
         m = miniai.gen_spec.treesitter({ a = '@function.outer', i = '@function.inner' }), -- method
         f = miniai.gen_spec.treesitter({ a = '@call.outer', i = '@call.inner' }), -- function call
+        x = miniai.gen_spec.treesitter({ a = '@attribute.outer', i = '@attribute.inner' }),
         -- c = miniai.gen_spec.treesitter({ a = '@class.outer', i = '@class.inner' }), -- class
         ['='] = miniai.gen_spec.treesitter({ a = '@assignment.outer', i = '@assignment.inner' }), -- assignment
         ['o'] = { { "%b''", '%b""', '%b``' }, '^.().*().$' }, -- Quotes
