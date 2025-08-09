@@ -39,7 +39,7 @@ require('lazy').setup('plugins', {
         'tarPlugin',
         -- 'shada', -- for editing ShaDa files
         -- 'matchit', -- matches html tags
-        'matchparen', -- replaced with sentiment.nvim
+        -- 'matchparen', -- uncomment this when using sentiment.nvim
         'tohtml',
         jit.os:find('Windows') and 'man',
         'spellfile',
