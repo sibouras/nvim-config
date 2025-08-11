@@ -1,7 +1,8 @@
 return {
   'dmtrKovalenko/fff.nvim',
+  -- NOTE: build manually with `OPENSSL_NO_VENDOR=1 cargo build --release`
   -- build = 'cargo build --release',
-  opts = {},
+  cmd = { 'FFFFind' },
   keys = {
     {
       'ff',
@@ -11,4 +12,5 @@ return {
       desc = 'FFF: find files',
     },
   },
+  opts = {},
 }

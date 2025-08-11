@@ -16,7 +16,7 @@ return {
     }
     dashboard.section.buttons.val = {
       dashboard.button('e', '  New file', ':enew <BAR> startinsert<CR>'),
-      dashboard.button('f', '  Find file', ':Telescope find_files<CR>'),
+      dashboard.button('f', '  Find file', ':FFFFind<CR>'),
       dashboard.button('p', '  Find project', ':Telescope workspaces<CR>'),
       dashboard.button('o', '  Old files', ':Telescope oldfiles<CR>'),
       dashboard.button('w', '  Wiki', ':WorkspacesOpen docuwiki<CR>'),
