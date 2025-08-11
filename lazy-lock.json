@@ -21,6 +21,7 @@
   "mini.bracketed": { "branch": "main", "commit": "4a005a6e5aad58230b69f0f59df2cbb8b1c2e643" },
   "mini.bufremove": { "branch": "main", "commit": "a1bbb2af40f7773c8cee9e364aac4a724b5c10de" },
   "mini.clue": { "branch": "main", "commit": "edf3016944b5f2c7932d39af83af7c885ca0f019" },
+  "mini.extra": { "branch": "main", "commit": "0dec9611833d058f9d2d48f6333b41631f5ef3b9" },
   "mini.files": { "branch": "main", "commit": "5b9431cf5c69b8e69e5a67d2d12338a3ac2e1541" },
   "mini.map": { "branch": "main", "commit": "94ce1694e7b7a3940fc507ab25f061deb9c8179c" },
   "mini.operators": { "branch": "main", "commit": "fd655907ed56434c83a6efb654b266d9c090ca82" },

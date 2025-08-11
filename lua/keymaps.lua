@@ -193,13 +193,13 @@ map('n', 'X', ':keeppatterns substitute/\\s*\\%#\\s*/\\r/e <bar> normal! ==^<cr>
 -- map('n', 'J', 'mzJ`z')
 
 vim.cmd([[
-  " line text object
-  xnoremap il g_o^
-  onoremap <silent> il :normal vil<CR>
-  xnoremap al g_o0
-  onoremap <silent> al :normal val<CR>
-  xnoremap ig GoggV
-  onoremap <silent> ig :normal vig<CR>
+  " line text object(using mini.ai instead)
+  "xnoremap il g_o^
+  "onoremap <silent> il :normal vil<CR>
+  "xnoremap al g_o0
+  "onoremap <silent> al :normal val<CR>
+  "xnoremap ig GoggV
+  "onoremap <silent> ig :normal vig<CR>
 
   " better start and end of line
   nnoremap gs _

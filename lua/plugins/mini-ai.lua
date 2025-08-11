@@ -1,71 +1,40 @@
 return {
   'echasnovski/mini.ai',
   event = 'VeryLazy',
-  dependencies = 'nvim-treesitter/nvim-treesitter-textobjects',
+  dependencies = {
+    'echasnovski/mini.extra',
+    'nvim-treesitter/nvim-treesitter-textobjects',
+  },
 
   opts = function()
-    local miniai = require('mini.ai')
-
-    -- Mini.ai indent text object
-    -- For "a", it will include the non-whitespace line surrounding the indent block.
-    -- "a" is line-wise, "i" is character-wise.
-    ---@alias Mini.ai.loc {line:number, col:number}
-    ---@alias Mini.ai.region {from:Mini.ai.loc, to:Mini.ai.loc}
-    local function ai_indent(ai_type)
-      local spaces = (' '):rep(vim.o.tabstop)
-      local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-      local indents = {} ---@type {line: number, indent: number, text: string}[]
-
-      for l, line in ipairs(lines) do
-        if not line:find('^%s*$') then
-          indents[#indents + 1] = { line = l, indent = #line:gsub('\t', spaces):match('^%s*'), text = line }
-        end
-      end
-
-      local ret = {} ---@type (Mini.ai.region | {indent: number})[]
-
-      for i = 1, #indents do
-        if i == 1 or indents[i - 1].indent < indents[i].indent then
-          local from, to = i, i
-          for j = i + 1, #indents do
-            if indents[j].indent < indents[i].indent then
-              break
-            end
-            to = j
-          end
-          from = ai_type == 'a' and from > 1 and from - 1 or from
-          to = ai_type == 'a' and to < #indents and to + 1 or to
-          ret[#ret + 1] = {
-            indent = indents[i].indent,
-            from = { line = indents[from].line, col = ai_type == 'a' and 1 or indents[from].indent + 1 },
-            to = { line = indents[to].line, col = #indents[to].text },
-          }
-        end
-      end
-
-      return ret
-    end
+    local gen_spec = require('mini.ai').gen_spec
+    local gen_spec_extra = require('mini.extra').gen_ai_spec
 
     return {
       -- Table with textobject id as fields, textobject specification as values.
       -- Also use this to disable builtin textobjects. See |MiniAi.config|.
       custom_textobjects = {
-        j = miniai.gen_spec.treesitter({ -- code block
+        j = gen_spec.treesitter({ -- code block
           a = { '@block.outer', '@conditional.outer', '@loop.outer' },
           i = { '@block.inner', '@conditional.inner', '@loop.inner' },
         }),
-        m = miniai.gen_spec.treesitter({ a = '@function.outer', i = '@function.inner' }), -- method
-        f = miniai.gen_spec.treesitter({ a = '@call.outer', i = '@call.inner' }), -- function call
-        x = miniai.gen_spec.treesitter({ a = '@attribute.outer', i = '@attribute.inner' }),
-        -- c = miniai.gen_spec.treesitter({ a = '@class.outer', i = '@class.inner' }), -- class
-        ['='] = miniai.gen_spec.treesitter({ a = '@assignment.outer', i = '@assignment.inner' }), -- assignment
-        ['o'] = { { "%b''", '%b""', '%b``' }, '^.().*().$' }, -- Quotes
-        d = { '%f[%d]%d+' }, -- digits
-        e = { -- Word with case
+        m = gen_spec.treesitter({ a = '@function.outer', i = '@function.inner' }), -- method
+        f = gen_spec.treesitter({ a = '@call.outer', i = '@call.inner' }), -- function call
+        x = gen_spec.treesitter({ a = '@attribute.outer', i = '@attribute.inner' }),
+        -- c = gen_spec.treesitter({ a = '@class.outer', i = '@class.inner' }),
+        c = gen_spec.treesitter({ a = '@comment.outer', i = '@comment.inner' }),
+        ['='] = gen_spec.treesitter({ a = '@assignment.outer', i = '@assignment.inner' }),
+        o = { { "%b''", '%b""', '%b``' }, '^.().*().$' }, -- Quotes
+        e = { -- Word with camel case
           { '%u[%l%d]+%f[^%l%d]', '%f[%S][%l%d]+%f[^%l%d]', '%f[%P][%l%d]+%f[^%l%d]', '^[%l%d]+%f[^%l%d]' },
           '^().*()$',
         },
-        i = ai_indent,
+        -- mini.extra
+        i = gen_spec_extra.indent(),
+        d = gen_spec_extra.diagnostic(),
+        g = gen_spec_extra.buffer(),
+        L = gen_spec_extra.line(),
+        N = gen_spec_extra.number(),
       },
 
       -- Module mappings. Use `''` (empty string) to disable one.
@@ -77,8 +46,8 @@ return {
         -- Next/last variants
         around_next = 'an',
         inside_next = 'in',
-        around_last = 'aN',
-        inside_last = 'iN',
+        around_last = 'al',
+        inside_last = 'il',
 
         -- Move cursor to corresponding edge of `a` textobject
         goto_left = 'g[',
