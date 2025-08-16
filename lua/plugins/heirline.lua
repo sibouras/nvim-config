@@ -398,6 +398,16 @@ return {
       end,
       hl = { fg = 'gray' },
     }
+
+    --> arrow.nvim
+
+    local Arrow = {
+      condition = function()
+        return require('arrow.statusline').is_on_arrow_file()
+      end,
+      update = 'BufEnter',
+      provider = function()
+        return require('arrow.statusline').text_for_statusline_with_icons()
       end,
       hl = { fg = 'gray' },
     }
@@ -676,7 +686,9 @@ return {
     local DefaultStatusline = {
       ViMode,
       Space,
-      Grapple,
+      -- Grapple,
+      Arrow,
+      Space,
       -- FileNameBlock,
       utils.surround({ '', '' }, 'dark_bg', { FileNameBlock }),
       Spell,

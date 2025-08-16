@@ -25,24 +25,15 @@ vim.api.nvim_create_autocmd({ 'BufRead' }, {
 local function close_unused_buffers()
   local curbufnr = vim.api.nvim_get_current_buf()
   local buflist = vim.api.nvim_list_bufs()
-
-  -- remove grapple buffers from buflist
-  local grapple_ok, grapple = pcall(require, 'grapple')
-  if grapple_ok then
-    local tags = grapple.tags()
-    for tag_key, tag in pairs(tags) do
-      local filename = tag.path
-      local bufnr = vim.fn.bufnr(filename)
-      for i, v in ipairs(buflist) do
-        if v == bufnr then
-          table.remove(buflist, i)
-        end
-      end
-    end
-  end
+  local is_on_arrow_file = require('arrow.statusline').is_on_arrow_file
 
   for _, bufnr in ipairs(buflist) do
-    if vim.bo[bufnr].buflisted and bufnr ~= curbufnr and (vim.fn.getbufvar(bufnr, 'bufpersist') ~= 1) then
+    if
+      vim.bo[bufnr].buflisted
+      and bufnr ~= curbufnr
+      and (vim.fn.getbufvar(bufnr, 'bufpersist') ~= 1)
+      and not is_on_arrow_file(bufnr)
+    then
       vim.cmd('bd ' .. tostring(bufnr))
     end
   end
