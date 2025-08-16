@@ -140,8 +140,9 @@ return {
       pattern = 'MiniFilesBufferCreate',
       callback = function(args)
         local buf_id = args.data.buf_id
-        map_split(buf_id, '<C-h>', 'belowright horizontal')
-        map_split(buf_id, '<C-l>', 'belowright vertical')
+        map_split(buf_id, '<C-s>', 'belowright horizontal')
+        map_split(buf_id, '<C-v>', 'belowright vertical')
+        map_split(buf_id, '<C-t>', 'tab')
       end,
     })
 
