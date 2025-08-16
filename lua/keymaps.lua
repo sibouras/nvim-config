@@ -40,6 +40,14 @@ map('n', '<Esc>', ':noh | stopinsert<CR>', { desc = 'Escape and clear hlsearch/m
 --   { desc = 'Redraw / clear hlsearch / diff update' }
 -- )
 
+-- vim.keymap.set({ 'i', 's', 'n' }, '<esc>', function()
+--   if require('luasnip').expand_or_jumpable() then
+--     require('luasnip').unlink_current()
+--   end
+--   vim.cmd('noh')
+--   return '<esc>'
+-- end, { desc = 'Escape, clear hlsearch, and stop snippet session', expr = true })
+
 -- Stay in indent mode
 map('v', '<', '<gv')
 map('v', '>', '>gv')
@@ -47,8 +55,8 @@ map('v', '>', '>gv')
 -- search for word under cursor without moving
 -- map('n', 'gw', '*N')
 -- map('n', 'gw', [[:%s/<C-r>=expand('<cword>')<CR>//n<CR>]])
-map('n', 'gW', '<Cmd>norm! gd<CR>')
-map('x', 'gW', [[y/\V<C-R>"<CR>N]])
+-- map('n', 'gW', '<Cmd>norm! gd<CR>')
+-- map('x', 'gW', [[y/\V<C-R>"<CR>N]])
 
 --> Navigate buffers
 -- NOTE: b# doesn't work with jumpoption=view
@@ -605,7 +613,7 @@ end, { desc = 'Telescope lsp_document_symbols' })
 require('small.highlight_selected').setup()
 
 -- stylua: ignore start
-map('n', '<leader>i', function() require('small.bufend').run() end, { desc = 'Bufend' })
+-- map('n', '<leader>i', function() require('small.bufend').run() end, { desc = 'Bufend' })
 
 local treeselect = require('small.treeselect')
 map('n', '<M-Up>', function() treeselect.current() end, { desc = 'TreeSelect current node' })

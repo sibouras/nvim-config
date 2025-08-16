@@ -3,7 +3,7 @@ return {
   event = 'VeryLazy',
   opts = {
     file = { suffix = 'r', options = { wrap = false } },
-    buffer = { suffix = 'e', options = { wrap = false } },
+    buffer = { suffix = 'b', options = { wrap = false } },
     oldfile = { suffix = 'o', options = { wrap = false } },
     location = { suffix = 'l', options = {} },
     yank = { suffix = 'y', options = { wrap = false } },
@@ -11,7 +11,7 @@ return {
     -- using these with Repeat movement with ; and ,
     comment = { suffix = 'c', options = { add_to_jumplist = true } },
     indent = { suffix = 'i', options = { add_to_jumplist = true } },
-    treesitter = { suffix = 's', options = { add_to_jumplist = true } },
+    treesitter = { suffix = 'e', options = { add_to_jumplist = true } },
     -- disable these
     conflict = { suffix = '', options = {} },
     diagnostic = { suffix = '', options = {} },

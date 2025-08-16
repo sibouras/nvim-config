@@ -250,8 +250,8 @@ return {
         end, function()
           bracketed.treesitter('backward')
         end)
-        map({ 'n', 'x', 'o' }, ']s', next_treesitter, { desc = 'Treesitter forward' })
-        map({ 'n', 'x', 'o' }, '[s', prev_treesitter, { desc = 'Treesitter backward' })
+        map({ 'n', 'x', 'o' }, ']e', next_treesitter, { desc = 'Treesitter forward' })
+        map({ 'n', 'x', 'o' }, '[e', prev_treesitter, { desc = 'Treesitter backward' })
       end
 
       vim.api.nvim_create_autocmd({ 'FileType' }, {
