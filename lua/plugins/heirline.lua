@@ -390,10 +390,14 @@ return {
       end,
       update = 'BufEnter',
       provider = function()
-        -- local key = require('grapple').name_or_index()
+        local key = require('grapple').name_or_index()
         -- return '  [' .. key .. ']'
-        local statusline = require('grapple').statusline()
-        return statusline .. ' '
+        return '󰛢 [' .. key .. '] '
+        -- local statusline = require('grapple').statusline()
+        -- return statusline .. ' '
+      end,
+      hl = { fg = 'gray' },
+    }
       end,
       hl = { fg = 'gray' },
     }

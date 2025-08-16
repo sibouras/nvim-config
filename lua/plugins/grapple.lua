@@ -36,12 +36,6 @@ return {
     },
   },
   config = function()
-    for i = 1, 9 do
-      vim.keymap.set('n', i .. '<leader>', function()
-        require('grapple').select({ index = i })
-      end)
-    end
-
     vim.api.nvim_create_autocmd('FileType', {
       desc = 'set cursorline and move the cursor to the current file',
       group = vim.api.nvim_create_augroup('MyGroup_grapple', { clear = true }),
@@ -54,7 +48,7 @@ return {
           -- vim.fn.search('.*' .. path)
           -- add a hl group to current file
           vim.fn.clearmatches()
-          vim.fn.matchadd('GrappleCurrentFile', path)
+          vim.fn.matchadd('GrappleCurrent', path)
           vim.opt_local.cursorline = true
         end)
 
