@@ -1,6 +1,7 @@
 return {
   {
     'natecraddock/sessions.nvim',
+    enabled = false,
     cmd = { 'SessionsStop', 'SessionsLoad' },
     keys = {
       { '<leader>sl', ':SessionsLoad<CR>', desc = 'Sessions Load', silent = true },
@@ -14,6 +15,7 @@ return {
   },
   {
     'natecraddock/workspaces.nvim',
+    enabled = false,
     cmd = { 'WorkspacesAdd', 'WorkspacesOpen' },
     opts = {
       hooks = {

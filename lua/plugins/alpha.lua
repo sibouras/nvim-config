@@ -14,15 +14,18 @@ return {
       [[\ \_\ \_\ \____\ \____/\ \___/  \ \_\ \_\ \_\ \_\]],
       [[ \/_/\/_/\/____/\/___/  \/__/    \/_/\/_/\/_/\/_/]],
     }
+
+    local function get_path()
+      return vim.fn.fnamemodify(vim.fn.getcwd(), ':~'):gsub(jit.os:find('Windows') and '\\' or '/', '.'):sub(3)
+    end
+
     dashboard.section.buttons.val = {
       dashboard.button('e', '  New file', ':enew <BAR> startinsert<CR>'),
       dashboard.button('f', '  Find file', ':FFFFind<CR>'),
-      dashboard.button('p', '  Find project', ':Telescope workspaces<CR>'),
       dashboard.button('o', '  Old files', ':Telescope oldfiles<CR>'),
-      dashboard.button('w', '  Wiki', ':WorkspacesOpen docuwiki<CR>'),
-      dashboard.button('c', '  Configuration', ':WorkspacesOpen nvim<CR>'),
       -- dashboard.button('s', '󱎫  Startup time', ':StartupTime<CR>'),
-      dashboard.button('s', '  Session load', ':SessionsLoad<CR>'),
+      dashboard.button('s', '  Session select', ':lua MiniSessions.select()<CR>'),
+      dashboard.button('r', '  Session read', ':lua MiniSessions.read("' .. get_path() .. '")<CR>'),
       dashboard.button('l', '󰒲 ' .. ' Lazy', ':Lazy<CR>'),
       dashboard.button('q', '  Quit Neovim', ':qa<CR>'),
     }

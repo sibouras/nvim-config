@@ -587,7 +587,6 @@ map('n', '<leader>fC', ':Telescope colorscheme enable_preview=true<CR>', { desc 
 map('n', '<leader>f;', ':Telescope command_history<CR>', { desc = 'Telescope command_history' })
 map('n', '<leader>f/', ':Telescope search_history<CR>', { desc = 'Telescope search_history' })
 map('n', '<leader>fb', ':Telescope current_buffer_fuzzy_find<CR>', { desc = 'Telescope current_buffer_fuzzy_find' })
-map('n', '<leader>fp', ':Telescope workspaces<CR>', { desc = 'Telescope workspaces' })
 map('n', '<leader>lr', ':Telescope lsp_references<CR>', { desc = 'Telescope lsp_references' })
 map('n', '<leader>lt', ':Telescope lsp_type_definitions<CR>', { desc = 'Telescope lsp_type_definitions' })
 map('n', '<leader>ld', ':Telescope diagnostics<CR>', { desc = 'Telescope diagnostics' })
