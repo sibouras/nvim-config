@@ -103,16 +103,44 @@ for i = 1, 9 do
   map('n', i .. ',', i .. 'gt')
 end
 
--- Switch to last active tab
-vim.cmd([[
-  if !exists('g:Lasttab')
-    let g:Lasttab = 1
-    let g:Lasttab_backup = 1
-  endif
-  autocmd! TabLeave * let g:Lasttab_backup = g:Lasttab | let g:Lasttab = tabpagenr()
-  autocmd! TabClosed * let g:Lasttab = g:Lasttab_backup
-  " nmap <silent> <C-h> :exe "tabn " . g:Lasttab<cr>
-]])
+-- -- Switch to last active tab
+-- vim.cmd([[
+--   if !exists('g:Lasttab')
+--     let g:Lasttab = 1
+--     let g:Lasttab_backup = 1
+--   endif
+--   autocmd! TabLeave * let g:Lasttab_backup = g:Lasttab | let g:Lasttab = tabpagenr()
+--   autocmd! TabClosed * let g:Lasttab = g:Lasttab_backup
+--   nmap <silent> <C-h> :exe "tabn " . g:Lasttab<cr>
+-- ]])
+
+-- toggle current buffer with the full-screen using :tabedit %
+-- from: https://old.reddit.com/r/neovim/comments/1msuasw/a_simple_shortcut_to_toggle_focus_on_a_splited/n971zqy/
+map('n', '<C-w>m', function()
+  local current_buf = vim.api.nvim_get_current_buf()
+  local tabs = vim.api.nvim_list_tabpages()
+  local pos = vim.api.nvim_win_get_cursor(0)
+
+  if #tabs > 1 then
+    for _, tab in ipairs(tabs) do
+      local win = vim.api.nvim_tabpage_get_win(tab)
+      local buf = vim.api.nvim_win_get_buf(win)
+
+      if buf == current_buf and tab ~= vim.api.nvim_get_current_tabpage() then
+        vim.api.nvim_win_set_cursor(win, pos)
+        vim.cmd('tabclose')
+        return
+      end
+    end
+  end
+
+  vim.cmd('tabedit %')
+
+  local win = vim.api.nvim_get_current_win()
+  local line_count = vim.api.nvim_buf_line_count(0)
+  local line = math.min(pos[1], line_count)
+  vim.api.nvim_win_set_cursor(win, { line, pos[2] })
+end, { desc = 'toggle current buffer with the full-screen using :tabedit %' })
 
 -- Move text up and down(using nvim-gomove instead)
 -- map("n", "<A-j>", "<Esc>:m .+1<CR>==gi")
