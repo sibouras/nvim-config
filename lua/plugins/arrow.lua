@@ -1,5 +1,6 @@
 return {
   'otavioschwanck/arrow.nvim',
+  enabled = false,
   keys = { '<leader>i', '<leader>o' },
   opts = {
     show_icons = true,

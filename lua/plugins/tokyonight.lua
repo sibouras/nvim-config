@@ -22,7 +22,6 @@ return {
       -- https://github.com/folke/tokyonight.nvim/blob/main/lua/tokyonight/theme.lua
       on_highlights = function(hl, colors)
         hl.Comment = { fg = colors.dark5 }
-        hl.TabLineSel = { bg = '#1A2336' }
         hl.WinSeparator = { fg = colors.fg_gutter }
         hl.Folded = { fg = colors.blue, bg = colors.transparent }
         hl['@text.uri.markdown_inline'] = { fg = colors.blue, underline = true } -- markdown link
@@ -38,6 +37,10 @@ return {
         hl.IlluminatedWordRead = { bg = '#272c41' }
         hl.IlluminatedWordWrite = { bg = '#272c41' }
         hl.DiagnosticUnnecessary = { fg = '#565f89' }
+        hl.TabLineSel = { bg = '#1A2336' } -- used in dart.nvim
+        hl.TabLine = { fg = colors.dark5, bg = colors.bg_dark } -- used in dart.nvim
+        hl.DartCurrentLabel = { fg = colors.orange, bg = '#1A2336' }
+        hl.DartVisibleLabel = { fg = colors.orange, bg = colors.bg_dark }
       end,
     })
 

@@ -685,9 +685,9 @@ return {
 
     local DefaultStatusline = {
       ViMode,
-      Space,
+      -- Space,
       -- Grapple,
-      Arrow,
+      -- Arrow,
       Space,
       -- FileNameBlock,
       utils.surround({ '', '' }, 'dark_bg', { FileNameBlock }),
