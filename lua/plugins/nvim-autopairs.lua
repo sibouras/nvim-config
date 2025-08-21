@@ -4,7 +4,9 @@ return {
   keys = '<M-a>',
   opts = {
     break_undo = false,
-    fast_wrap = {},
+    fast_wrap = {
+      keys = 'wertyuiopzxcvbnmasdfghjkl',
+    },
   },
   config = function(_, opts)
     local autopairs = require('nvim-autopairs')

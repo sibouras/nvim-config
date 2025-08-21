@@ -12,5 +12,10 @@ return {
       desc = 'FFF: find files',
     },
   },
-  opts = {},
+  opts = {
+    layout = {
+      prompt_position = 'top', -- 'top' or 'bottom'
+      preview_position = 'right', -- 'left', 'right', 'top', 'bottom'
+    },
+  },
 }

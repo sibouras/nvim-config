@@ -219,7 +219,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     end
     -- Save small deletes in numbered registers
     local small = vim.fn.getreg('-')
-    if small ~= vim.g.lat_small_reg then
+    if #small > 1 and small ~= vim.g.lat_small_reg then
       shift_reg({ val = small, typ = vim.fn.getregtype('-') })
       vim.g.lat_small_reg = small
     end

@@ -4,7 +4,7 @@ return {
   enabled = false,
   keys = {
     {
-      '<M-e>',
+      '<M-a>',
       function()
         vim.g.minipairs_disable = not vim.g.minipairs_disable
       end,

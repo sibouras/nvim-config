@@ -1,10 +1,10 @@
 return {
   'otavioschwanck/arrow.nvim',
-  keys = { '<leader>j', '<leader>n' },
+  keys = { '<leader>i', '<leader>o' },
   opts = {
     show_icons = true,
-    leader_key = '<leader>j',
-    buffer_leader_key = '<leader>n',
+    leader_key = '<leader>i',
+    buffer_leader_key = '<leader>o',
     hide_handbook = true,
     mappings = {
       toggle = 'i', -- used as save if separate_save_and_remove is true
