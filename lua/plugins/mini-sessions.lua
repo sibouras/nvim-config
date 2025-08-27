@@ -1,25 +1,6 @@
 return {
   'echasnovski/mini.sessions',
-  opts = function()
-    local dart_ok, dart = pcall(require, 'dart')
-
-    return {
-      hooks = {
-        pre = {
-          read = function(session)
-            if dart_ok then
-              dart.read_session(session['name'])
-            end
-          end,
-          write = function(session)
-            if dart_ok then
-              dart.write_session(session['name'])
-            end
-          end,
-        },
-      },
-    }
-  end,
+  opts = {},
   config = function(_, opts)
     local sessions = require('mini.sessions')
     sessions.setup(opts)

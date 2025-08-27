@@ -99,9 +99,9 @@ map('n', '<leader>w', switch_mru_buffer(2), { desc = 'Switch to second most rece
 
 -- Navigate tabs
 -- Number + , to select a tab, i.e. type 1, to select the first tab.
-for i = 1, 9 do
-  map('n', i .. ',', i .. 'gt')
-end
+-- for i = 1, 9 do
+--   map('n', i .. ',', i .. 'gt')
+-- end
 
 -- -- Switch to last active tab
 -- vim.cmd([[

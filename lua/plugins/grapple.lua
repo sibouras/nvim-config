@@ -1,9 +1,8 @@
 return {
   'cbochs/grapple.nvim',
-  enabled = false,
   keys = {
     {
-      '<leader>o',
+      '<leader>i',
       function()
         if vim.g.is_win then
           vim.g.grapple_current_file = string.gsub(vim.fn.expand('%'), '[/\\]', '\\\\')
@@ -17,7 +16,7 @@ return {
       '<leader>va',
       function()
         require('grapple').toggle()
-        vim.cmd.redrawstatus()
+        -- vim.cmd.redrawstatus()
       end,
       desc = 'Grapple toggle',
     },
@@ -36,7 +35,17 @@ return {
       desc = 'Cycle backwards to marked file',
     },
   },
-  config = function()
+  opts = {
+    quick_select = '123456789',
+    win_opts = {
+      width = 60,
+      border = 'rounded',
+      footer = '', -- disable footer
+    },
+  },
+  config = function(_, opts)
+    require('grapple').setup(opts)
+
     vim.api.nvim_create_autocmd('FileType', {
       desc = 'set cursorline and move the cursor to the current file',
       group = vim.api.nvim_create_augroup('MyGroup_grapple', { clear = true }),

@@ -37,10 +37,11 @@ return {
         hl.IlluminatedWordRead = { bg = '#272c41' }
         hl.IlluminatedWordWrite = { bg = '#272c41' }
         hl.DiagnosticUnnecessary = { fg = '#565f89' }
-        hl.TabLineSel = { bg = '#1A2336' } -- used in dart.nvim
-        hl.TabLine = { fg = colors.dark5, bg = colors.bg_dark } -- used in dart.nvim
+        hl.TabLineSel = { bg = '#1A2336' }
+        hl.TabLine = { fg = colors.dark5, bg = colors.bg_dark }
         hl.DartCurrentLabel = { fg = colors.orange, bg = '#1A2336' }
         hl.DartVisibleLabel = { fg = colors.orange, bg = colors.bg_dark }
+        hl.SignColumn = { fg = colors.dark5, bg = colors.bg_float } -- used in grapple.nvim quick_select
       end,
     })
 

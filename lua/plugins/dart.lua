@@ -1,5 +1,6 @@
 return {
   'iofq/dart.nvim',
+  enabled = false,
   opts = function()
     local dart = require('dart')
 
