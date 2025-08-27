@@ -346,15 +346,12 @@ map('n', '<Leader>cl', function()
 end, { desc = 'Copy absolute file name to clipboard' })
 
 -- Saner behavior of n and N(from vim-galore)
-vim.cmd([[
-nnoremap <expr> n 'Nn'[v:searchforward]
-xnoremap <expr> n 'Nn'[v:searchforward]
-onoremap <expr> n 'Nn'[v:searchforward]
-
-nnoremap <expr> N 'nN'[v:searchforward]
-xnoremap <expr> N 'nN'[v:searchforward]
-onoremap <expr> N 'nN'[v:searchforward]
-]])
+map('n', 'n', "'Nn'[v:searchforward].'zv'", { expr = true, desc = 'Next search result' })
+map('x', 'n', "'Nn'[v:searchforward]", { expr = true, desc = 'Next search result' })
+map('o', 'n', "'Nn'[v:searchforward]", { expr = true, desc = 'Next search result' })
+map('n', 'N', "'nN'[v:searchforward].'zv'", { expr = true, desc = 'Prev search result' })
+map('x', 'N', "'nN'[v:searchforward]", { expr = true, desc = 'Prev search result' })
+map('o', 'N', "'nN'[v:searchforward]", { expr = true, desc = 'Prev search result' })
 
 -- Quickly edit your macros(from vim-galore)
 -- Use it like this <leader>me or "q<leader>me.
