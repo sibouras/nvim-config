@@ -1,5 +1,6 @@
 return {
   'windwp/nvim-autopairs',
+  enabled = false,
   event = 'InsertEnter',
   keys = '<M-a>',
   opts = {
@@ -15,10 +16,10 @@ return {
     vim.keymap.set({ 'n', 'i' }, '<M-a>', function()
       if autopairs.state.disabled == true then
         autopairs.enable()
-        print('Enabled autopairs')
+        vim.notify('Enabled autopairs')
       else
         autopairs.disable()
-        print('Disabled autopairs')
+        vim.notify('Disabled autopairs')
       end
     end, { desc = 'Toggle auto pairs' })
   end,
