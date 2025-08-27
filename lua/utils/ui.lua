@@ -1,4 +1,5 @@
 -- from: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/util/ui.lua
+-- similar: https://github.com/deathbeam/dotfiles/blob/master/nvim/.config/nvim/lua/config/statuscolumn.lua
 ---@class utils.ui
 local M = {}
 
@@ -12,18 +13,6 @@ function M.get_signs(buf, lnum)
   -- Get regular signs
   ---@type Sign[]
   local signs = {}
-
-  if vim.fn.has('nvim-0.10') == 0 then
-    -- Only needed for Neovim <0.10
-    -- Newer versions include legacy signs in nvim_buf_get_extmarks
-    for _, sign in ipairs(vim.fn.sign_getplaced(buf, { group = '*', lnum = lnum })[1].signs) do
-      local ret = vim.fn.sign_getdefined(sign.name)[1] --[[@as Sign]]
-      if ret then
-        ret.priority = sign.priority
-        signs[#signs + 1] = ret
-      end
-    end
-  end
 
   -- Get extmark signs
   local extmarks = vim.api.nvim_buf_get_extmarks(
