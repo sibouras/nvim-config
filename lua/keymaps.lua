@@ -28,8 +28,20 @@ vim.cmd('command! -bang Q quit<bang>')
 -- new line
 map('i', '<C-CR>', '<C-o>o')
 
--- remove highlight
-map('n', '<Esc>', ':noh | stopinsert<CR>', { desc = 'Escape and clear hlsearch/messages' })
+-- clear highlight/messages
+map('n', '<Esc>', function()
+  vim.cmd.nohlsearch()
+  vim.cmd.stopinsert()
+  return '<Esc>'
+end, { desc = 'Escape and clear hlsearch/messages', expr = true })
+
+-- vim.keymap.set({ 'i', 's', 'n' }, '<esc>', function()
+--   if require('luasnip').expand_or_jumpable() then
+--     require('luasnip').unlink_current()
+--   end
+--   vim.cmd('noh')
+--   return '<esc>'
+-- end, { desc = 'Escape, clear hlsearch, and stop snippet session', expr = true })
 
 -- Clear search, diff update and redraw
 -- taken from runtime/lua/_editor.lua
@@ -40,14 +52,6 @@ map('n', '<Esc>', ':noh | stopinsert<CR>', { desc = 'Escape and clear hlsearch/m
 --   { desc = 'Redraw / clear hlsearch / diff update' }
 -- )
 
--- vim.keymap.set({ 'i', 's', 'n' }, '<esc>', function()
---   if require('luasnip').expand_or_jumpable() then
---     require('luasnip').unlink_current()
---   end
---   vim.cmd('noh')
---   return '<esc>'
--- end, { desc = 'Escape, clear hlsearch, and stop snippet session', expr = true })
-
 -- Stay in indent mode
 map('v', '<', '<gv')
 map('v', '>', '>gv')
@@ -57,6 +61,8 @@ map('v', '>', '>gv')
 -- map('n', 'gw', [[:%s/<C-r>=expand('<cword>')<CR>//n<CR>]])
 -- map('n', 'gW', '<Cmd>norm! gd<CR>')
 -- map('x', 'gW', [[y/\V<C-R>"<CR>N]])
+
+map('n', '[/', '[<c-i>') -- `:h [_ctrl-i`
 
 --> Navigate buffers
 -- NOTE: b# doesn't work with jumpoption=view
@@ -162,19 +168,19 @@ map('i', '<C-Del>', '<C-o>dw')
 -- ctrl-z to undo
 map('i', '<C-z>', '<C-o>:u<CR>')
 
--- undo break points
-local undo_ch = { ',', '!', '?', ';' }
-for _, ch in ipairs(undo_ch) do
-  map('i', ch, ch .. '<C-g>u')
-end
+-- -- undo break points
+-- local undo_ch = { ',', '!', '?', ';' }
+-- for _, ch in ipairs(undo_ch) do
+--   map('i', ch, ch .. '<C-g>u')
+-- end
 
 -- Store relative line number jumps in the jumplist if they exceed a threshold.
-map('n', 'k', '(v:count > 5 ? "m\'" . v:count : "") . "k"', { expr = true })
-map('n', 'j', '(v:count > 5 ? "m\'" . v:count : "") . "j"', { expr = true })
+map('n', 'k', '(v:count > 5 ? "m\'" . v:count : "") . "gk"', { expr = true })
+map('n', 'j', '(v:count > 5 ? "m\'" . v:count : "") . "gj"', { expr = true })
 
 -- When the :keepjumps command modifier is used, jumps are not stored in the jumplist.
-map('n', '{', ":execute 'keepjumps norm! ' . v:count1 . '{'<CR>")
-map('n', '}', ":execute 'keepjumps norm! ' . v:count1 . '}'<CR>")
+-- map('n', '{', ":execute 'keepjumps norm! ' . v:count1 . '{'<CR>")
+-- map('n', '}', ":execute 'keepjumps norm! ' . v:count1 . '}'<CR>")
 -- map('n', '(', ":execute 'keepjumps norm! ' . v:count1 . '('<CR>")
 -- map('n', ')', ":execute 'keepjumps norm! ' . v:count1 . ')'<CR>")
 
@@ -212,8 +218,8 @@ map('n', '<C-d>', '<C-d>zz')
 map('n', '<C-u>', '<C-u>zz')
 
 -- Faster scrolling
-map('n', '<C-e>', '2<C-e>')
-map('n', '<C-y>', '2<C-y>')
+map('n', '<C-e>', '3<C-e>')
+map('n', '<C-y>', '3<C-y>')
 
 -- More comfortable jumping to marks
 map('n', "'", '`')
@@ -318,8 +324,17 @@ map('i', '<S-Insert>', '<C-r>+')
 map('n', 'gy', '`[v`]', { desc = 'reselect pasted or yanked text' })
 
 -- Copies last yank/cut to clipboard register
-map('n', '<leader>cy', ':let @*=@"<CR>', { desc = 'Copy last yank/cut to clipboard' })
+-- map('n', '<leader>cy', ':let @*=@"<CR>', { desc = 'Copy last yank/cut to clipboard' })
 map('n', '<leader>dy', ':let @*=@"<CR>', { desc = 'Copy last yank/cut to clipboard' })
+
+-- Copy contents of the unnamed register (") to system clipboard (+)
+map('n', '<leader>cy', function()
+  local copy = vim.fn.getreg('"')
+  if copy ~= '' then
+    vim.fn.setreg('+', copy)
+    vim.notify('Copied to clipboard:\n' .. copy)
+  end
+end, { desc = 'Copy last yank/cut to clipboard' })
 
 -- Redirect change/delete operations to the blackhole
 -- NOTE: before these mapping map something with <leader>c and <leader>d like
@@ -329,8 +344,19 @@ map('n', '<leader>C', '"_C')
 map({ 'n', 'x' }, '<leader>d', '"_d')
 map('n', '<leader>D', '"_D')
 -- -- x and X won't alter the register
--- map("n", "x", '"_x')
--- map("n", "X", '"_X')
+-- map('n', 'x', '"_x')
+-- map('n', 'X', '"_X')
+
+-- use black hole register when deleting empty line
+local function smart_dd()
+  if vim.api.nvim_get_current_line():match('^%s*$') then
+    return '"_dd'
+  else
+    return 'dd'
+  end
+end
+
+map('n', 'dd', smart_dd, { expr = true })
 
 -- unexpected behavior when pasting above highlighted text
 -- map('v', '<leader>p', '"_dP') -- already exists with P
@@ -452,17 +478,6 @@ map('t', '<C-r>', [['<C-\><C-n>"' . nr2char(getchar()) . 'pi']], { expr = true }
 ----------------------------------
 --- functions
 ----------------------------------
-
--- use black hole register when deleting empty line
-local function smart_dd()
-  if vim.api.nvim_get_current_line():match('^%s*$') then
-    return '"_dd'
-  else
-    return 'dd'
-  end
-end
-
-map('n', 'dd', smart_dd, { expr = true })
 
 -- autoload/functions.vim
 map('v', '<leader>cy', ':call functions#CompleteYank()<CR>')
