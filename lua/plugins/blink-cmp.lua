@@ -55,6 +55,9 @@ return {
     },
     signature = {
       enabled = true,
+      trigger = {
+        show_on_trigger_character = false,
+      },
     },
     completion = {
       menu = { border = 'none' },

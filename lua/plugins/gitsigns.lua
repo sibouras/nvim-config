@@ -11,7 +11,7 @@ return {
       untracked = { text = '▎' },
     },
     diffthis = {
-      split = 'belowright',
+      split = 'aboveleft', -- Defaults to 'aboveleft'
     },
     -- base = 'FILE',
     on_attach = function(buffer)

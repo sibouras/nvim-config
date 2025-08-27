@@ -24,7 +24,6 @@ return {
         -- c = gen_spec.treesitter({ a = '@class.outer', i = '@class.inner' }),
         c = gen_spec.treesitter({ a = '@comment.outer', i = '@comment.inner' }),
         ['='] = gen_spec.treesitter({ a = '@assignment.outer', i = '@assignment.inner' }),
-        o = { { "%b''", '%b""', '%b``' }, '^.().*().$' }, -- Quotes
         -- subword from: https://github.com/drowning-cat/nvim/blob/main/lua/plugins/mini.lua#L21
         e = {
           {
