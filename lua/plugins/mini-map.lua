@@ -1,5 +1,5 @@
 return {
-  'echasnovski/mini.map',
+  'nvim-mini/mini.map',
   keys = {
     { '<leader>mm', '<Cmd>lua MiniMap.toggle()<CR>', desc = 'MiniMap Toggle' },
     { '<leader>mf', desc = 'MiniMap Focus (Toggle)' },

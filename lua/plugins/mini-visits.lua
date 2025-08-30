@@ -1,5 +1,5 @@
 return {
-  'echasnovski/mini.visits',
+  'nvim-mini/mini.visits',
   opts = {
     -- How visit index is converted to list of paths
     list = {

@@ -19,7 +19,7 @@ return {
     end,
   },
   {
-    'echasnovski/mini.comment',
+    'nvim-mini/mini.comment',
     event = 'VeryLazy',
     enabled = false,
     opts = {

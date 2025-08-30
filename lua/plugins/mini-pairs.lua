@@ -1,5 +1,5 @@
 return {
-  'echasnovski/mini.pairs',
+  'nvim-mini/mini.pairs',
   event = 'VeryLazy',
   keys = {
     {
@@ -19,7 +19,7 @@ return {
   opts = {
     modes = { insert = true, command = true, terminal = false },
     mappings = {
-      -- Alternative default config: https://github.com/echasnovski/mini.nvim/issues/835
+      -- Alternative default config: https://github.com/nvim-mini/mini.nvim/issues/835
 
       -- insert whole pair if left character is not `\` and if right character is whitespace.
       -- So it will not insert whole pair if directly before any non-whitespace character.

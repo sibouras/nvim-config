@@ -1,8 +1,8 @@
 return {
-  'echasnovski/mini.ai',
+  'nvim-mini/mini.ai',
   event = 'VeryLazy',
   dependencies = {
-    'echasnovski/mini.extra',
+    'nvim-mini/mini.extra',
     'nvim-treesitter/nvim-treesitter-textobjects',
   },
 

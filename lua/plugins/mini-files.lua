@@ -1,5 +1,5 @@
 return {
-  'echasnovski/mini.files',
+  'nvim-mini/mini.files',
   enabled = true,
   dependencies = {
     'nvim-tree/nvim-web-devicons',

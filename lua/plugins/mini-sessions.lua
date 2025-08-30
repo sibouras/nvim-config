@@ -1,5 +1,5 @@
 return {
-  'echasnovski/mini.sessions',
+  'nvim-mini/mini.sessions',
   opts = {},
   config = function(_, opts)
     local sessions = require('mini.sessions')

@@ -1,5 +1,5 @@
 return {
-  'echasnovski/mini.clue',
+  'nvim-mini/mini.clue',
   event = 'VeryLazy',
   enabled = true,
   opts = function()
