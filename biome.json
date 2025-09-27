@@ -1,9 +1,12 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.2.2/schema.json",
   "formatter": {
     "enabled": true,
     "indentWidth": 2,
     "indentStyle": "space",
     "lineEnding": "lf"
+  },
+  "json": {
+    "parser": { "allowTrailingCommas": false }
   }
 }
