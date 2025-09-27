@@ -184,13 +184,22 @@ return {
       -- https://old.reddit.com/r/neovim/comments/1l7pz1l/starting_from_0112_i_have_a_weird_issue/
       -- https://github.com/neovim/neovim/issues/33116
       -- https://github.com/neovim/neovim/pull/33762
-      vim.lsp.enable({ 'lua_ls', 'ts_ls', 'html', 'taplo' })
+      vim.lsp.enable({
+        'lua_ls',
+        'ts_ls',
+        'biome',
+        'html',
+        'taplo',
+        'cssls',
+        'jsonls',
+        'emmet_language_server',
+        'tailwindcss',
+        'nushell',
+      })
+      vim.lsp.enable('ahk2', vim.fn.executable('C:/Program Files/AutoHotkey/v2/AutoHotkey.exe') == 1)
     end)
 
-    local lspconfig = require('lspconfig')
-
-    lspconfig.cssls.setup({
-      on_attach = on_attach,
+    vim.lsp.config('cssls', {
       -- https://github.com/neovim/neovim/issues/33577
       init_options = {
         provideFormatter = false,
@@ -206,8 +215,7 @@ return {
       },
     })
 
-    lspconfig.jsonls.setup({
-      on_attach = on_attach,
+    vim.lsp.config('jsonls', {
       init_options = {
         provideFormatter = false,
       },
@@ -219,78 +227,33 @@ return {
       },
     })
 
-    lspconfig.emmet_language_server.setup({
-      on_attach = function(client)
-        client.server_capabilities.completionProvider.triggerCharacters = {}
-      end,
-      filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less' },
-    })
+    -- vim.lsp.config('emmet_language_server', {
+    --   on_attach = function(client)
+    --     client.server_capabilities.completionProvider.triggerCharacters = {}
+    --   end,
+    --   filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less' },
+    --   -- https://docs.emmet.io/customization/preferences/
+    --   -- init_options = {
+    --   --   preferences = {
+    --   --     ['format.forceIndentationForTags'] = { 'body', 'thead', 'tbody' },
+    --   --   },
+    --   -- },
+    -- })
 
-    lspconfig.tailwindcss.setup({
-      on_attach = function(client, bufnr)
-        -- if client.server_capabilities.colorProvider then
-        --   -- require("user.lsp.utils.documentcolors").buf_attach(bufnr)
-        --   -- slows opening files
-        --   require('document-color').buf_attach(bufnr)
-        -- end
-        -- client.server_capabilities.hoverProvider = false
-        -- client.server_capabilities.completionProvider = false
-        client.server_capabilities.completionProvider.triggerCharacters = {
-          '"',
-          "'",
-          '`',
-          '.',
-          '(',
-          '[',
-          '!',
-          '/',
-          ':',
-        }
-      end,
-      -- flags = {
-      --   debounce_text_changes = 500,
-      -- },
-      filetypes = { 'html', 'css', 'javascriptreact', 'typescriptreact', 'vue', 'svelte' },
-      root_dir = lspconfig.util.root_pattern('tailwind.config.js', 'tailwind.config.ts'),
-    })
-
-    lspconfig.rust_analyzer.setup({
-      on_attach = on_attach,
+    vim.lsp.config('rust_analyzer', {
       cmd = { 'rustup', 'run', 'stable', 'rust-analyzer' },
     })
 
-    lspconfig.nushell.setup({
-      on_attach = on_attach,
-    })
-
-    lspconfig.denols.setup({
-      on_attach = on_attach,
-      cmd = { 'deno', 'lsp' },
-      root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc'),
-    })
-
-    lspconfig.biome.setup({
+    vim.lsp.config('biome', {
       on_attach = function(client)
         -- formatting modifies the buffer even when there's no changes, use null-ls instead
         client.capabilities.textDocument.formatting.dynamicRegistration = false
         client.capabilities.textDocument.rangeFormatting.dynamicRegistration = false
       end,
-      -- check for the biome package within package.json using insert_package_json method
-      -- https://github.com/neovim/nvim-lspconfig/pull/3648
-      root_dir = function(fname)
-        local root_files = { 'biome.json', 'biome.jsonc' }
-        root_files = lspconfig.util.insert_package_json(root_files, 'biome', fname)
-        -- return vim.fs.dirname(vim.fs.find(root_files, { path = fname, upward = true })[1])
-        return lspconfig.util.root_pattern(unpack(root_files))(fname)
-      end,
-      single_file_support = false,
     })
 
     -- https://github.com/thqby/vscode-autohotkey2-lsp?tab=readme-ov-file#nvim-lspconfig
-    local ahk2_configs = {
-      autostart = true,
-      single_file_support = true,
-      on_attach = on_attach,
+    vim.lsp.config('ahk2', {
       filetypes = { 'ahk', 'autohotkey', 'ahk2' },
       cmd = { 'node', vim.fn.expand('$HOME/src/vscode-autohotkey2-lsp/server/dist/server.js'), '--stdio' },
       init_options = {
@@ -299,11 +262,6 @@ return {
         InterpreterPath = 'C:/Program Files/AutoHotkey/v2/AutoHotkey.exe',
       },
       flags = { debounce_text_changes = 500 },
-    }
-
-    local configs = require('lspconfig.configs')
-    configs.ahk2 = { default_config = ahk2_configs }
-    local nvim_lsp = require('lspconfig')
-    nvim_lsp.ahk2.setup({})
+    })
   end,
 }
