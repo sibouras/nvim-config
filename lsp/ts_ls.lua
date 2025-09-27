@@ -1,8 +1,6 @@
 ---@diagnostic disable-next-line: undefined-doc-name
 ---@type vim.lsp.Config
 return {
-  -- autostart = false,
-  -- single_file_support = false,
   -- commands = {
   --   OrganizeImports = {
   --     organize_imports,
@@ -27,13 +25,4 @@ return {
       includeInlayFunctionLikeReturnTypeHints = true,
     },
   },
-  -- disable lsp in node_modules
-  -- not needed anymore: https://github.com/neovim/nvim-lspconfig/pull/2287
-  -- root_dir = function(fname)
-  --   if string.find(fname, "node_modules/") then
-  --     return
-  --   end
-  --   local root_files = { "package.json", "tsconfig.json", "jsconfig.json", ".git" }
-  --   return lspconfig.util.root_pattern(unpack(root_files))(fname)
-  -- end,
 }

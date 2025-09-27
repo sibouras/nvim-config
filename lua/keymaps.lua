@@ -332,7 +332,13 @@ map('n', '<leader>cy', function()
   local copy = vim.fn.getreg('"')
   if copy ~= '' then
     vim.fn.setreg('+', copy)
-    vim.notify('Copied to clipboard:\n' .. copy)
+    local _, n = string.gsub(copy, '\n', '')
+    if n > 0 then
+      vim.notify(string.format('%s %s yanked into "+', n, n > 1 and 'lines' or 'line'))
+    else
+      n = #copy
+      vim.notify(string.format('%s %s yanked into "+', n, n > 1 and 'chars' or 'char'))
+    end
   end
 end, { desc = 'Copy last yank/cut to clipboard' })
 

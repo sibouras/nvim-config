@@ -4,11 +4,11 @@ return {
   keys = {
     -- stylua: ignore start
     { '<C-j>', function()
-      local blink = require "blink.cmp"
+      -- local blink = require "blink.cmp"
       if require('luasnip').expand_or_locally_jumpable() then
-        if blink.is_menu_visible() then
-          blink.hide()
-        end
+        -- if blink.is_menu_visible() then
+        --   blink.hide()
+        -- end
         require('luasnip').expand_or_jump()
       end
     end, silent = true, mode = { "i", "s" } },
@@ -37,8 +37,8 @@ return {
     local types = require('luasnip.util.types')
 
     ls.config.set_config({
-      keep_roots = true,
-      link_roots = true,
+      keep_roots = false,
+      link_roots = false,
       exit_roots = false,
       link_children = false,
       update_events = 'TextChanged,TextChangedI', -- slow in macros

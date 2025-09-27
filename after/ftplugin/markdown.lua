@@ -31,5 +31,3 @@ vim.keymap.set('n', '<leader>t', function()
   -- restore cursor position
   vim.api.nvim_win_set_cursor(0, cursor)
 end, { buffer = 0, silent = true, desc = 'Toggle checkbox' })
-vim.keymap.set('n', 'j', 'gj', { buffer = 0 })
-vim.keymap.set('n', 'k', 'gk', { buffer = 0 })

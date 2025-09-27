@@ -49,7 +49,7 @@ return {
     },
     -- HACK: make similar snippets with blink(in snippets folder) so they show in the menu
     -- or use vscode snippets and trigger them with luasnip
-    -- snippets = { preset = 'luasnip' }, -- very slow in macros
+    snippets = { preset = 'luasnip' }, -- very slow in macros
     fuzzy = {
       sorts = { 'exact', 'score', 'sort_text' },
     },
