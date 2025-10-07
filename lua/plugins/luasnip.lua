@@ -75,24 +75,24 @@ return {
     -- ls.filetype_extend('javascriptreact', { 'javascript' })
     -- ls.filetype_extend('typescriptreact', { 'javascript' })
 
-    local s = ls.snippet
-    local f = ls.function_node
-    -- new way: https://github.com/L3MON4D3/LuaSnip/issues/81
-    ls.add_snippets(nil, {
-      all = {
-        s(
-          'curtime',
-          f(function()
-            return os.date('%D - %H:%M')
-          end)
-        ),
-        -- s(
-        --   'date',
-        --   f(function()
-        --     return string.format(string.gsub(vim.bo.commentstring, '%%s', ' %%s'), os.date())
-        --   end)
-        -- ),
-      },
-    })
+    -- local s = ls.snippet
+    -- local f = ls.function_node
+    -- -- new way: https://github.com/L3MON4D3/LuaSnip/issues/81
+    -- ls.add_snippets(nil, {
+    --   all = {
+    --     s(
+    --       'curtime',
+    --       f(function()
+    --         return os.date('%D - %H:%M')
+    --       end)
+    --     ),
+    --     s(
+    --       'date',
+    --       f(function()
+    --         return string.format(string.gsub(vim.bo.commentstring, '%%s', ' %%s'), os.date())
+    --       end)
+    --     ),
+    --   },
+    -- })
   end,
 }

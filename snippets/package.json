@@ -3,6 +3,10 @@
   "contributes": {
     "snippets": [
       {
+        "language": "all",
+        "path": "./all.json"
+      },
+      {
         "language": "lua",
         "path": "./lua.json"
       },
@@ -37,18 +41,6 @@
       {
         "language": "javascriptreact",
         "path": "./javascript/react.json"
-      },
-      {
-        "language": "javascriptreact",
-        "path": "./javascript/react-native.json"
-      },
-      {
-        "language": "typescriptreact",
-        "path": "./javascript/react-ts.json"
-      },
-      {
-        "language": "typescriptreact",
-        "path": "./javascript/react-native-ts.json"
       }
     ]
   }
