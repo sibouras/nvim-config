@@ -195,6 +195,7 @@ return {
         'emmet_language_server',
         'tailwindcss',
         'nushell',
+        'clangd',
       })
       vim.lsp.enable('ahk2', vim.fn.executable('C:/Program Files/AutoHotkey/v2/AutoHotkey.exe') == 1)
     end)

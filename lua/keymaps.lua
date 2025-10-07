@@ -244,15 +244,15 @@ vim.cmd([[
   "onoremap <silent> ig :normal vig<CR>
 
   " better start and end of line
-  nnoremap gs _
-  xnoremap gs _
-  onoremap <silent> gs :normal vgs<CR>
+  nnoremap gh _
+  xnoremap gh _
+  onoremap <silent> gh :normal vgh<CR>
   nnoremap gl g_
   xnoremap gl g_
   onoremap <silent> gl :normal vgl<CR>
-  nnoremap gh 0
-  xnoremap gh 0
-  onoremap <silent> gh :normal hv0<CR>
+  "nnoremap gh 0
+  "xnoremap gh 0
+  "onoremap <silent> gh :normal hv0<CR>
 ]])
 
 -- limit the search in the visual selection

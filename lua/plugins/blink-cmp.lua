@@ -54,7 +54,7 @@ return {
       sorts = { 'exact', 'score', 'sort_text' },
     },
     signature = {
-      enabled = true,
+      enabled = false,
       trigger = {
         show_on_trigger_character = false,
       },
