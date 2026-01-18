@@ -798,179 +798,184 @@ return {
       },
     }
 
-    local TablineBufnr = {
-      provider = function(self)
-        local key = require('grapple').name_or_index({ buffer = self.bufnr })
-        return key .. ' '
-      end,
-      hl = 'Comment',
-    }
+    --> grapple tabline
+    local grapple_ok, grapple = pcall(require, 'grapple')
 
-    -- we redefine the filename component, as we probably only want the tail and not the relative path
-    local TablineFileName = {
-      provider = function(self)
-        -- self.filename will be defined later, just keep looking at the example!
-        local filename = self.filename
-        filename = filename == '' and '[No Name]' or vim.fn.fnamemodify(filename, ':t')
-        return filename
-      end,
-    }
-
-    -- this looks exactly like the FileFlags component that we saw in
-    -- #crash-course-part-ii-filename-and-friends, but we are indexing the bufnr explicitly
-    -- also, we are adding a nice icon for terminal buffers.
-    local TablineFileFlags = {
-      {
-        condition = function(self)
-          return vim.api.nvim_get_option_value('modified', { buf = self.bufnr })
-        end,
-        provider = '[+]',
-        hl = { fg = 'green' },
-      },
-      {
-        condition = function(self)
-          return not vim.api.nvim_get_option_value('modifiable', { buf = self.bufnr })
-            or vim.api.nvim_get_option_value('readonly', { buf = self.bufnr })
-        end,
+    if grapple_ok then
+      local TablineBufnr = {
         provider = function(self)
-          if vim.api.nvim_get_option_value('buftype', { buf = self.bufnr }) == 'terminal' then
-            return '  '
+          local key = require('grapple').name_or_index({ buffer = self.bufnr })
+          return key .. ' '
+        end,
+        hl = 'Comment',
+      }
+
+      -- we redefine the filename component, as we probably only want the tail and not the relative path
+      local TablineFileName = {
+        provider = function(self)
+          -- self.filename will be defined later, just keep looking at the example!
+          local filename = self.filename
+          filename = filename == '' and '[No Name]' or vim.fn.fnamemodify(filename, ':t')
+          return filename
+        end,
+      }
+
+      -- this looks exactly like the FileFlags component that we saw in
+      -- #crash-course-part-ii-filename-and-friends, but we are indexing the bufnr explicitly
+      -- also, we are adding a nice icon for terminal buffers.
+      local TablineFileFlags = {
+        {
+          condition = function(self)
+            return vim.api.nvim_get_option_value('modified', { buf = self.bufnr })
+          end,
+          provider = '[+]',
+          hl = { fg = 'green' },
+        },
+        {
+          condition = function(self)
+            return not vim.api.nvim_get_option_value('modifiable', { buf = self.bufnr })
+              or vim.api.nvim_get_option_value('readonly', { buf = self.bufnr })
+          end,
+          provider = function(self)
+            if vim.api.nvim_get_option_value('buftype', { buf = self.bufnr }) == 'terminal' then
+              return '  '
+            else
+              return ''
+            end
+          end,
+          hl = { fg = 'orange' },
+        },
+      }
+
+      -- Here the filename block finally comes together
+      local TablineFileNameBlock = {
+        init = function(self)
+          self.filename = vim.api.nvim_buf_get_name(self.bufnr)
+        end,
+        hl = function(self)
+          if self.is_active then
+            return 'TabLineSel'
+          -- why not?
+          -- elseif not vim.api.nvim_buf_is_loaded(self.bufnr) then
+          --     return { fg = "gray" }
           else
-            return ''
+            return 'TabLine'
           end
         end,
-        hl = { fg = 'orange' },
-      },
-    }
+        on_click = {
+          callback = function(_, minwid, _, button)
+            if button == 'm' then -- close on mouse middle click
+              vim.schedule(function()
+                vim.api.nvim_buf_delete(minwid, { force = false })
+              end)
+            else
+              vim.api.nvim_win_set_buf(0, minwid)
+            end
+          end,
+          minwid = function(self)
+            return self.bufnr
+          end,
+          name = 'heirline_tabline_buffer_callback',
+        },
+        -- TablineBufnr,
+        FileIcon, -- turns out the version defined in #crash-course-part-ii-filename-and-friends can be reutilized as is here!
+        TablineFileName,
+        TablineFileFlags,
+      }
 
-    -- Here the filename block finally comes together
-    local TablineFileNameBlock = {
-      init = function(self)
-        self.filename = vim.api.nvim_buf_get_name(self.bufnr)
-      end,
-      hl = function(self)
+      -- The final touch!
+      local TablineBufferBlock = utils.surround({ '', '' }, function(self)
         if self.is_active then
-          return 'TabLineSel'
-        -- why not?
-        -- elseif not vim.api.nvim_buf_is_loaded(self.bufnr) then
-        --     return { fg = "gray" }
+          return utils.get_highlight('TabLineSel').bg
         else
-          return 'TabLine'
+          return utils.get_highlight('TabLine').bg
         end
-      end,
-      on_click = {
-        callback = function(_, minwid, _, button)
-          if button == 'm' then -- close on mouse middle click
-            vim.schedule(function()
-              vim.api.nvim_buf_delete(minwid, { force = false })
-            end)
+      end, { TablineFileNameBlock })
+
+      -- initialize the buflist cache
+      local buflist_cache = {}
+
+      local function setup_buflist()
+        vim.schedule(function()
+          local tags = require('grapple').tags()
+          for i, tag in ipairs(tags) do
+            buflist_cache[i] = vim.fn.bufnr(tag.path) --If the buffer doesn't exist, -1 is returned
+          end
+          for i = #tags + 1, #buflist_cache do
+            buflist_cache[i] = nil
+          end
+
+          -- check how many buffers we have and set showtabline accordingly
+          if #buflist_cache > 0 and buflist_cache[1] ~= -1 then
+            vim.o.showtabline = 2 -- always
+          elseif vim.o.showtabline ~= 0 then -- don't reset the option if it's already at default value
+            vim.o.showtabline = 0 -- never
+          end
+        end)
+      end
+
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'GrappleUpdate',
+        desc = 'update grapple buflist',
+        group = vim.api.nvim_create_augroup('update_grapple_buflist', { clear = true }),
+        callback = setup_buflist,
+      })
+
+      vim.api.nvim_create_autocmd('SessionLoadPost', {
+        desc = 'show grapple buflist after session load',
+        group = vim.api.nvim_create_augroup('load_grapple_buflist', { clear = true }),
+        callback = setup_buflist,
+      })
+
+      -- and here we go
+      local BufferLine = utils.make_buflist(
+        TablineBufferBlock,
+        { provider = '', hl = { fg = 'gray' } }, -- left truncation, optional (defaults to "<")
+        { provider = '', hl = { fg = 'gray' } }, -- right trunctation, also optional (defaults to ...... yep, ">")
+        -- get_bufs
+        -- out buf_func simply returns the buflist_cache
+        function()
+          return buflist_cache
+        end,
+        -- no cache, as we're handling everything ourselves
+        false
+      )
+
+      local Tabpage = {
+        provider = function(self)
+          return '%' .. self.tabnr .. 'T ' .. self.tabpage .. ' %T'
+        end,
+        hl = function(self)
+          if not self.is_active then
+            return 'TabLine'
           else
-            vim.api.nvim_win_set_buf(0, minwid)
+            return 'TabLineSel'
           end
         end,
-        minwid = function(self)
-          return self.bufnr
+      }
+
+      local TabpageClose = {
+        provider = '%999X 󰅖 %X',
+        hl = 'TabLine',
+      }
+
+      local TabPages = {
+        -- only show this component if there's 2 or more tabpages
+        condition = function()
+          return #vim.api.nvim_list_tabpages() >= 2
         end,
-        name = 'heirline_tabline_buffer_callback',
-      },
-      -- TablineBufnr,
-      FileIcon, -- turns out the version defined in #crash-course-part-ii-filename-and-friends can be reutilized as is here!
-      TablineFileName,
-      TablineFileFlags,
-    }
+        { provider = '%=' },
+        utils.make_tablist(Tabpage),
+        -- TabpageClose,
+      }
 
-    -- The final touch!
-    local TablineBufferBlock = utils.surround({ '', '' }, function(self)
-      if self.is_active then
-        return utils.get_highlight('TabLineSel').bg
-      else
-        return utils.get_highlight('TabLine').bg
-      end
-    end, { TablineFileNameBlock })
-
-    -- initialize the buflist cache
-    local buflist_cache = {}
-
-    local function setup_buflist()
-      vim.schedule(function()
-        local tags = require('grapple').tags()
-        for i, tag in ipairs(tags) do
-          buflist_cache[i] = vim.fn.bufnr(tag.path) --If the buffer doesn't exist, -1 is returned
-        end
-        for i = #tags + 1, #buflist_cache do
-          buflist_cache[i] = nil
-        end
-
-        -- check how many buffers we have and set showtabline accordingly
-        if #buflist_cache > 0 and buflist_cache[1] ~= -1 then
-          vim.o.showtabline = 2 -- always
-        elseif vim.o.showtabline ~= 0 then -- don't reset the option if it's already at default value
-          vim.o.showtabline = 0 -- never
-        end
-      end)
+      local TabLine = { BufferLine, TabPages }
     end
-
-    vim.api.nvim_create_autocmd('User', {
-      pattern = 'GrappleUpdate',
-      desc = 'update grapple buflist',
-      group = vim.api.nvim_create_augroup('update_grapple_buflist', { clear = true }),
-      callback = setup_buflist,
-    })
-
-    vim.api.nvim_create_autocmd('SessionLoadPost', {
-      desc = 'show grapple buflist after session load',
-      group = vim.api.nvim_create_augroup('load_grapple_buflist', { clear = true }),
-      callback = setup_buflist,
-    })
-
-    -- and here we go
-    local BufferLine = utils.make_buflist(
-      TablineBufferBlock,
-      { provider = '', hl = { fg = 'gray' } }, -- left truncation, optional (defaults to "<")
-      { provider = '', hl = { fg = 'gray' } }, -- right trunctation, also optional (defaults to ...... yep, ">")
-      -- get_bufs
-      -- out buf_func simply returns the buflist_cache
-      function()
-        return buflist_cache
-      end,
-      -- no cache, as we're handling everything ourselves
-      false
-    )
-
-    local Tabpage = {
-      provider = function(self)
-        return '%' .. self.tabnr .. 'T ' .. self.tabpage .. ' %T'
-      end,
-      hl = function(self)
-        if not self.is_active then
-          return 'TabLine'
-        else
-          return 'TabLineSel'
-        end
-      end,
-    }
-
-    local TabpageClose = {
-      provider = '%999X 󰅖 %X',
-      hl = 'TabLine',
-    }
-
-    local TabPages = {
-      -- only show this component if there's 2 or more tabpages
-      condition = function()
-        return #vim.api.nvim_list_tabpages() >= 2
-      end,
-      { provider = '%=' },
-      utils.make_tablist(Tabpage),
-      -- TabpageClose,
-    }
-
-    local TabLine = { BufferLine, TabPages }
 
     require('heirline').setup({
       statusline = StatusLines,
       -- winbar = WinBars,
-      tabline = TabLine,
+      -- tabline = TabLine,
       opts = {
         -- if the callback returns true, the winbar will be disabled for that window
         -- the args parameter corresponds to the table argument passed to autocommand callbacks. :h nvim_lua_create_autocmd()
