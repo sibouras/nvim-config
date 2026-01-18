@@ -32,9 +32,9 @@ return {
       local telescope = require('telescope')
       local actions = require('telescope.actions')
 
-      local open_with_trouble = function(...)
-        return require('trouble.sources.telescope').open(...)
-      end
+      -- local open_with_trouble = function(...)
+      --   return require('trouble.sources.telescope').open(...)
+      -- end
 
       local function yank_selected_entry(prompt_bufnr)
         local entry = require('telescope.actions.state').get_selected_entry().value
@@ -125,7 +125,7 @@ return {
               ['<C-f>'] = actions.to_fuzzy_refine,
               ['<C-q>'] = actions.send_to_qflist + actions.open_qflist,
               ['<M-q>'] = actions.send_selected_to_qflist + actions.open_qflist,
-              ['<c-n>'] = open_with_trouble,
+              -- ['<c-n>'] = open_with_trouble,
               ['<C-y>'] = yank_selected_entry,
               ['<C-o>'] = focus_preview,
             },
@@ -163,7 +163,7 @@ return {
               ['<C-p>'] = require('telescope.actions.layout').toggle_preview,
               ['<C-q>'] = actions.send_to_qflist + actions.open_qflist,
               ['<M-q>'] = actions.send_selected_to_qflist + actions.open_qflist,
-              ['<C-n>'] = open_with_trouble,
+              -- ['<C-n>'] = open_with_trouble,
               ['<C-y>'] = yank_selected_entry,
               ['<C-o>'] = focus_preview,
             },
