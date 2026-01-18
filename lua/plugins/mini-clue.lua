@@ -12,30 +12,23 @@ return {
     return {
       triggers = {
         -- Leader triggers
-        { mode = 'n', keys = '<Leader>' },
-        { mode = 'x', keys = '<Leader>' },
+        { mode = { 'n', 'x' }, keys = '<Leader>' },
 
-        { mode = 'n', keys = '[' },
-        { mode = 'n', keys = ']' },
-        { mode = 'x', keys = '[' },
-        { mode = 'x', keys = ']' },
+        { mode = { 'n', 'x' }, keys = '[' },
+        { mode = { 'n', 'x' }, keys = ']' },
 
         -- Built-in completion
         { mode = 'i', keys = '<C-x>' },
 
         -- `g` key
-        { mode = 'n', keys = 'g' },
-        { mode = 'x', keys = 'g' },
+        { mode = { 'n', 'x' }, keys = 'g' },
 
         -- Marks
-        { mode = 'n', keys = "'" },
-        { mode = 'n', keys = '`' },
-        { mode = 'x', keys = "'" },
-        { mode = 'x', keys = '`' },
+        { mode = { 'n', 'x' }, keys = "'" },
+        { mode = { 'n', 'x' }, keys = '`' },
 
         -- Registers
-        { mode = 'n', keys = '"' },
-        { mode = 'x', keys = '"' },
+        { mode = { 'n', 'x' }, keys = '"' },
         -- { mode = 'i', keys = '<C-r>' }, -- bug with macros
         { mode = 'c', keys = '<C-r>' },
 
@@ -43,8 +36,7 @@ return {
         { mode = 'n', keys = '<C-w>' },
 
         -- `z` key
-        { mode = 'n', keys = 'z' },
-        { mode = 'x', keys = 'z' },
+        { mode = { 'n', 'x' }, keys = 'z' },
       },
       clues = {
         -- Enhance this by adding descriptions for <Leader> mapping groups
