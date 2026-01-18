@@ -3,6 +3,7 @@
   "SchemaStore.nvim": { "branch": "main", "commit": "21645280ad06fce01ef109e82d76302dcbe62756" },
   "YankAssassin.vim": { "branch": "main", "commit": "55ce478a08333c086bcccdf087453085f85854d4" },
   "alpha-nvim": { "branch": "main", "commit": "3979b01cb05734331c7873049001d3f2bb8477f4" },
+  "bafa.nvim": { "branch": "main", "commit": "d4199d05bbe2505e413c1bf1f0c3f701bed4a870" },
   "before.nvim": { "branch": "master", "commit": "187bafe2792a82d53cdb632971e4113cd703ac53" },
   "blink.cmp": { "branch": "main", "commit": "b19413d214068f316c78978b08264ed1c41830ec" },
   "bufterm.nvim": { "branch": "main", "commit": "7aae848dff66a24425b4dcaf0567c4620edf45be" },
