@@ -1,6 +1,5 @@
 return {
   'cbochs/grapple.nvim',
-  enabled = false,
   keys = {
     {
       '<leader>i',

@@ -1,5 +1,6 @@
 return {
   'mistweaverco/bafa.nvim',
+  enabled = false,
   config = function()
     vim.keymap.set(
       'n',

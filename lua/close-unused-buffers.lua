@@ -31,7 +31,7 @@ local function close_unused_buffers()
       vim.bo[bufnr].buflisted
       and bufnr ~= curbufnr
       and (vim.fn.getbufvar(bufnr, 'bufpersist') ~= 1)
-      -- and not require('grapple').exists({ buffer = bufnr })
+      and not require('grapple').exists({ buffer = bufnr })
     then
       vim.cmd('bd ' .. tostring(bufnr))
     end
