@@ -1,7 +1,5 @@
 return {
   'dmtrKovalenko/fff.nvim',
-  -- bad commit: https://github.com/dmtrKovalenko/fff.nvim/pull/175
-  commit = '3c76ba523f12356955f3207d61cdd7a7dee686a6',
   -- NOTE: build manually with `OPENSSL_NO_VENDOR=1 cargo build --release`
   -- build = 'cargo build --release',
   build = function()
