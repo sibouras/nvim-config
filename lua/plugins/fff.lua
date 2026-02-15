@@ -2,10 +2,10 @@ return {
   'dmtrKovalenko/fff.nvim',
   -- NOTE: build manually with `OPENSSL_NO_VENDOR=1 cargo build --release`
   -- build = 'cargo build --release',
+  -- https://github.com/dmtrKovalenko/fff.nvim/issues/228
+  commit = 'd7bc72786d4362ca70aa05d397f8d08bbaf39604',
   build = function()
-    -- this will download prebuild binary or try to use existing rustup toolchain to build from source
-    -- (if you are using lazy you can use gb for rebuilding a plugin if needed)
-    require('fff.download').download_or_build_binary()
+    require('fff.download').download_binary()
   end,
   cmd = { 'FFFFind' },
   keys = {
