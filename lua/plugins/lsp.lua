@@ -222,7 +222,17 @@ return {
       },
       settings = {
         json = {
-          schemas = require('schemastore').json.schemas(),
+          -- To use a subset of the catalog, you can select schemas by name
+          -- https://github.com/SchemaStore/schemastore/blob/master/src/api/json/catalog.json
+          schemas = require('schemastore').json.schemas({
+            select = {
+              '.eslintrc',
+              'package.json',
+              'tsconfig.json',
+              'jsconfig.json',
+              'prettierrc.json',
+            },
+          }),
           validate = { enable = false },
         },
       },
