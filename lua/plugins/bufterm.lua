@@ -101,12 +101,6 @@ return {
       if vim.bo.buftype == 'terminal' and get_most_recent_buffer() then
         recent_bufnr = cur_bufnr
         vim.cmd('b' .. get_most_recent_buffer())
-        vim.schedule(function()
-          -- Terminal-mode forces these local options so i reset them here, :h terminal-input
-          vim.opt_local.cursorline = true
-          vim.opt_local.scrolloff = 5
-          vim.opt_local.sidescrolloff = 10
-        end)
       else
         if recent_bufnr == nil then
           shell:spawn()
@@ -140,6 +134,7 @@ return {
     local width = 52
     map({ 'n', 't' }, '<F3>', function()
       local term_win_info = get_term_win_info()
+      -- print(vim.inspect(term_win_info))
       -- if terminal window is visible close it
       if term_win_info then
         recent_bufnr = term_win_info.bufnr
