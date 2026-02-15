@@ -1,4 +1,5 @@
 -- from: https://github.com/kiyoon/dotfiles/blob/master/nvim/lua/kiyoon/ts_textobjs_main_extended.lua
+-- NOTE: a plugin now exists: https://github.com/kiyoon/repeatable-move.nvim
 local M = {}
 
 -- Alternative:

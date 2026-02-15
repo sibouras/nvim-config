@@ -11,4 +11,10 @@ function M.setTimeout(timeout, callback)
   return timer
 end
 
+function M.indent(size)
+  vim.opt_local.tabstop = size
+  vim.opt_local.shiftwidth = size
+  -- vim.opt_local.softtabstop = size
+end
+
 return M
