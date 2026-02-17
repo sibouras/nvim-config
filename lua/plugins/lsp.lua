@@ -189,7 +189,7 @@ return {
         'ts_ls',
         'biome',
         'html',
-        'taplo',
+        'tombi',
         'cssls',
         'jsonls',
         'emmet_language_server',

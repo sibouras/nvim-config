@@ -241,7 +241,7 @@ return  {
     -- this slows down startuptime
     -- mason_lspconfig.setup({
     --   -- A list of servers to automatically install if they're not already installed.
-    --   ensure_installed = { 'lua_ls', 'html', 'cssls', 'ts_ls', 'jsonls', 'taplo' },
+    --   ensure_installed = { 'lua_ls', 'html', 'cssls', 'ts_ls', 'jsonls', 'tombi' },
     -- })
 
     local function organize_imports()
