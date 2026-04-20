@@ -18,8 +18,8 @@ return {
     local map = vim.keymap.set
     map('n', '<leader>dg', vim.diagnostic.open_float, opts)
     map('n', '<leader>dq', vim.diagnostic.setloclist, opts)
-    map('n', '<leader>li', '<Cmd>LspInfo<CR>', { desc = 'LspInfo' })
-    map('n', '<leader>ln', '<Cmd>NullLsInfo<CR>', { desc = 'NullLsInfo' })
+    map('n', '<leader>li', '<Cmd>checkhealth vim.lsp<CR>', { desc = 'Show LSP Info' })
+    map('n', '<leader>ln', '<Cmd>NullLsInfo<CR>', { desc = 'Show null-ls Info' })
 
     -- restore terminal tab title after formatting
     local function restoreTitle()
@@ -61,13 +61,13 @@ return {
       --   navic.attach(client, bufnr)
       -- end
 
-      -- if client.supports_method('textDocument/inlayHint') then
+      -- if client:supports_method('textDocument/inlayHint') then
       --   require('utils.toggle').inlay_hints(bufnr, true)
       -- end
 
       -- semantic tokens
       -- NOTE: get the method names from: vim.lsp.protocol.Methods
-      if client.supports_method('textDocument/semanticTokens') then
+      if client:supports_method('textDocument/semanticTokens') then
         -- client.server_capabilities.semanticTokensProvider = nil
         if client.name == 'lua_ls' then
           -- override tokenTypes table because i only want to highlight parameters

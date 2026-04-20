@@ -261,11 +261,12 @@ return {
           follow = true,
         },
         buffers = {
+          disable_coordinates = true,
+          initial_mode = 'normal',
           mappings = {
             i = { ['<C-x>'] = actions.delete_buffer },
             n = { ['<C-x>'] = actions.delete_buffer },
           },
-          initial_mode = 'normal',
         },
         git_status = {
           previewer = true,
