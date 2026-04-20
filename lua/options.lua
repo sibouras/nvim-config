@@ -1,6 +1,6 @@
 local options = {
   -- clipboard = "unnamedplus", -- allows neovim to access the system clipboard
-  cmdheight = 1, -- more space in the neovim command line for displaying messages
+  -- cmdheight = 1, -- more space in the neovim command line for displaying messages
   laststatus = 3, -- have a global statusline at the bottom instead of one for each window
   completeopt = { 'menuone', 'noselect' }, -- mostly just for cmp
   conceallevel = 2, -- Concealed text is completely hidden unless it has a custom replacement character defined

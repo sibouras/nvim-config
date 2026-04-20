@@ -31,7 +31,7 @@ map('i', '<C-CR>', '<C-o>o')
 -- clear highlight/messages
 map('n', '<Esc>', function()
   vim.cmd.nohlsearch()
-  vim.cmd.stopinsert()
+  -- vim.cmd.stopinsert()
   return '<Esc>'
 end, { desc = 'Escape and clear hlsearch/messages', expr = true })
 
