@@ -45,7 +45,7 @@ function M.last_place()
 end
 
 --> Go To URL
-function M.go_to_url(cmd)
+function M.go_to_url()
   local url = vim.api.nvim_get_current_line():match([[%[.*]%((.%S+)%)]]) -- markdown links
   if url == nil then
     return
@@ -60,7 +60,7 @@ function M.go_to_url(cmd)
       execute ":keepjumps edit " .. path
     ]])
   else
-    os.execute(cmd .. ' ' .. url)
+    vim.ui.open(url)
   end
 end
 

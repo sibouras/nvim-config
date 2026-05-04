@@ -10,7 +10,7 @@ map('n', '<Tab>', "<Cmd>call search('\\[[^]]*\\]([^)]\\+)')<CR>", opts)
 map('n', '<S-Tab>', "<Cmd>call search('\\[[^]]*\\]([^)]\\+)', 'b')<CR>", opts)
 
 -- open url if markdown link is a url else `gf`
-map('n', '<CR>', ":lua require('essentials').go_to_url('start')<CR>", opts)
+map('n', '<CR>', ":lua require('essentials').go_to_url()<CR>", opts)
 
 -- close floating lsp hover window with Esc
 if vim.api.nvim_win_get_config(0).relative == 'win' then
