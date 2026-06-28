@@ -8,7 +8,7 @@ return {
   config = function()
     require('illuminate').configure({
       -- providers: provider used to get references in the buffer, ordered by priority
-      providers = { 'treesitter' },
+      providers = { 'lsp', 'treesitter' },
       -- delay: delay in milliseconds
       delay = 200,
       -- filetypes_denylist: filetypes to not illuminate when using regex, this overrides filetypes_allowlist

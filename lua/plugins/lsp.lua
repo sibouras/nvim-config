@@ -82,8 +82,8 @@ return {
             'parameter',
           }
         end
-        if client.name == 'ts_ls' then
-          -- this keeps creating tscancellation files in temp folder
+        if client.name == 'ts_ls' or client.name == 'tsgo' then
+          -- ts_ls keeps creating tscancellation files in temp folder, and tsgo breaks illuminate.nvim
           client.server_capabilities.documentHighlightProvider = false
         end
       end
