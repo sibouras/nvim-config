@@ -1,10 +1,14 @@
 return {
-  'RRethy/vim-illuminate',
+  'UrsaDK/vim-illuminate',
   event = 'LazyFile',
+  dependencies = {
+    { 'nvim-treesitter/nvim-treesitter' },
+    { 'nvim-treesitter/nvim-treesitter-locals' },
+  },
   config = function()
     require('illuminate').configure({
       -- providers: provider used to get references in the buffer, ordered by priority
-      providers = { 'lsp', 'treesitter' },
+      providers = { 'treesitter' },
       -- delay: delay in milliseconds
       delay = 200,
       -- filetypes_denylist: filetypes to not illuminate when using regex, this overrides filetypes_allowlist
