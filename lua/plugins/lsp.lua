@@ -88,7 +88,7 @@ return {
         end
       end
 
-      if client.name == 'ts_ls' or client.name == 'html' then
+      if client.name == 'ts_ls' or client.name == 'tsgo' or client.name == 'html' then
         client.server_capabilities.documentFormattingProvider = false
         client.server_capabilities.documentRangeFormattingProvider = false
       end
@@ -186,7 +186,8 @@ return {
       -- https://github.com/neovim/neovim/pull/33762
       vim.lsp.enable({
         'lua_ls',
-        'ts_ls',
+        -- 'ts_ls',
+        'tsgo',
         'biome',
         'html',
         'tombi',
