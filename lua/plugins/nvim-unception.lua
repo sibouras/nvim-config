@@ -1,6 +1,6 @@
 return {
   'samjwill/nvim-unception',
-  enabled = true,
+  enabled = false,
   init = function()
     vim.api.nvim_create_autocmd('User', {
       pattern = 'UnceptionEditRequestReceived',
