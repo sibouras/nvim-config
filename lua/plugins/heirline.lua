@@ -666,12 +666,55 @@ return {
       hl = { bold = true, fg = 'orange' },
     }
 
+    --> No 'cmdheight'? No problem! SearchCount, MacroRec and ShowCmd
+    local SearchCount = {
+      condition = function()
+        return vim.v.hlsearch ~= 0 and vim.o.cmdheight == 0
+      end,
+      init = function(self)
+        local ok, search = pcall(vim.fn.searchcount)
+        if ok and search.total then
+          self.search = search
+        end
+      end,
+      provider = function(self)
+        local search = self.search
+        return string.format('[%d/%d]', search.current, math.min(search.total, search.maxcount))
+      end,
+    }
+
+    local MacroRec = {
+      condition = function()
+        return vim.fn.reg_recording() ~= '' and vim.o.cmdheight == 0
+      end,
+      provider = ' ',
+      hl = { fg = 'orange', bold = true },
+      utils.surround({ '[', '] ' }, nil, {
+        provider = function()
+          return vim.fn.reg_recording()
+        end,
+        hl = { fg = 'green', bold = true },
+      }),
+      update = {
+        'RecordingEnter',
+        'RecordingLeave',
+      },
+    }
+
+    vim.opt.showcmdloc = 'statusline'
+    local ShowCmd = {
+      condition = function()
+        return vim.o.cmdheight == 0
+      end,
+      provider = '%3.5(%S%)',
+    }
+
     --> Putting it all together: Conditional Statuslines
 
     local Align = { provider = '%=' }
     local Space = { provider = ' ' }
 
-    ViMode = utils.surround({ '', '' }, 'dark_bg', { ViMode })
+    ViMode = utils.surround({ '', '' }, 'dark_bg', { MacroRec, ViMode })
 
     Ruler = utils.surround({ '', '' }, 'dark_bg', { Ruler })
 
@@ -702,6 +745,10 @@ return {
       -- },
       -- Diagnostics,
       Align,
+      ShowCmd,
+      Space,
+      SearchCount,
+      Space,
       -- { flexible = 3, LSPSimple, { provider = "" } },
       -- LSPSimple,
       -- Space,
