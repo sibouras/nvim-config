@@ -518,7 +518,7 @@ end, { force = true, desc = 'paste JSON in new buffer' })
 
 vim.api.nvim_create_user_command('Mdn', function(cmd_opts)
   local url = 'https://mdn.io/'
-  vim.cmd('silent !start "" "' .. url .. unpack(cmd_opts.fargs) .. '"')
+  vim.ui.open(url .. unpack(cmd_opts.fargs))
 end, { nargs = 1, desc = 'search in mdn' })
 
 vim.api.nvim_create_user_command('Bonly', "silent! execute '%bd|e#|bd#'", { desc = 'delete all but current buffer' })
