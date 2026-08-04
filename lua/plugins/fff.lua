@@ -27,5 +27,8 @@ return {
       flex = { size = 110, wrap = 'bottom' },
       min_list_height = 6, --  do not display anything except the list below this threshold
     },
+    file_picker = {
+      fuzzy_query_highlighting = true, -- true to highlight fuzzy query matches in file picker results
+    },
   },
 }
