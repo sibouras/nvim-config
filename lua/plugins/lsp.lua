@@ -82,13 +82,13 @@ return {
             'parameter',
           }
         end
-        if client.name == 'ts_ls' or client.name == 'tsgo' then
-          -- ts_ls keeps creating tscancellation files in temp folder, and tsgo breaks illuminate.nvim
-          client.server_capabilities.documentHighlightProvider = false
+        if client.name == 'ts_ls' or client.name == 'tsc' then
+          -- ts_ls keeps creating tscancellation files in temp folder
+          client.server_capabilities.documentHighlightProvider = true
         end
       end
 
-      if client.name == 'ts_ls' or client.name == 'tsgo' or client.name == 'html' then
+      if client.name == 'ts_ls' or client.name == 'tsc' or client.name == 'html' then
         client.server_capabilities.documentFormattingProvider = false
         client.server_capabilities.documentRangeFormattingProvider = false
       end
@@ -187,7 +187,7 @@ return {
       vim.lsp.enable({
         'lua_ls',
         -- 'ts_ls',
-        'tsgo',
+        'tsc',
         'biome',
         'html',
         'tombi',
