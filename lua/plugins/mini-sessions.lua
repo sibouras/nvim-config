@@ -1,6 +1,8 @@
 return {
   'nvim-mini/mini.sessions',
-  opts = {},
+  opts = {
+    force = { read = false, write = true, delete = true },
+  },
   config = function(_, opts)
     local sessions = require('mini.sessions')
     sessions.setup(opts)
@@ -21,5 +23,9 @@ return {
     vim.keymap.set('n', '<leader>ss', function()
       sessions.select()
     end, { desc = 'Sessions Select' })
+
+    vim.keymap.set('n', '<leader>sd', function()
+      sessions.delete()
+    end, { desc = 'Sessions Delete' })
   end,
 }
