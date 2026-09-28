@@ -2,6 +2,7 @@ return {
   'dmtrKovalenko/fff.nvim',
   -- NOTE: build manually with `OPENSSL_NO_VENDOR=1 cargo build --release`
   -- build = 'cargo build --release',
+  enabled = false,
   build = function()
     require('fff.download').download_binary()
   end,
