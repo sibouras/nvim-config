@@ -119,8 +119,8 @@ vim.api.nvim_create_autocmd({ 'TermOpen', 'BufWinEnter' }, {
   end,
 })
 
-vim.api.nvim_create_autocmd('SessionLoadPost', {
-  desc = 'change tab title to directory name when loading session',
+vim.api.nvim_create_autocmd('VimEnter', {
+  desc = 'change tab title to directory name when entering vim',
   group = augroup('change_title'),
   callback = function()
     -- return the tail path of the current working directory
