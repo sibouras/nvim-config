@@ -195,27 +195,23 @@ return {
       map({ 'n', 'x', 'o' }, '[d', prev_diagnostic, { desc = 'Previous Diagnostic' })
       map({ 'n', 'x', 'o' }, ']d', next_diagnostic, { desc = 'Next Diagnostic' })
 
-      --> repeat gitsigns
-      local gitsigns_ok, gitsigns = pcall(require, 'gitsigns')
-      if gitsigns_ok then
-        local next_hunk, prev_hunk = ts_textobjects_extended.make_repeatable_move_pair(function()
-          -- use nav_hunk() when gitsigns is available to keep the preview open
-          -- if vim.wo.diff and vim.b.gitsigns_head == nil then
-          if vim.wo.diff then
-            vim.cmd.normal({ ']c', bang = true })
-          else
-            gitsigns.nav_hunk('next', { target = 'all' })
-          end
-        end, function()
-          if vim.wo.diff then
-            vim.cmd.normal({ '[c', bang = true })
-          else
-            gitsigns.nav_hunk('prev', { target = 'all' })
-          end
-        end)
-        map({ 'n', 'x' }, ']g', next_hunk, { desc = 'Git hunk forward' })
-        map({ 'n', 'x' }, '[g', prev_hunk, { desc = 'Git hunk backward' })
-      end
+      --> repeat hunks
+      local minidiff_ok, minidiff = pcall(require, 'mini.diff')
+      local next_hunk, prev_hunk = ts_textobjects_extended.make_repeatable_move_pair(function()
+        if vim.wo.diff then
+          vim.cmd.normal({ ']c', bang = true })
+        elseif minidiff_ok then
+          minidiff.goto_hunk('next', { wrap = true })
+        end
+      end, function()
+        if vim.wo.diff then
+          vim.cmd.normal({ '[c', bang = true })
+        elseif minidiff_ok then
+          minidiff.goto_hunk('prev', { wrap = true })
+        end
+      end)
+      map({ 'n', 'x' }, ']g', next_hunk, { desc = 'Git hunk forward' })
+      map({ 'n', 'x' }, '[g', prev_hunk, { desc = 'Git hunk backward' })
 
       --> repeat some mini.bracketed keys
       local bracketed_ok, bracketed = pcall(require, 'mini.bracketed')

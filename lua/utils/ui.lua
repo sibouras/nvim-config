@@ -93,7 +93,7 @@ function M.statuscolumn()
     ---@type Sign?,Sign?,Sign?
     local left, right, fold
     for _, s in ipairs(M.get_signs(buf, vim.v.lnum)) do
-      if s.name and s.name:find('GitSign') then
+      if s.name and s.name:find('MiniDiff') then
         right = s
       else
         left = s

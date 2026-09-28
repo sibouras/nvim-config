@@ -17,6 +17,7 @@ return {
         green = utils.get_highlight('String').fg,
         blue = utils.get_highlight('Function').fg,
         gray = utils.get_highlight('NonText').fg,
+        white = utils.get_highlight('NormalSB').fg,
         orange = utils.get_highlight('Constant').fg,
         purple = utils.get_highlight('Statement').fg,
         cyan = utils.get_highlight('Special').fg,
@@ -574,18 +575,20 @@ return {
     --> Git
 
     local Git = {
-      condition = conditions.is_git_repo,
+      condition = function()
+        return vim.fn.FugitiveHead() and vim.b.minidiff_summary
+      end,
 
       init = function(self)
-        self.status_dict = vim.b.gitsigns_status_dict
-        self.has_changes = self.status_dict.added ~= 0 or self.status_dict.removed ~= 0 or self.status_dict.changed ~= 0
+        self.status_dict = vim.b.minidiff_summary
+        self.has_changes = self.status_dict.add ~= 0 or self.status_dict.delete ~= 0 or self.status_dict.change ~= 0
       end,
 
       hl = { fg = 'purple' },
 
       { -- git branch name
         provider = function(self)
-          return ' ' .. self.status_dict.head
+          return ' ' .. vim.fn.FugitiveHead()
         end,
         hl = { bold = false },
       },
@@ -596,23 +599,35 @@ return {
         end,
         provider = '(',
       },
+      -- {
+      --   provider = function()
+      --     return vim.b.minidiff_summary_string
+      --   end,
+      -- },
       {
         provider = function(self)
-          local count = self.status_dict.added or 0
+          local count = self.status_dict.n_ranges or 0
+          return count > 0 and ('#' .. count)
+        end,
+        hl = { fg = 'white' },
+      },
+      {
+        provider = function(self)
+          local count = self.status_dict.add or 0
           return count > 0 and ('+' .. count)
         end,
         hl = { fg = 'git_add' },
       },
       {
         provider = function(self)
-          local count = self.status_dict.removed or 0
+          local count = self.status_dict.delete or 0
           return count > 0 and ('-' .. count)
         end,
         hl = { fg = 'git_del' },
       },
       {
         provider = function(self)
-          local count = self.status_dict.changed or 0
+          local count = self.status_dict.change or 0
           return count > 0 and ('~' .. count)
         end,
         hl = { fg = 'git_change' },
@@ -720,7 +735,7 @@ return {
 
     Git = {
       condition = function()
-        return conditions.is_git_repo()
+        return vim.fn.FugitiveHead() and vim.b.minidiff_summary
       end,
       Space,
       utils.surround({ '', '' }, 'dark_bg', { Git }),
