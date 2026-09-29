@@ -29,7 +29,7 @@ return {
 
     local shell = require('bufterm.terminal').Terminal:new({
       cmd = function()
-        if vim.g.is_win then
+        if vim.g.is_win and vim.o.shell == "nu" then
           local flag = vim.opt.shellcmdflag:get()
           vim.opt.shellcmdflag = '--no-config-file -c'
           vim.schedule(function()

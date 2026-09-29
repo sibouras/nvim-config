@@ -160,7 +160,7 @@ map({ 'n', 'x' }, '<M-s>', '<Cmd>silent update<CR>')
 map('i', '<M-s>', '<Esc>:silent update<CR>')
 
 -- Ctrl-Backspace to delete the previous word
-map('i', '<C-BS>', '<C-w>', { noremap = false })
+map('i', '<C-BS>', '<C-w>')
 map('c', '<C-BS>', '<C-w>', { silent = false })
 
 map('i', '<C-Del>', '<C-o>dw')
@@ -533,7 +533,6 @@ iab <expr> td/ strftime('TODO(' . '%Y-%m-%d):')
 " Open help and man pages in a tab:
 cab he tab help
 cab mdn Mdn
-cab f find
 ]])
 
 -----------------------------------
