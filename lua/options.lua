@@ -189,14 +189,13 @@ vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 
 -- popup-menu
-vim.cmd([[
-nmenu 10.100 PopUp.Goto\ Definition <Cmd>Telescope lsp_definitions<CR>
-nmenu 10.110 PopUp.References <Cmd>TroubleToggle lsp_references<CR>
-nmenu 10.120 PopUp.-Sep-	:
-aunmenu PopUp.How-to\ disable\ mouse
-aunmenu PopUp.-1-
-]])
+-- remove only the "How-to disable mouse" menu item (and its separator)
+-- suppress errors(when sourcing) using pcall
+pcall(vim.cmd, "aunmenu PopUp.How-to\\ disable\\ mouse")
+pcall(vim.cmd, "aunmenu PopUp.-2-")
 
+-- NOTE: breaks Grep
+--[[
 if vim.g.is_win then
   --> nushell as shell
   vim.opt.shell = 'nu'
@@ -239,6 +238,7 @@ if vim.g.is_win then
 
   vim.cmd('cabbrev term Term')
 end
+--]]
 
 -- remove `cr` when pasting in wsl. https://stackoverflow.com/a/76388417
 if vim.fn.has('wsl') == 1 then
