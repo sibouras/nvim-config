@@ -59,6 +59,7 @@ return {
           niR = 'Nr',
           niV = 'Nv',
           nt = 'Nt',
+          ntT = 'NtT',
           v = 'V',
           vs = 'Vs',
           V = 'V_',
@@ -650,6 +651,7 @@ return {
           return '  ' .. tname
         end
       end,
+      update = 'BufWinEnter',
       hl = { fg = 'blue', bold = true },
     }
 
