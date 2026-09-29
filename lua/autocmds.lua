@@ -25,16 +25,17 @@ vim.cmd([[autocmd VimResized * wincmd =]])
 -- automatically open quickfix window and don't jump to first match
 vim.cmd([[command! -nargs=+ Grep execute 'silent grep! <args>' | copen]])
 
--- create new file with :e even if directory doesn't exist
+-- Auto create dir when saving a file, in case some intermediate directory does not exist
 vim.api.nvim_create_autocmd('BufWritePre', {
-  desc = 'Create missing directories when writing a buffer',
-  group = augroup('Mkdir'),
-  callback = function()
-    local dirname = vim.fs.dirname(vim.api.nvim_buf_get_name(0))
-    local stat = vim.uv.fs_stat(dirname)
-    if not stat or stat.type ~= 'directory' then
-      vim.fn.mkdir(dirname, 'p')
+  desc = 'Auto create dir when saving a file',
+  group = augroup('auto_create_dir'),
+  callback = function(event)
+    -- don't auto create dirs for urls(like vim-fugitive)
+    if event.match:match('^%w%w+:[\\/][\\/]') then
+      return
     end
+    local file = vim.uv.fs_realpath(event.match) or event.match
+    vim.fn.mkdir(vim.fn.fnamemodify(file, ':p:h'), 'p')
   end,
 })
 
