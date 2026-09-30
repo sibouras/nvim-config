@@ -69,7 +69,7 @@ return {
       -- NOTE: get the method names from: vim.lsp.protocol.Methods
       if client:supports_method('textDocument/semanticTokens') then
         -- client.server_capabilities.semanticTokensProvider = nil
-        if client.name == 'lua_ls' then
+        if client.name == 'lua_ls' or client.name == 'emmylua_ls' then
           -- override tokenTypes table because i only want to highlight parameters
           client.server_capabilities.semanticTokensProvider.legend.tokenTypes = {
             'namespace',
@@ -88,7 +88,7 @@ return {
         end
       end
 
-      if client.name == 'ts_ls' or client.name == 'tsc' or client.name == 'html' then
+      if client.name == 'ts_ls' or client.name == 'emmylua_ls' or client.name == 'tsc' or client.name == 'html' then
         client.server_capabilities.documentFormattingProvider = false
         client.server_capabilities.documentRangeFormattingProvider = false
       end
@@ -185,7 +185,7 @@ return {
       -- https://github.com/neovim/neovim/issues/33116
       -- https://github.com/neovim/neovim/pull/33762
       vim.lsp.enable({
-        'lua_ls',
+        'emmylua_ls',
         -- 'ts_ls',
         'tsc',
         'biome',

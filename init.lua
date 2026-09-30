@@ -59,6 +59,7 @@ local should_profile = os.getenv('NVIM_PROFILE')
 if should_profile then
   require('profile').instrument_autocmds()
   if should_profile:lower():match('^start') then
+    ---@diagnostic disable-next-line: missing-parameter
     require('profile').start('*')
   else
     require('profile').instrument('*')
@@ -76,6 +77,7 @@ local function toggle_profile()
       end
     end)
   else
+    ---@diagnostic disable-next-line: missing-parameter
     prof.start('*')
   end
 end

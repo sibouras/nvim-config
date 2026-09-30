@@ -7,6 +7,12 @@
     "lineEnding": "lf"
   },
   "json": {
-    "parser": { "allowTrailingCommas": false }
+    "parser": {
+      "allowComments": false,
+      "allowTrailingCommas": true
+    },
+    "formatter": {
+      "trailingCommas": "none"
+    }
   }
 }
