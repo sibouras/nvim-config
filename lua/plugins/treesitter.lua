@@ -33,6 +33,10 @@ return {
         'vue',
         'xml',
         'yaml',
+        'make',
+        'diff',
+        'fish',
+        'git_config',
       }
       -- require('nvim-treesitter').install(parsers)
 
