@@ -21,8 +21,8 @@ return {
 
     dashboard.section.buttons.val = {
       dashboard.button('e', '  New file', ':enew <BAR> startinsert<CR>'),
-      dashboard.button('f', '  Find file', ':FFFFind<CR>'),
-      dashboard.button('o', '  Old files', ':Telescope oldfiles<CR>'),
+      dashboard.button('f', '  Find file', ':Pick files<CR>'),
+      dashboard.button('o', '  Old files', ':Pick oldfiles<CR>'),
       -- dashboard.button('s', '󱎫  Startup time', ':StartupTime<CR>'),
       dashboard.button('s', '  Session select', ':lua MiniSessions.select()<CR>'),
       dashboard.button('r', '  Session read', ':lua MiniSessions.read("' .. get_path() .. '")<CR>'),
