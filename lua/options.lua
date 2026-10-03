@@ -191,8 +191,8 @@ vim.g.loaded_ruby_provider = 0
 -- popup-menu
 -- remove only the "How-to disable mouse" menu item (and its separator)
 -- suppress errors(when sourcing) using pcall
-pcall(vim.cmd, "aunmenu PopUp.How-to\\ disable\\ mouse")
-pcall(vim.cmd, "aunmenu PopUp.-2-")
+pcall(vim.cmd, 'aunmenu PopUp.How-to\\ disable\\ mouse')
+pcall(vim.cmd, 'aunmenu PopUp.-2-')
 
 -- NOTE: breaks Grep
 --[[

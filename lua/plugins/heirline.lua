@@ -713,7 +713,9 @@ return {
       },
     }
 
-    vim.opt.showcmdloc = 'statusline'
+    if vim.o.cmdheight == 0 then
+      vim.opt.showcmdloc = 'statusline'
+    end
     local ShowCmd = {
       condition = function()
         return vim.o.cmdheight == 0

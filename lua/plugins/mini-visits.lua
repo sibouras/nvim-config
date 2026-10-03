@@ -45,12 +45,11 @@ return {
 
     -- Select approach keymaps
     local make_select_path = function(select_global, recency_weight)
-      local visits = require('mini.visits')
-      local sort = visits.gen_sort.default({ recency_weight = recency_weight })
+      local sort = minivisits.gen_sort.default({ recency_weight = recency_weight })
       local select_opts = { sort = sort }
       return function()
         local cwd = select_global and '' or vim.fs.normalize(vim.fn.getcwd())
-        visits.select_path(cwd, select_opts)
+        minivisits.select_path(cwd, select_opts)
       end
     end
 
