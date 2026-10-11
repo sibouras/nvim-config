@@ -634,7 +634,6 @@ map('n', '<leader>ul', function() toggle('list') end, { desc = 'Toggle List' })
 map('n', '<leader>ur', function() toggle('relativenumber') end, { desc = 'Toggle Relative Line Numbers' })
 map('n', '<leader>un', function() toggle.number() end, { desc = 'Toggle Line Numbers' })
 map('n', '<leader>uD', function() toggle.diagnostics() end, { desc = 'Toggle Diagnostics' })
-map('n', '<leader>uT', function() toggle.buffer_semantic_tokens() end, { desc = 'Toggle Semantic Tokens' })
 map('n', '<leader>uh', ':let v:hlsearch = 1 - v:hlsearch<CR>', { desc = 'Toggle hlsearch', silent = true })
 
 local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 2
@@ -648,7 +647,16 @@ map('n', '<leader>ut', function()
   if vim.b.ts_highlight then vim.treesitter.stop()
   else vim.treesitter.start() vim.opt.emoji = true end
 end, { desc = 'Toggle Treesitter Highlight' })
--- stylua: ignore end
+
+map('n', '<leader>uT', function()
+  if vim.lsp.semantic_tokens.is_enabled() then
+    vim.lsp.semantic_tokens.enable(false)
+    print('Disabled Semantic Tokens')
+  else
+    vim.lsp.semantic_tokens.enable()
+    print('Enabled Semantic Tokens')
+  end
+end, { desc = 'Toggle Semantic Tokens' })
 
 vim.keymap.set('n', '<leader>ud', function()
   local new_config = not vim.diagnostic.config().virtual_lines
