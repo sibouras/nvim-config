@@ -41,7 +41,6 @@ return {
     { '<leader>fo', '<Cmd>Pick oldfiles current_dir=true<CR>', desc = 'MiniPick: oldfiles(cwd)' },
     { '<leader>fv', '<Cmd>Pick options<CR>', desc = 'MiniPick: options' },
     { '<leader>fr', '<Cmd>Pick registers<CR>', desc = 'MiniPick: registers' },
-    { '<leader>vs', '<Cmd>Pick visit_paths<CR>', desc = 'MiniPick: visit paths' },
     { '<leader>fe', '<Cmd>Pick explorer<CR>', desc = 'MiniPick: explorer' },
     {
       '<leader>ff',
@@ -50,6 +49,10 @@ return {
       end,
       desc = 'MiniPick: explorer(cwd)',
     },
+    { '<leader>vs', '<Cmd>Pick visit_paths<CR>', desc = 'MiniPick: visit paths (cwd)' },
+    { '<leader>vS', '<Cmd>Pick visit_paths cwd=""<CR>', desc = 'MiniPick: visit paths (all)' },
+    { '<leader>o', desc = 'MiniPick: Core visits (cwd)' },
+    { '<leader>vo', desc = 'MiniPick: Core visits (all)' },
   },
   opts = {
     mappings = {
@@ -103,5 +106,20 @@ return {
       local source = { name = 'Git status', show = show_fn, choose = choose_fn, preview = preview_fn }
       return MiniPick.builtin.cli(local_opts, { source = source })
     end
+
+    local nmap = function(lhs, rhs, desc)
+      vim.keymap.set('n', lhs, rhs, { desc = desc })
+    end
+
+    local make_pick_core = function(cwd, desc)
+      return function()
+        local sort_latest = MiniVisits.gen_sort.default({ recency_weight = 1 })
+        local local_opts = { cwd = cwd, filter = 'core', sort = sort_latest }
+        MiniExtra.pickers.visit_paths(local_opts, { source = { name = desc } })
+      end
+    end
+
+    nmap('<leader>o', make_pick_core(nil, 'Core visits (cwd)'), 'MiniPick: Core visits (cwd)')
+    nmap('<leader>vo', make_pick_core('', 'Core visits (all)'), 'MiniPick: Core visits (all)')
   end,
 }

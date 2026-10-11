@@ -9,7 +9,7 @@
       "need-check-nil",
       "type-not-found"
     ],
-    "globals": ["vim", "MiniExtra", "MiniPick"]
+    "globals": ["vim", "MiniExtra", "MiniPick", "MiniVisits"]
   },
   "runtime": {
     "INFO": "https://www.reddit.com/r/neovim/comments/1mdtr4g/emmylua_ls_is_supersnappy/",
