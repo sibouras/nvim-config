@@ -207,19 +207,19 @@ function! ScrollGolden(move)
   "execute 'keepjumps normal! ' . prep . float2nr(round(height*0.24)) . key . post
   execute 'keepjumps normal! ' . prep . 5 . key
 endfunction
-nnoremap <silent> <C-k> <cmd>call ScrollGolden('up')<CR>
-vnoremap <silent> <C-k> <cmd>call ScrollGolden('up')<CR>
-nnoremap <silent> <C-j> <cmd>call ScrollGolden('down')<CR>
-vnoremap <silent> <C-j> <cmd>call ScrollGolden('down')<CR>
+"nnoremap <silent> <C-k> <cmd>call ScrollGolden('up')<CR>
+"vnoremap <silent> <C-k> <cmd>call ScrollGolden('up')<CR>
+"nnoremap <silent> <C-j> <cmd>call ScrollGolden('down')<CR>
+"vnoremap <silent> <C-j> <cmd>call ScrollGolden('down')<CR>
 ]])
 
 -- center when scrolling
-map('n', '<C-d>', '<C-d>zz')
-map('n', '<C-u>', '<C-u>zz')
+-- map('n', '<C-d>', '<C-d>zz')
+-- map('n', '<C-u>', '<C-u>zz')
 
 -- Faster scrolling
-map('n', '<C-e>', '3<C-e>')
-map('n', '<C-y>', '3<C-y>')
+map({ 'n', 'x' }, '<C-j>', '3<C-e>')
+map({ 'n', 'x' }, '<C-k>', '3<C-y>')
 
 -- More comfortable jumping to marks
 map('n', "'", '`')
