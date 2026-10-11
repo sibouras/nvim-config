@@ -728,7 +728,7 @@ return {
     local Align = { provider = '%=' }
     local Space = { provider = ' ' }
 
-    ViMode = utils.surround({ '', '' }, 'dark_bg', { MacroRec, ViMode })
+    ViMode = utils.surround({ '', '' }, 'dark_bg', { ViMode })
 
     Ruler = utils.surround({ '', '' }, 'dark_bg', { Ruler })
 
@@ -759,10 +759,13 @@ return {
       -- },
       -- Diagnostics,
       Align,
-      ShowCmd,
-      Space,
-      SearchCount,
-      Space,
+
+      ---- components for cmdheight=0
+      -- ShowCmd,
+      -- Space,
+      -- SearchCount,
+      -- Space,
+
       -- { flexible = 3, LSPSimple, { provider = "" } },
       -- LSPSimple,
       -- Space,
