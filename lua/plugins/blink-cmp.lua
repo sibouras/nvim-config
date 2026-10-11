@@ -27,7 +27,8 @@ return {
       -- stylua: ignore end
     },
     cmdline = {
-      enabled = true,
+      -- NOTE: incsearch highlight flicker with cursorline enabled
+      enabled = false,
       keymap = {
         preset = 'cmdline',
         ['<M-C-S-F5>'] = { 'show' },
