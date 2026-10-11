@@ -176,7 +176,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
     if vim.v.event.operator == 'y' then
       -- Highlight the yanked area
-      vim.highlight.on_yank({ higroup = 'IncSearch', timeout = 200 })
+      vim.hl.on_yank({ higroup = 'IncSearch', timeout = 200 })
       -- save yanks in the numbered registers
       shift_reg({ val = vim.fn.getreg('0'), typ = vim.fn.getregtype('0') })
       return

@@ -639,13 +639,17 @@ map('n', '<leader>uh', ':let v:hlsearch = 1 - v:hlsearch<CR>', { desc = 'Toggle 
 local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 2
 map('n', '<leader>uc', function() toggle('conceallevel', false, { 0, conceallevel }) end, { desc = 'Toggle Conceal' })
 
-if vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint  then
-  map('n', '<leader>uH', function() toggle.inlay_hints()  end, { desc = 'Toggle Inlay Hints' })
+if vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint then
+  map('n', '<leader>uH', function() toggle.inlay_hints() end, { desc = 'Toggle Inlay Hints' })
 end
+-- stylua: ignore end
 
 map('n', '<leader>ut', function()
-  if vim.b.ts_highlight then vim.treesitter.stop()
-  else vim.treesitter.start() vim.opt.emoji = true end
+  if vim.b.ts_highlight then
+    vim.treesitter.stop()
+  else
+    vim.treesitter.start()
+  end
 end, { desc = 'Toggle Treesitter Highlight' })
 
 map('n', '<leader>uT', function()

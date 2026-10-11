@@ -112,7 +112,6 @@ return {
       nmap('gR', '<cmd>TroubleToggle lsp_references<cr>', '[G]oto [R]eferences')
 
       -- See `:help K` for why this keymap
-      nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
       nmap('<leader>k', function()
         ---@diagnostic disable-next-line: redundant-parameter
         vim.lsp.buf.hover({
@@ -161,9 +160,12 @@ return {
       virtual_text = false,
       virtual_lines = false,
       signs = {
-        -- set sign by using extmark
-        -- https://github.com/neovim/neovim/pull/26193
-        text = { ['ERROR'] = '✘', ['WARN'] = '▲', ['HINT'] = '⚑', ['INFO'] = '' },
+        -- text = {
+        --   [vim.diagnostic.severity.ERROR] = '✘',
+        --   [vim.diagnostic.severity.WARN] = '▲',
+        --   [vim.diagnostic.severity.HINT] = '⚑',
+        --   [vim.diagnostic.severity.INFO] = '',
+        -- },
       },
       update_in_insert = false,
       underline = true,
