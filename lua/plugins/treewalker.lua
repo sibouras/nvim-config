@@ -8,10 +8,10 @@ return {
     { mode = { 'n', 'v' }, '<C-Right>', '<cmd>Treewalker Right<cr>' },
 
     -- swapping
-    { mode = 'n', '<C-S-Up>', '<cmd>Treewalker SwapUp<cr>' },
-    { mode = 'n', '<C-S-Down>', '<cmd>Treewalker SwapDown<cr>' },
-    { mode = 'n', '<C-S-Left>', '<cmd>Treewalker SwapLeft<cr>' },
-    { mode = 'n', '<C-S-Right>', '<cmd>Treewalker SwapRight<cr>' },
+    { mode = 'n', '<S-Up>', '<cmd>Treewalker SwapUp<cr>' },
+    { mode = 'n', '<S-Down>', '<cmd>Treewalker SwapDown<cr>' },
+    { mode = 'n', '<S-Left>', '<cmd>Treewalker SwapLeft<cr>' },
+    { mode = 'n', '<S-Right>', '<cmd>Treewalker SwapRight<cr>' },
   },
 
   opts = {
