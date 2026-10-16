@@ -88,7 +88,13 @@ return {
         end
       end
 
-      if client.name == 'ts_ls' or client.name == 'emmylua_ls' or client.name == 'tsc' or client.name == 'html' then
+      if
+        client.name == 'ts_ls'
+        or client.name == 'emmylua_ls'
+        or client.name == 'tsc'
+        or client.name == 'html'
+        or client.name == 'bashls'
+      then
         client.server_capabilities.documentFormattingProvider = false
         client.server_capabilities.documentRangeFormattingProvider = false
       end
@@ -199,6 +205,7 @@ return {
         'tailwindcss',
         'nushell',
         'clangd',
+        'bashls',
       })
       vim.lsp.enable('ahk2', vim.fn.executable('C:/Program Files/AutoHotkey/v2/AutoHotkey.exe') == 1)
     end)
