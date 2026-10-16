@@ -59,6 +59,7 @@ return {
       choose_marked = '<C-q>',
       refine = '<C-j>',
       refine_marked = '<C-k>',
+      delete_word = '<C-BS>',
     },
   },
   config = function(_, opts)

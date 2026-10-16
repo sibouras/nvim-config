@@ -3,7 +3,7 @@ return {
   enabled = true,
   event = { 'TermOpen' },
   keys = {
-    { mode = { 'n', 'i', 't' }, '<M-C-S-F7>', desc = 'Toggle floating terminal' },
+    { mode = { 'n', 'i', 't' }, '<C-;>', desc = 'Toggle floating terminal' },
     { mode = { 'n', 't' }, '<F1>', desc = 'Enter terminal' },
     { mode = { 'n', 't' }, '<F2>', desc = 'Toggle horizontal terminal' },
     { mode = { 'n', 't' }, '<F3>', desc = 'Toggle vertical terminal' },
@@ -56,7 +56,7 @@ return {
 
     -- switch to most recent terminal
     local recent_bufnr
-    map({ 'n', 'i', 't' }, '<M-C-S-F7>', function() -- mapped <C-;> to <M-C-S-F7> with ahk
+    map({ 'n', 'i', 't' }, '<C-;>', function() -- mapped <C-;> to <M-C-S-F7> with ahk
       local mode = vim.api.nvim_get_mode().mode
       if mode == 'i' then
         vim.cmd('stopinsert')
