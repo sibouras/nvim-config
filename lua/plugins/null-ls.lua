@@ -9,7 +9,10 @@ return {
     return {
       root_dir = require('null-ls.utils').root_pattern('.null-ls-root', '.neoconf.json', 'Makefile', '.git'),
       sources = {
-        null_ls.builtins.formatting.shfmt.with({ extra_args = { '--indent', '2', '--space-redirects' } }),
+        builtins.formatting.shfmt.with({
+          extra_args = { '--indent', '2', '--space-redirects', '--case-indent' },
+          filetypes = { 'sh', 'zsh' },
+        }),
         -- builtins.formatting.prettier.with({ extra_args = { "--single-quote", "--jsx-single-quote" } }),
         -- builtins.formatting.prettierd.with({
         --   filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "html", "css", "markdown" },

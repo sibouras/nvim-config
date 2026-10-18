@@ -205,7 +205,7 @@ return {
         'tailwindcss',
         'nushell',
         'clangd',
-        'bashls',
+        -- 'bashls',
       })
       vim.lsp.enable('ahk2', vim.fn.executable('C:/Program Files/AutoHotkey/v2/AutoHotkey.exe') == 1)
     end)
