@@ -33,6 +33,7 @@ return {
             'svelte',
             'graphql',
             'html',
+            'yaml',
           },
           env = {
             PRETTIERD_DEFAULT_CONFIG = vim.fn.stdpath('config') .. '/linter-config/.prettierrc.json',
@@ -46,9 +47,10 @@ return {
             'typescriptreact',
             'json',
             'jsonc',
-            'html',
             'css',
             'graphql',
+            'html',
+            'yaml',
           },
         }),
         builtins.formatting.stylua.with({

@@ -31,13 +31,13 @@ return {
         vim.uv.set_process_title(title)
       end, 500)
     end
-    map('n', '<M-F>', function()
+    map('n', '<M-e>', function()
       vim.lsp.buf.format({ async = true })
       if vim.g.is_win then
         restoreTitle()
       end
     end)
-    map('v', '<M-F>', function()
+    map('v', '<M-e>', function()
       vim.lsp.buf.format({ async = true, range = true })
       if vim.g.is_win == 1 then
         restoreTitle()
